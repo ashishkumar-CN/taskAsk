@@ -1,0 +1,435 @@
+<div class="min-h-screen bg-gradient-to-br from-amber-50 to-stone-100 p-4 md:p-8 font-serif">
+  <!-- Parchment Background Effect -->
+  <div class="fixed inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxkZWZzPjxwYXR0ZXJuIGlkPSJwYXR0ZXJuIiB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHBhdHRlcm5Vbml0cz0idXNlclNwYWNlT25Vc2UiIHBhdHRlcm5UcmFuc2Zvcm09InJvdGF0ZSg0NSkiPjxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9IiNmZmZmZmYiIGZpbGwtb3BhY2l0eT0iMC4wNSIvPjxwYXRoIGQ9Ik0wIDYwTDYwIDBNNjAgMEwwIDYwIiBzdHJva2U9IiNlZWUiIHN0cm9rZS13aWR0aD0iMC41IiBmaWxsPSJub25lIi8+PC9wYXR0ZXJuPjwvZGVmcz48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSJ1cmwoI3BhdHRlcm4pIi8+PC9zdmc+')] opacity-30 pointer-events-none"></div>
+
+  <div class="max-w-7xl mx-auto relative">
+    <!-- Decorative Elements -->
+    <div class="absolute -top-4 -left-4 w-24 h-24 border-t-4 border-l-4 border-amber-900/20 rounded-tl-3xl"></div>
+    <div class="absolute -bottom-4 -right-4 w-24 h-24 border-b-4 border-r-4 border-amber-900/20 rounded-br-3xl"></div>
+
+    <!-- Header -->
+    <header class="mb-12 relative">
+      <div class="flex items-center justify-between mb-6">
+        <div class="flex items-center space-x-4">
+          <!-- Crest Logo -->
+          <div class="relative">
+            <div class="w-16 h-16 bg-gradient-to-br from-amber-600 to-amber-800 rounded-full flex items-center justify-center shadow-lg border-4 border-amber-200">
+              <div class="w-12 h-12 bg-gradient-to-tr from-amber-200 to-amber-100 rounded-full flex items-center justify-center border-2 border-amber-300">
+                <span class="text-2xl font-bold text-amber-900 font-serif">T</span>
+              </div>
+            </div>
+            <div class="absolute -top-1 -right-1 w-6 h-6 bg-amber-400 rounded-full border-2 border-amber-200"></div>
+            <div class="absolute -bottom-1 -left-1 w-6 h-6 bg-amber-400 rounded-full border-2 border-amber-200"></div>
+          </div>
+          
+          <div>
+            <p class="text-xs uppercase tracking-widest text-amber-700/80 font-sans mb-1">Task Dashboard</p>
+            <h1 class="text-4xl md:text-5xl font-bold text-stone-800 tracking-tight">
+              {{ title() }}
+              <span class="block text-lg text-amber-700/80 font-normal mt-1">{{ tagline() }}</span>
+            </h1>
+          </div>
+        </div>
+
+        <!-- User Panel -->
+        <div class="flex items-center space-x-4" *ngIf="isLoggedIn()">
+          <div class="text-right hidden md:block">
+            <p class="text-sm text-stone-600">{{ userEmail() }}</p>
+            <div class="flex items-center space-x-2">
+              <span class="px-3 py-1 bg-gradient-to-r from-amber-500 to-amber-600 text-amber-50 text-xs rounded-full font-sans font-semibold shadow">
+                {{ userRole() || 'USER' }}
+              </span>
+            </div>
+          </div>
+          <button 
+            (click)="logout()"
+            class="px-6 py-3 bg-gradient-to-br from-stone-700 to-stone-900 text-stone-100 rounded-lg font-sans font-medium hover:from-stone-800 hover:to-stone-950 transition-all duration-200 shadow-lg hover:shadow-xl border border-stone-600/30 flex items-center space-x-2"
+          >
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+            </svg>
+            <span>Logout</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Divider -->
+      <div class="h-px bg-gradient-to-r from-transparent via-amber-400/30 to-transparent"></div>
+    </header>
+
+    <!-- Main Content Grid -->
+    <main class="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-12">
+      <!-- Left Column - Auth & Metrics -->
+      <div class="lg:col-span-1 space-y-8">
+        <!-- Auth Card -->
+        <div class="bg-white rounded-2xl shadow-xl border border-stone-200/60 p-6 space-y-4">
+          <div class="flex items-center justify-between mb-2">
+            <div>
+              <h2 class="text-2xl font-bold text-stone-800">Access</h2>
+              <p class="text-stone-600 text-sm">Sign in or create an account.</p>
+            </div>
+            <div class="w-10 h-10 rounded-full bg-amber-100 text-amber-700 grid place-items-center font-semibold">{{ isLoggedIn() ? 'ON' : 'OFF' }}</div>
+          </div>
+
+          <div *ngIf="!isLoggedIn()" class="space-y-4">
+            <div class="flex bg-stone-100 p-1 rounded-xl">
+              <button
+                [ngClass]="authMode() === 'login' ? 'flex-1 py-2 rounded-lg bg-white shadow text-stone-900' : 'flex-1 py-2 rounded-lg text-stone-600'"
+                (click)="setAuthMode('login')">Login</button>
+              <button
+                [ngClass]="authMode() === 'signup' ? 'flex-1 py-2 rounded-lg bg-white shadow text-stone-900' : 'flex-1 py-2 rounded-lg text-stone-600'"
+                (click)="setAuthMode('signup')">Sign up</button>
+            </div>
+
+            <ng-container *ngIf="authMode() === 'login'; else signupBlock">
+              <label class="text-sm text-stone-700 flex flex-col gap-1">
+                <span>Email</span>
+                <input [(ngModel)]="loginEmail" class="border rounded-lg px-3 py-2" placeholder="you@company.com" />
+              </label>
+              <label class="text-sm text-stone-700 flex flex-col gap-1">
+                <span>Password</span>
+                <input type="password" [(ngModel)]="loginPassword" class="border rounded-lg px-3 py-2" placeholder="••••••••" />
+              </label>
+              <button (click)="login()" [disabled]="isLoading()" class="w-full py-3 rounded-lg bg-amber-600 text-white font-semibold">{{ isLoading() ? 'Signing in…' : 'Sign in' }}</button>
+            </ng-container>
+
+            <ng-template #signupBlock>
+              <label class="text-sm text-stone-700 flex flex-col gap-1">
+                <span>Full name</span>
+                <input [(ngModel)]="signupFullName" class="border rounded-lg px-3 py-2" placeholder="Jordan Smith" />
+              </label>
+              <label class="text-sm text-stone-700 flex flex-col gap-1">
+                <span>Email</span>
+                <input type="email" [(ngModel)]="signupEmail" class="border rounded-lg px-3 py-2" placeholder="you@company.com" />
+              </label>
+              <label class="text-sm text-stone-700 flex flex-col gap-1">
+                <span>Password</span>
+                <input type="password" [(ngModel)]="signupPassword" class="border rounded-lg px-3 py-2" placeholder="Create a password" />
+              </label>
+              <label class="text-sm text-stone-700 flex flex-col gap-1">
+                <span>Role</span>
+                <select [(ngModel)]="signupRole" class="border rounded-lg px-3 py-2">
+                  <option value="EMPLOYEE">Employee</option>
+                  <option value="MANAGER">Manager</option>
+                </select>
+              </label>
+              <button (click)="signup()" [disabled]="isLoading()" class="w-full py-3 rounded-lg bg-emerald-600 text-white font-semibold">{{ isLoading() ? 'Creating…' : 'Create account' }}</button>
+            </ng-template>
+          </div>
+
+          <div *ngIf="isLoggedIn()" class="space-y-3">
+            <p class="text-sm text-stone-700">Signed in as <strong>{{ userEmail() }}</strong></p>
+            <div class="flex gap-2">
+              <button (click)="loadTasks()" class="flex-1 py-2 border rounded-lg text-stone-700">Refresh</button>
+              <button (click)="logout()" class="flex-1 py-2 bg-stone-800 text-white rounded-lg">Logout</button>
+            </div>
+          </div>
+
+          <div class="space-y-2">
+            <p *ngIf="authMessage()" class="text-sm text-emerald-700 bg-emerald-50 border border-emerald-200 rounded-lg p-2">{{ authMessage() }}</p>
+            <p *ngIf="authError()" class="text-sm text-red-700 bg-red-50 border border-red-200 rounded-lg p-2">{{ authError() }}</p>
+          </div>
+        </div>
+
+        <!-- Metrics -->
+        <div class="grid grid-cols-2 gap-4">
+          <!-- Task Count -->
+          <div class="bg-gradient-to-br from-white to-stone-50 rounded-xl p-4 shadow-lg border border-stone-200">
+            <div class="flex items-center justify-between mb-2">
+              <span class="text-xs font-sans font-semibold text-stone-500 uppercase tracking-wider">Tasks</span>
+              <svg class="w-5 h-5 text-amber-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+              </svg>
+            </div>
+            <p class="text-3xl font-bold text-stone-800">{{ filteredTasks().length || 0 }}</p>
+            <p class="text-xs text-stone-500 mt-1">Active tasks</p>
+          </div>
+
+          <!-- Team Count -->
+          <div class="bg-gradient-to-br from-white to-stone-50 rounded-xl p-4 shadow-lg border border-stone-200" *ngIf="userRole() === 'MANAGER'">
+            <div class="flex items-center justify-between mb-2">
+              <span class="text-xs font-sans font-semibold text-stone-500 uppercase tracking-wider">Team</span>
+              <svg class="w-5 h-5 text-amber-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+              </svg>
+            </div>
+            <p class="text-3xl font-bold text-stone-800">{{ employees().length }}</p>
+            <p class="text-xs text-stone-500 mt-1">Assignable teammates</p>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Right Column - Tasks & Create -->
+      <div class="lg:col-span-2 space-y-8">
+        <!-- Create Task (Manager Only) -->
+        <div *ngIf="isLoggedIn() && userRole() === 'MANAGER'" class="bg-gradient-to-br from-stone-50 to-amber-50/30 rounded-2xl shadow-xl border border-amber-200/50 p-6">
+          <div class="flex items-center justify-between mb-6">
+            <div>
+              <div class="flex items-center space-x-2 mb-2">
+                <div class="w-2 h-8 bg-gradient-to-b from-amber-500 to-amber-600 rounded-full"></div>
+                <h2 class="text-2xl font-bold text-stone-800">Create New Task</h2>
+              </div>
+              <p class="text-stone-600">Assign work to your team and set priorities.</p>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+              <label class="block text-sm font-sans font-semibold text-stone-700 mb-2">Task Title</label>
+              <input 
+                [(ngModel)]="newTaskTitle"
+                class="w-full px-4 py-3 bg-white/80 border border-amber-200 rounded-xl focus:ring-2 focus:ring-amber-400/50 focus:border-amber-400 transition-all duration-200 placeholder:text-stone-400"
+                placeholder="Draft Q1 campaign plan"
+              />
+            </div>
+            <div>
+              <label class="block text-sm font-sans font-semibold text-stone-700 mb-2">Assign to</label>
+              <select 
+                [(ngModel)]="newTaskAssigneeId"
+                class="w-full px-4 py-3 bg-white/80 border border-amber-200 rounded-xl focus:ring-2 focus:ring-amber-400/50 focus:border-amber-400 transition-all duration-200 appearance-none"
+              >
+                <option value="">Select an employee</option>
+                <option *ngFor="let emp of employees()" [value]="emp.id">{{ emp.fullName }} - {{ emp.email }}</option>
+              </select>
+            </div>
+            <div class="md:col-span-2">
+              <label class="block text-sm font-sans font-semibold text-stone-700 mb-2">Task Description</label>
+              <textarea 
+                rows="3"
+                [(ngModel)]="newTaskDescription"
+                class="w-full px-4 py-3 bg-white/80 border border-amber-200 rounded-xl focus:ring-2 focus:ring-amber-400/50 focus:border-amber-400 transition-all duration-200 placeholder:text-stone-400 resize-none"
+                placeholder="Add context, objectives, and success criteria."
+              ></textarea>
+            </div>
+            <div>
+              <label class="block text-sm font-sans font-semibold text-stone-700 mb-2">Priority</label>
+              <select 
+                [(ngModel)]="newTaskPriority"
+                class="w-full px-4 py-3 bg-white/80 border border-amber-200 rounded-xl focus:ring-2 focus:ring-amber-400/50 focus:border-amber-400 transition-all duration-200 appearance-none"
+              >
+                <option value="LOW">Low</option>
+                <option value="MEDIUM">Medium</option>
+                <option value="HIGH">High</option>
+              </select>
+            </div>
+            <div>
+              <label class="block text-sm font-sans font-semibold text-stone-700 mb-2">Due Date</label>
+              <input 
+                type="date"
+                [(ngModel)]="newTaskDueDate"
+                class="w-full px-4 py-3 bg-white/80 border border-amber-200 rounded-xl focus:ring-2 focus:ring-amber-400/50 focus:border-amber-400 transition-all duration-200"
+              />
+            </div>
+          </div>
+
+          <div class="flex items-center justify-between mt-8 pt-6 border-t border-amber-200/50">
+            <div>
+              <p *ngIf="taskMessage()" class="text-emerald-600 font-sans text-sm">{{ taskMessage() }}</p>
+              <p *ngIf="taskError()" class="text-red-600 font-sans text-sm">{{ taskError() }}</p>
+            </div>
+            <button 
+              (click)="createTask()"
+              class="px-8 py-3 bg-gradient-to-r from-amber-600 to-amber-700 text-amber-50 rounded-xl font-sans font-semibold hover:from-amber-700 hover:to-amber-800 transition-all duration-200 shadow-lg hover:shadow-xl flex items-center space-x-2"
+            >
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+              </svg>
+              <span>Create Task</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Employee Task Panel -->
+        <div *ngIf="userRole() === 'EMPLOYEE'" class="bg-white rounded-2xl shadow-xl border border-stone-200/70 p-6 space-y-4">
+          <div class="flex items-center justify-between">
+            <div>
+              <p class="text-xs uppercase tracking-widest text-stone-500 mb-1">Your Tasks</p>
+              <h2 class="text-2xl font-bold text-stone-800">Assigned to you</h2>
+              <p class="text-stone-600">Update status or priority directly.</p>
+            </div>
+            <button (click)="loadTasks()" class="px-4 py-2 bg-stone-100 text-stone-700 rounded-lg font-sans font-medium hover:bg-stone-200 transition-all duration-200 flex items-center space-x-2">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+              </svg>
+              <span>Refresh</span>
+            </button>
+          </div>
+
+          <div class="space-y-2">
+            <p class="text-xs uppercase tracking-widest text-stone-500">Filter by status</p>
+            <div class="flex flex-wrap gap-2">
+              <button
+                *ngFor="let filter of statusFilters"
+                [ngClass]="statusFilter() === filter.value ? 'bg-gradient-to-r from-amber-600 to-amber-700 text-amber-50' : 'bg-stone-100 text-stone-700 hover:bg-stone-200'"
+                (click)="setFilter(filter.value)"
+                class="px-4 py-2 rounded-lg font-sans font-medium text-sm transition-all duration-200"
+              >
+                {{ filter.label }}
+              </button>
+            </div>
+          </div>
+
+          <div *ngIf="filteredTasks().length === 0" class="text-center text-stone-500 py-6">
+            No tasks assigned yet.
+          </div>
+
+          <div class="space-y-4" *ngIf="filteredTasks().length > 0">
+            <div *ngFor="let task of filteredTasks()" class="border border-stone-200 rounded-xl p-4 bg-white shadow-sm">
+              <div class="flex items-start justify-between gap-3">
+                <div class="min-w-0">
+                  <p class="text-xs text-stone-500">Due: {{ task.dueDate || 'No deadline' }}</p>
+                  <h3 class="text-lg font-bold text-stone-800 break-words">{{ task.title }}</h3>
+                  <p class="text-sm text-stone-600 break-words">{{ task.description || 'No description provided' }}</p>
+                </div>
+                <div class="flex flex-col gap-2 text-right">
+                  <span class="text-xs text-stone-500">Priority</span>
+                  <span class="text-sm font-semibold text-stone-700">{{ task.priority || 'MEDIUM' }}</span>
+                  <span class="text-xs text-stone-500">Status</span>
+                  <span class="text-sm font-semibold text-stone-700">{{ task.status }}</span>
+                </div>
+              </div>
+
+              <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 mt-4">
+                <label class="text-sm text-stone-700 flex flex-col gap-1">
+                  <span>Priority</span>
+                  <select [(ngModel)]="priorityChoice[task.id]" class="border rounded-lg px-3 py-2 bg-stone-50">
+                    <option *ngFor="let p of priorityOptions" [value]="p">{{ p }}</option>
+                  </select>
+                </label>
+                <label class="text-sm text-stone-700 flex flex-col gap-1">
+                  <span>Status</span>
+                  <select [(ngModel)]="statusChoice[task.id]" class="border rounded-lg px-3 py-2 bg-stone-50">
+                    <option *ngFor="let s of statusOptions" [value]="s">{{ s }}</option>
+                  </select>
+                </label>
+                <div class="flex items-end">
+                  <button (click)="updateTask(task.id, statusChoice[task.id], priorityChoice[task.id])" class="w-full px-4 py-2 bg-emerald-600 text-white rounded-lg font-semibold hover:bg-emerald-700 transition-all duration-200">Save</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Task Board (Manager) -->
+        <div *ngIf="userRole() === 'MANAGER'" class="bg-gradient-to-br from-white to-stone-50 rounded-2xl shadow-xl border border-stone-200/50 p-6">
+          <div class="flex items-center justify-between mb-8">
+            <div>
+              <div class="flex items-center space-x-3 mb-2">
+                <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-amber-500 to-amber-600 flex items-center justify-center">
+                  <svg class="w-4 h-4 text-amber-50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+                  </svg>
+                </div>
+                <h2 class="text-2xl font-bold text-stone-800">Task Board</h2>
+              </div>
+              <p class="text-stone-600">All tasks with current filters applied</p>
+            </div>
+            <button 
+              (click)="loadTasks()"
+              class="px-4 py-2 bg-stone-100 text-stone-700 rounded-lg font-sans font-medium hover:bg-stone-200 transition-all duration-200 flex items-center space-x-2"
+            >
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+              </svg>
+              <span>Refresh</span>
+            </button>
+          </div>
+
+          <div class="space-y-2 mb-6">
+            <p class="text-xs uppercase tracking-widest text-stone-500">Filter by status</p>
+            <div class="flex flex-wrap gap-2">
+              <button
+                *ngFor="let filter of statusFilters"
+                [ngClass]="statusFilter() === filter.value ? 'bg-gradient-to-r from-amber-600 to-amber-700 text-amber-50' : 'bg-stone-100 text-stone-700 hover:bg-stone-200'"
+                (click)="setFilter(filter.value)"
+                class="px-4 py-2 rounded-lg font-sans font-medium text-sm transition-all duration-200"
+              >
+                {{ filter.label }}
+              </button>
+            </div>
+          </div>
+
+          <!-- Empty State -->
+          <div *ngIf="filteredTasks().length === 0" class="text-center py-12">
+            <div class="w-24 h-24 mx-auto mb-4 opacity-20">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+              </svg>
+            </div>
+            <p class="text-stone-500">No tasks yet. Create one or refresh.</p>
+          </div>
+
+          <!-- Task Grid -->
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4" *ngIf="filteredTasks().length > 0">
+            <div 
+              *ngFor="let task of filteredTasks()"
+              class="bg-gradient-to-br from-white to-stone-50 rounded-xl p-4 border border-stone-200 hover:border-amber-300 transition-all duration-200 hover:shadow-lg"
+            >
+              <!-- Task Header -->
+              <div class="flex items-start justify-between mb-3">
+                <div>
+                  <div class="flex items-center space-x-2 mb-2">
+                    <span [ngClass]="{
+                      'bg-red-100 text-red-800': task.priority === 'HIGH',
+                      'bg-yellow-100 text-yellow-800': task.priority === 'MEDIUM',
+                      'bg-blue-100 text-blue-800': task.priority === 'LOW'
+                    }" class="px-2 py-1 rounded text-xs font-sans font-semibold">
+                      {{ task.priority }}
+                    </span>
+                    <span [ngClass]="{
+                      'bg-emerald-100 text-emerald-800': task.status === 'COMPLETED',
+                      'bg-amber-100 text-amber-800': task.status === 'PENDING'
+                    }" class="px-2 py-1 rounded text-xs font-sans font-semibold">
+                      {{ task.status }}
+                    </span>
+                  </div>
+                  <h3 class="text-lg font-bold text-stone-800 mb-1 break-words">{{ task.title }}</h3>
+                  <p class="text-stone-600 text-sm break-words">{{ task.description || 'No description provided' }}</p>
+                </div>
+                <div class="text-right">
+                  <p class="text-xs text-stone-500">Due:</p>
+                  <p class="text-sm font-sans font-semibold text-stone-700">{{ task.dueDate || 'No deadline' }}</p>
+                </div>
+              </div>
+
+              <!-- Task Meta -->
+              <div class="flex flex-wrap items-start justify-between gap-3 mt-4 pt-3 border-t border-stone-100">
+                <div class="flex items-center gap-2 min-w-0">
+                  <div class="w-6 h-6 rounded-full bg-gradient-to-br from-stone-400 to-stone-600 flex items-center justify-center flex-shrink-0">
+                    <span class="text-xs text-stone-50">{{ getEmployeeLabel(task.assignedToUserId)?.[0] }}</span>
+                  </div>
+                  <span class="text-sm text-stone-700 break-words">{{ getEmployeeLabel(task.assignedToUserId) }}</span>
+                </div>
+                
+                <!-- Manager Actions -->
+                <div class="flex flex-wrap gap-2" *ngIf="userRole() === 'MANAGER'">
+                  <button 
+                    (click)="updateTask(task.id, 'COMPLETED', task.priority || 'MEDIUM')"
+                    [disabled]="task.status === 'COMPLETED'"
+                    class="px-3 py-1 bg-emerald-100 text-emerald-700 rounded-lg text-xs font-sans font-semibold hover:bg-emerald-200 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+                  >
+                    Complete
+                  </button>
+                  <button 
+                    (click)="deleteTask(task.id)"
+                    class="px-3 py-1 bg-red-100 text-red-700 rounded-lg text-xs font-sans font-semibold hover:bg-red-200 transition-all duration-200"
+                  >
+                    Remove
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="text-center py-6 border-t border-amber-200/50 mt-8">
+      <p class="text-stone-600 text-sm">
+        Built with TaskAsk • © {{ currentYear }}
+      </p>
+    </footer>
+  </div>
+</div>
