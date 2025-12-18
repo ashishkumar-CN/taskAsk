@@ -1,12 +1,16 @@
 package com.example.taskask.service;
 
 import com.example.taskask.dto.CreateUserRequest;
+import com.example.taskask.dto.EmployeeResponse;
 import com.example.taskask.entity.User;
+import com.example.taskask.enums.Role;
 import com.example.taskask.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
+
+import java.util.List;
 
 import static org.springframework.http.HttpStatus.BAD_REQUEST;
 
@@ -35,5 +39,11 @@ public class UserService {
     public User getUserOrThrow(Long userId) {
         return userRepository.findById(userId)
                 .orElseThrow(() -> new ResponseStatusException(BAD_REQUEST, "User not found: " + userId));
+    }
+
+    public List<EmployeeResponse> getEmployees() {
+        return userRepository.findByRole(Role.EMPLOYEE).stream()
+                .map(user -> new EmployeeResponse(user.getId(), user.getFullName(), user.getEmail()))
+                .toList();
     }
 }

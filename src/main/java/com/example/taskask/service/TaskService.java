@@ -5,7 +5,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import com.example.taskask.dto.CreateTaskRequest;
 import com.example.taskask.dto.TaskResponse;
-import com.example.taskask.dto.UpdateTaskStatusRequest;
+import com.example.taskask.dto.UpdateTaskRequest;
 import com.example.taskask.entity.Task;
 import com.example.taskask.entity.User;
 import com.example.taskask.enums.Role;
@@ -53,15 +53,33 @@ public class TaskService {
 
      }       
 
-     public List <TaskResponse> getTasksForAssignee (Long userId) {
+    public List <TaskResponse> getTasksForAssignee (Long userId) {
         return taskRepository.findAllByAssignedToId(userId).stream().map(TaskResponse::fromEntity).toList();
      }
 
-     public TaskResponse updateStatus(Long taskId, UpdateTaskStatusRequest req) {
+     public List<TaskResponse> getTasksCreatedBy(Long managerId) {
+        return taskRepository.findAllByCreatedById(managerId).stream()
+                .map(TaskResponse::fromEntity)
+                .toList();
+     }
+
+     public TaskResponse updateTask(Long taskId, UpdateTaskRequest req) {
         Task task = taskRepository.findById(taskId).orElseThrow(( ) -> new ResponseStatusException(BAD_REQUEST, "Task Not Found " + taskId));
-        
-        task.setStatus(req.status());
+
+        if (req.status() != null) {
+            task.setStatus(req.status());
+        }
+        if (req.priority() != null) {
+            task.setPriority(req.priority());
+        }
 
         return TaskResponse.fromEntity(taskRepository.save(task));
      }
+
+      public void deleteTask(Long taskId) {
+          if (!taskRepository.existsById(taskId)) {
+                throw new ResponseStatusException(BAD_REQUEST, "Task Not Found " + taskId);
+          }
+          taskRepository.deleteById(taskId);
+      }
 }
