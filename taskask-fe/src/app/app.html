@@ -1,355 +1,355 @@
-<div class="min-h-screen bg-linear-to-br from-amber-50 to-stone-100 p-4 md:p-8 font-serif">
-  <!-- Parchment Background Effect -->
-  <div class="fixed inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxkZWZzPjxwYXR0ZXJuIGlkPSJwYXR0ZXJuIiB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHBhdHRlcm5Vbml0cz0idXNlclNwYWNlT25Vc2UiIHBhdHRlcm5UcmFuc2Zvcm09InJvdGF0ZSg0NSkiPjxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9IiNmZmZmZmYiIGZpbGwtb3BhY2l0eT0iMC4wNSIvPjxwYXRoIGQ9Ik0wIDYwTDYwIDBNNjAgMEwwIDYwIiBzdHJva2U9IiNlZWUiIHN0cm9rZS13aWR0aD0iMC41IiBmaWxsPSJub25lIi8+PC9wYXR0ZXJuPjwvZGVmcz48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSJ1cmwoI3BhdHRlcm4pIi8+PC9zdmc+')] opacity-30 pointer-events-none"></div>
+<div class="min-h-screen bg-gray-400 p-4 md:p-8 font-mono">
+  <!-- Retro Grid Background -->
+  <div class="fixed inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PHBhdHRlcm4gaWQ9ImdyaWQiIHdpZHRoPSI0MCIgaGVpZ2h0PSI0MCIgcGF0dGVyblVuaXRzPSJ1c2VyU3BhY2VPblVzZSI+PHBhdGggZD0iTSAwIDEwIEwgNDAgMTAgTSAxMCAwIEwgMTAgNDAgTSAwIDIwIEwgNDAgMjAgTSAyMCAwIEwgMjAgNDAgTSAwIDMwIEwgNDAgMzAgTSAzMCAwIEwgMzAgNDAiIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzAwMDAwMCIgb3BhY2l0eT0iMC4wMyIgc3Ryb2tlLXdpZHRoPSIxIi8+PC9wYXR0ZXJuPjwvZGVmcz48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSJ1cmwoI2dyaWQpIi8+PC9zdmc+')] opacity-50"></div>
 
   <div class="max-w-7xl mx-auto relative">
-    <!-- Decorative Elements -->
-    <div class="absolute -top-4 -left-4 w-24 h-24 border-t-4 border-l-4 border-amber-900/20 rounded-tl-3xl"></div>
-    <div class="absolute -bottom-4 -right-4 w-24 h-24 border-b-4 border-r-4 border-amber-900/20 rounded-br-3xl"></div>
+    <!-- Retro Banner -->
+    <div class="mb-4">
+      <div class="h-2 bg-linear-to-r from-cyan-400 via-purple-400 to-pink-400"></div>
+      <div class="h-1 bg-linear-to-r from-yellow-400 via-green-400 to-blue-400"></div>
+    </div>
 
     <!-- Header -->
-    <header class="mb-12 relative">
-      <div class="flex items-center justify-between mb-6">
-        <div class="flex items-center space-x-4">
-          <!-- Crest Logo -->
-          <div class="relative">
-            <div class="w-16 h-16 bg-linear-to-br from-amber-600 to-amber-800 rounded-full flex items-center justify-center shadow-lg border-4 border-amber-200">
-              <div class="w-12 h-12 bg-linear-to-tr from-amber-200 to-amber-100 rounded-full flex items-center justify-center border-2 border-amber-300">
-                <span class="text-2xl font-bold text-amber-900 font-serif">T</span>
+    <header class="mb-6 relative">
+      <div class="bg-blue-600 border-4 border-black shadow-[4px_4px_0_0_rgba(0,0,0,1)] p-4 mb-4">
+        <div class="flex items-center justify-between flex-wrap gap-4">
+          <div class="flex items-center space-x-3">
+            <!-- Retro Logo -->
+            <div class="relative">
+              <div class="w-12 h-12 bg-yellow-400 border-4 border-black flex items-center justify-center animate-pulse">
+                <span class="text-2xl font-bold text-black">T</span>
               </div>
             </div>
-            <div class="absolute -top-1 -right-1 w-6 h-6 bg-amber-400 rounded-full border-2 border-amber-200"></div>
-            <div class="absolute -bottom-1 -left-1 w-6 h-6 bg-amber-400 rounded-full border-2 border-amber-200"></div>
+            
+            <div>
+              <h1 class="text-3xl md:text-4xl font-bold text-white tracking-wider" style="text-shadow: 3px 3px 0 #000;">
+                {{ title() }}
+              </h1>
+              <p class="text-yellow-300 text-sm font-bold">{{ tagline() }}</p>
+            </div>
           </div>
-          
-          <div>
-            <p class="text-xs uppercase tracking-widest text-amber-700/80 font-sans mb-1">Task Dashboard</p>
-            <h1 class="text-4xl md:text-5xl font-bold text-stone-800 tracking-tight">
-              {{ title() }}
-              <span class="block text-lg text-amber-700/80 font-normal mt-1">{{ tagline() }}</span>
-            </h1>
-          </div>
-        </div>
 
-        <!-- User Panel -->
-        <div class="flex items-center space-x-4" *ngIf="isLoggedIn()">
-          <div class="text-right hidden md:block">
-            <p class="text-sm text-stone-600">{{ userEmail() }}</p>
-            <div class="flex items-center space-x-2">
-              <span class="px-3 py-1 bg-linear-to-r from-amber-500 to-amber-600 text-amber-50 text-xs rounded-full font-sans font-semibold shadow">
+          <!-- User Panel -->
+          <div class="flex items-center space-x-3" *ngIf="isLoggedIn()">
+            <div class="text-right hidden md:block bg-yellow-400 border-2 border-black px-3 py-2">
+              <p class="text-xs font-bold text-black">{{ userEmail() }}</p>
+              <span class="text-xs bg-black text-yellow-400 px-2 py-1 font-bold">
                 {{ userRole() || 'USER' }}
               </span>
             </div>
+            <button 
+              (click)="logout()"
+              class="px-4 py-2 bg-red-600 text-white border-4 border-black shadow-[2px_2px_0_0_rgba(0,0,0,1)] hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-none transition-all font-bold uppercase text-sm"
+            >
+              ← LOGOUT
+            </button>
           </div>
-          <button 
-            (click)="logout()"
-            class="px-6 py-3 bg-linear-to-br from-stone-700 to-stone-900 text-stone-100 rounded-lg font-sans font-medium hover:from-stone-800 hover:to-stone-950 transition-all duration-200 shadow-lg hover:shadow-xl border border-stone-600/30 flex items-center space-x-2"
-          >
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
-            </svg>
-            <span>Logout</span>
-          </button>
         </div>
       </div>
 
-      <!-- Divider -->
-      <div class="h-px bg-linear-to-r from-transparent via-amber-400/30 to-transparent"></div>
+      <!-- Marquee -->
+      <div class="bg-yellow-400 border-2 border-black p-2 overflow-hidden">
+        <div class="whitespace-nowrap animate-[scroll_20s_linear_infinite] inline-block">
+          <span class="text-black font-bold">★ WELCOME TO TASKASK ★ GET THINGS DONE ★ MANAGE YOUR TEAM ★ RETRO STYLE ★ </span>
+          <span class="text-black font-bold">★ WELCOME TO TASKASK ★ GET THINGS DONE ★ MANAGE YOUR TEAM ★ RETRO STYLE ★ </span>
+        </div>
+      </div>
     </header>
 
+    <style>
+      @keyframes scroll {
+        0% { transform: translateX(0); }
+        100% { transform: translateX(-50%); }
+      }
+    </style>
+
     <!-- Main Content Grid -->
-    <main class="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-12">
+    <main class="grid grid-cols-1 lg:grid-cols-3 gap-4 mb-6">
       <!-- Left Column - Auth & Metrics -->
-      <div class="lg:col-span-1 space-y-8">
+      <div class="lg:col-span-1 space-y-4">
         <!-- Auth Card -->
-        <div class="bg-white rounded-2xl shadow-xl border border-stone-200/60 p-6 space-y-4">
-          <div class="flex items-center justify-between mb-2">
+        <div class="bg-white border-4 border-black shadow-[6px_6px_0_0_rgba(0,0,0,1)] p-4">
+          <div class="flex items-center justify-between mb-4 border-b-4 border-dotted border-black pb-3">
             <div>
-              <h2 class="text-2xl font-bold text-stone-800">Access</h2>
-              <p class="text-stone-600 text-sm">Sign in or create an account.</p>
+              <h2 class="text-xl font-bold text-black uppercase tracking-wide">⚡ ACCESS ⚡</h2>
+              <p class="text-black text-xs font-bold">Sign in or create account</p>
             </div>
-            <div class="w-10 h-10 rounded-full bg-amber-100 text-amber-700 grid place-items-center font-semibold">{{ isLoggedIn() ? 'ON' : 'OFF' }}</div>
+            <div class="w-16 h-16 bg-linear-to-br from-lime-400 to-green-500 border-4 border-black flex items-center justify-center font-bold text-lg">
+              {{ isLoggedIn() ? '✓' : '✗' }}
+            </div>
           </div>
 
-          <div *ngIf="!isLoggedIn()" class="space-y-4">
-            <div class="flex bg-stone-100 p-1 rounded-xl">
+          <div *ngIf="!isLoggedIn()" class="space-y-3">
+            <div class="flex bg-gray-300 p-1 border-2 border-black">
               <button
-                [ngClass]="authMode() === 'login' ? 'flex-1 py-2 rounded-lg bg-white shadow text-stone-900' : 'flex-1 py-2 rounded-lg text-stone-600'"
-                (click)="setAuthMode('login')">Login</button>
+                [ngClass]="authMode() === 'login' ? 'flex-1 py-2 bg-cyan-400 border-2 border-black font-bold' : 'flex-1 py-2 text-black font-bold'"
+                (click)="setAuthMode('login')">LOGIN</button>
               <button
-                [ngClass]="authMode() === 'signup' ? 'flex-1 py-2 rounded-lg bg-white shadow text-stone-900' : 'flex-1 py-2 rounded-lg text-stone-600'"
-                (click)="setAuthMode('signup')">Sign up</button>
+                [ngClass]="authMode() === 'signup' ? 'flex-1 py-2 bg-cyan-400 border-2 border-black font-bold' : 'flex-1 py-2 text-black font-bold'"
+                (click)="setAuthMode('signup')">SIGN UP</button>
             </div>
 
             <ng-container *ngIf="authMode() === 'login'; else signupBlock">
-              <label class="text-sm text-stone-700 flex flex-col gap-1">
-                <span>Email</span>
-                <input [(ngModel)]="loginEmail" class="border rounded-lg px-3 py-2" placeholder="you@company.com" />
+              <label class="text-xs text-black font-bold flex flex-col gap-1">
+                <span>EMAIL:</span>
+                <input [(ngModel)]="loginEmail" class="border-2 border-black px-2 py-2 bg-white font-mono text-sm" placeholder="you@company.com" />
               </label>
-              <label class="text-sm text-stone-700 flex flex-col gap-1">
-                <span>Password</span>
-                <input type="password" [(ngModel)]="loginPassword" class="border rounded-lg px-3 py-2" placeholder="••••••••" />
+              <label class="text-xs text-black font-bold flex flex-col gap-1">
+                <span>PASSWORD:</span>
+                <input type="password" [(ngModel)]="loginPassword" class="border-2 border-black px-2 py-2 bg-white font-mono text-sm" placeholder="••••••••" />
               </label>
-              <button (click)="login()" [disabled]="isLoading()" class="w-full py-3 rounded-lg bg-amber-600 text-white font-semibold">{{ isLoading() ? 'Signing in…' : 'Sign in' }}</button>
+              <button (click)="login()" [disabled]="isLoading()" class="w-full py-3 bg-lime-400 border-4 border-black shadow-[4px_4px_0_0_rgba(0,0,0,1)] hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-none transition-all text-black font-bold uppercase">
+                {{ isLoading() ? '⏳ SIGNING IN...' : '→ SIGN IN' }}
+              </button>
             </ng-container>
 
             <ng-template #signupBlock>
-              <label class="text-sm text-stone-700 flex flex-col gap-1">
-                <span>Full name</span>
-                <input [(ngModel)]="signupFullName" class="border rounded-lg px-3 py-2" placeholder="Jordan Smith" />
+              <label class="text-xs text-black font-bold flex flex-col gap-1">
+                <span>FULL NAME:</span>
+                <input [(ngModel)]="signupFullName" class="border-2 border-black px-2 py-2 bg-white font-mono text-sm" placeholder="Jordan Smith" />
               </label>
-              <label class="text-sm text-stone-700 flex flex-col gap-1">
-                <span>Email</span>
-                <input type="email" [(ngModel)]="signupEmail" class="border rounded-lg px-3 py-2" placeholder="you@company.com" />
+              <label class="text-xs text-black font-bold flex flex-col gap-1">
+                <span>EMAIL:</span>
+                <input type="email" [(ngModel)]="signupEmail" class="border-2 border-black px-2 py-2 bg-white font-mono text-sm" placeholder="you@company.com" />
               </label>
-              <label class="text-sm text-stone-700 flex flex-col gap-1">
-                <span>Password</span>
-                <input type="password" [(ngModel)]="signupPassword" class="border rounded-lg px-3 py-2" placeholder="Create a password" />
+              <label class="text-xs text-black font-bold flex flex-col gap-1">
+                <span>PASSWORD:</span>
+                <input type="password" [(ngModel)]="signupPassword" class="border-2 border-black px-2 py-2 bg-white font-mono text-sm" placeholder="Create password" />
               </label>
-              <label class="text-sm text-stone-700 flex flex-col gap-1">
-                <span>Role</span>
-                <select [(ngModel)]="signupRole" class="border rounded-lg px-3 py-2">
-                  <option value="EMPLOYEE">Employee</option>
-                  <option value="MANAGER">Manager</option>
-                  <option value="ADMIN">Admin</option>
+              <label class="text-xs text-black font-bold flex flex-col gap-1">
+                <span>ROLE:</span>
+                <select [(ngModel)]="signupRole" class="border-2 border-black px-2 py-2 bg-white font-mono text-sm">
+                  <option value="EMPLOYEE">EMPLOYEE</option>
+                  <option value="MANAGER">MANAGER</option>
+                  <option value="ADMIN">ADMIN</option>
                 </select>
               </label>
-              <button (click)="signup()" [disabled]="isLoading()" class="w-full py-3 rounded-lg bg-emerald-600 text-white font-semibold">{{ isLoading() ? 'Creating…' : 'Create account' }}</button>
+              <button (click)="signup()" [disabled]="isLoading()" class="w-full py-3 bg-pink-400 border-4 border-black shadow-[4px_4px_0_0_rgba(0,0,0,1)] hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-none transition-all text-black font-bold uppercase">
+                {{ isLoading() ? '⏳ CREATING...' : '★ CREATE ACCOUNT' }}
+              </button>
             </ng-template>
           </div>
 
-          <div *ngIf="isLoggedIn()" class="space-y-3">
-            <p class="text-sm text-stone-700">Signed in as <strong>{{ userEmail() }}</strong></p>
+          <div *ngIf="isLoggedIn()" class="space-y-2">
+            <div class="bg-lime-100 border-2 border-black p-2">
+              <p class="text-xs font-bold text-black">LOGGED IN AS:</p>
+              <p class="text-sm font-bold text-black wrap-break-word">{{ userEmail() }}</p>
+            </div>
             <div class="flex gap-2">
-              <button (click)="loadTasks()" class="flex-1 py-2 border rounded-lg text-stone-700">Refresh</button>
-              <button (click)="logout()" class="flex-1 py-2 bg-stone-800 text-white rounded-lg">Logout</button>
+              <button (click)="loadTasks()" class="flex-1 py-2 border-2 border-black bg-yellow-300 text-black font-bold hover:bg-yellow-400">↻ REFRESH</button>
+              <button (click)="logout()" class="flex-1 py-2 bg-red-500 text-white border-2 border-black font-bold hover:bg-red-600">✗ LOGOUT</button>
             </div>
           </div>
 
-          <div class="space-y-2">
-            <p *ngIf="authMessage()" class="text-sm text-emerald-700 bg-emerald-50 border border-emerald-200 rounded-lg p-2">{{ authMessage() }}</p>
-            <p *ngIf="authError()" class="text-sm text-red-700 bg-red-50 border border-red-200 rounded-lg p-2">{{ authError() }}</p>
+          <div class="space-y-2 mt-3">
+            <p *ngIf="authMessage()" class="text-xs font-bold text-green-700 bg-green-200 border-2 border-black p-2">✓ {{ authMessage() }}</p>
+            <p *ngIf="authError()" class="text-xs font-bold text-red-700 bg-red-200 border-2 border-black p-2">✗ {{ authError() }}</p>
           </div>
         </div>
 
         <!-- Metrics -->
         <div class="grid grid-cols-2 gap-4">
           <!-- Task Count -->
-          <div class="bg-linear-to-br from-white to-stone-50 rounded-xl p-4 shadow-lg border border-stone-200">
+          <div class="bg-linear-to-br from-cyan-300 to-blue-400 border-4 border-black shadow-[4px_4px_0_0_rgba(0,0,0,1)] p-3">
             <div class="flex items-center justify-between mb-2">
-              <span class="text-xs font-sans font-semibold text-stone-500 uppercase tracking-wider">Tasks</span>
-              <svg class="w-5 h-5 text-amber-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-              </svg>
+              <span class="text-xs font-bold text-black uppercase">TASKS</span>
+              <span class="text-2xl">📋</span>
             </div>
-            <p class="text-3xl font-bold text-stone-800">{{ filteredTasks().length || 0 }}</p>
-            <p class="text-xs text-stone-500 mt-1">Active tasks</p>
+            <p class="text-4xl font-bold text-black" style="text-shadow: 2px 2px 0 #fff;">{{ filteredTasks().length || 0 }}</p>
+            <p class="text-xs text-black font-bold mt-1">ACTIVE</p>
           </div>
 
           <!-- Team Count -->
-          <div class="bg-linear-to-br from-white to-stone-50 rounded-xl p-4 shadow-lg border border-stone-200" *ngIf="userRole() === 'MANAGER'">
+          <div class="bg-linear-to-br from-pink-300 to-purple-400 border-4 border-black shadow-[4px_4px_0_0_rgba(0,0,0,1)] p-3" *ngIf="userRole() === 'MANAGER'">
             <div class="flex items-center justify-between mb-2">
-              <span class="text-xs font-sans font-semibold text-stone-500 uppercase tracking-wider">Team</span>
-              <svg class="w-5 h-5 text-amber-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
-              </svg>
+              <span class="text-xs font-bold text-black uppercase">TEAM</span>
+              <span class="text-2xl">👥</span>
             </div>
-            <p class="text-3xl font-bold text-stone-800">{{ employees().length }}</p>
-            <p class="text-xs text-stone-500 mt-1">Assignable teammates</p>
+            <p class="text-4xl font-bold text-black" style="text-shadow: 2px 2px 0 #fff;">{{ employees().length }}</p>
+            <p class="text-xs text-black font-bold mt-1">MEMBERS</p>
           </div>
-
         </div>
       </div>
 
       <!-- Right Column - Tasks & Create -->
-      <div class="lg:col-span-2 space-y-8">
+      <div class="lg:col-span-2 space-y-4">
         <!-- Create Task (Manager Only) -->
-        <div *ngIf="isLoggedIn() && userRole() === 'MANAGER'" class="bg-linear-to-br from-stone-50 to-amber-50/30 rounded-2xl shadow-xl border border-amber-200/50 p-6">
-          <div class="flex items-center justify-between mb-6">
+        <div *ngIf="isLoggedIn() && userRole() === 'MANAGER'" class="bg-linear-to-br from-lime-200 to-green-300 border-4 border-black shadow-[6px_6px_0_0_rgba(0,0,0,1)] p-4">
+          <div class="flex items-center justify-between mb-4 pb-3 border-b-4 border-dotted border-black">
             <div>
-              <div class="flex items-center space-x-2 mb-2">
-                <div class="w-2 h-8 bg-linear-to-b from-amber-500 to-amber-600 rounded-full"></div>
-                <h2 class="text-2xl font-bold text-stone-800">Create New Task</h2>
-              </div>
-              <p class="text-stone-600">Assign work to your team and set priorities.</p>
+              <h2 class="text-2xl font-bold text-black uppercase">✏️ CREATE NEW TASK</h2>
+              <p class="text-black text-xs font-bold">Assign work to your team</p>
             </div>
           </div>
 
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
-              <label class="block text-sm font-sans font-semibold text-stone-700 mb-2">Task Title</label>
+              <label class="block text-xs font-bold text-black mb-1 uppercase">TASK TITLE:</label>
               <input 
                 [(ngModel)]="newTaskTitle"
-                class="w-full px-4 py-3 bg-white/80 border border-amber-200 rounded-xl focus:ring-2 focus:ring-amber-400/50 focus:border-amber-400 transition-all duration-200 placeholder:text-stone-400"
+                class="w-full px-3 py-2 bg-white border-2 border-black font-mono text-sm"
                 placeholder="Draft Q1 campaign plan"
               />
             </div>
             <div>
-              <label class="block text-sm font-sans font-semibold text-stone-700 mb-2">Assign to</label>
+              <label class="block text-xs font-bold text-black mb-1 uppercase">ASSIGN TO:</label>
               <select 
                 [(ngModel)]="newTaskAssigneeId"
-                class="w-full px-4 py-3 bg-white/80 border border-amber-200 rounded-xl focus:ring-2 focus:ring-amber-400/50 focus:border-amber-400 transition-all duration-200 appearance-none"
+                class="w-full px-3 py-2 bg-white border-2 border-black font-mono text-sm"
               >
-                <option value="">Select an employee</option>
+                <option value="">Select employee...</option>
                 <option *ngFor="let emp of employees()" [value]="emp.id">{{ emp.fullName }} - {{ emp.email }}</option>
               </select>
             </div>
             <div class="md:col-span-2">
-              <label class="block text-sm font-sans font-semibold text-stone-700 mb-2">Task Description</label>
+              <label class="block text-xs font-bold text-black mb-1 uppercase">DESCRIPTION:</label>
               <textarea 
                 rows="3"
                 [(ngModel)]="newTaskDescription"
-                class="w-full px-4 py-3 bg-white/80 border border-amber-200 rounded-xl focus:ring-2 focus:ring-amber-400/50 focus:border-amber-400 transition-all duration-200 placeholder:text-stone-400 resize-none"
-                placeholder="Add context, objectives, and success criteria."
+                class="w-full px-3 py-2 bg-white border-2 border-black font-mono text-sm resize-none"
+                placeholder="Add context and objectives..."
               ></textarea>
             </div>
             <div>
-              <label class="block text-sm font-sans font-semibold text-stone-700 mb-2">Priority</label>
+              <label class="block text-xs font-bold text-black mb-1 uppercase">PRIORITY:</label>
               <select 
                 [(ngModel)]="newTaskPriority"
-                class="w-full px-4 py-3 bg-white/80 border border-amber-200 rounded-xl focus:ring-2 focus:ring-amber-400/50 focus:border-amber-400 transition-all duration-200 appearance-none"
+                class="w-full px-3 py-2 bg-white border-2 border-black font-mono text-sm"
               >
-                <option value="LOW">Low</option>
-                <option value="MEDIUM">Medium</option>
-                <option value="HIGH">High</option>
+                <option value="LOW">LOW</option>
+                <option value="MEDIUM">MEDIUM</option>
+                <option value="HIGH">HIGH</option>
               </select>
             </div>
             <div>
-              <label class="block text-sm font-sans font-semibold text-stone-700 mb-2">Due Date</label>
+              <label class="block text-xs font-bold text-black mb-1 uppercase">DUE DATE:</label>
               <input 
                 type="date"
                 [(ngModel)]="newTaskDueDate"
-                class="w-full px-4 py-3 bg-white/80 border border-amber-200 rounded-xl focus:ring-2 focus:ring-amber-400/50 focus:border-amber-400 transition-all duration-200"
+                class="w-full px-3 py-2 bg-white border-2 border-black font-mono text-sm"
               />
             </div>
           </div>
 
-          <div class="flex items-center justify-between mt-8 pt-6 border-t border-amber-200/50">
-            <div>
-              <p *ngIf="taskMessage()" class="text-emerald-600 font-sans text-sm">{{ taskMessage() }}</p>
-              <p *ngIf="taskError()" class="text-red-600 font-sans text-sm">{{ taskError() }}</p>
+          <div class="flex items-center justify-between mt-4 pt-4 border-t-4 border-dotted border-black">
+            <div class="flex-1">
+              <p *ngIf="taskMessage()" class="text-green-700 font-bold text-xs bg-green-200 border-2 border-black px-2 py-1">✓ {{ taskMessage() }}</p>
+              <p *ngIf="taskError()" class="text-red-700 font-bold text-xs bg-red-200 border-2 border-black px-2 py-1">✗ {{ taskError() }}</p>
             </div>
             <button 
               (click)="createTask()"
-              class="px-8 py-3 bg-linear-to-r from-amber-600 to-amber-700 text-amber-50 rounded-xl font-sans font-semibold hover:from-amber-700 hover:to-amber-800 transition-all duration-200 shadow-lg hover:shadow-xl flex items-center space-x-2"
+              class="px-6 py-3 bg-yellow-400 border-4 border-black shadow-[4px_4px_0_0_rgba(0,0,0,1)] hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-none transition-all text-black font-bold uppercase flex items-center space-x-2"
             >
-              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
-              </svg>
-              <span>Create Task</span>
+              <span>★ CREATE TASK ★</span>
             </button>
           </div>
         </div>
 
         <!-- Employee Task Panel -->
-        <div *ngIf="userRole() === 'EMPLOYEE'" class="bg-white rounded-2xl shadow-xl border border-stone-200/70 p-6 space-y-4">
-          <div class="flex items-center justify-between">
+        <div *ngIf="userRole() === 'EMPLOYEE'" class="bg-white border-4 border-black shadow-[6px_6px_0_0_rgba(0,0,0,1)] p-4">
+          <div class="flex items-center justify-between mb-4 pb-3 border-b-4 border-dotted border-black">
             <div>
-              <p class="text-xs uppercase tracking-widest text-stone-500 mb-1">Your Tasks</p>
-              <h2 class="text-2xl font-bold text-stone-800">Assigned to you</h2>
-              <p class="text-stone-600">Update status or priority directly.</p>
+              <h2 class="text-2xl font-bold text-black uppercase">📝 YOUR TASKS</h2>
+              <p class="text-black text-xs font-bold">Assigned to you</p>
             </div>
-            <button (click)="loadTasks()" class="px-4 py-2 bg-stone-100 text-stone-700 rounded-lg font-sans font-medium hover:bg-stone-200 transition-all duration-200 flex items-center space-x-2">
-              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
-              </svg>
-              <span>Refresh</span>
+            <button (click)="loadTasks()" class="px-4 py-2 bg-cyan-400 border-2 border-black font-bold uppercase text-sm hover:bg-cyan-500">
+              ↻ REFRESH
             </button>
           </div>
 
-          <div class="space-y-2">
-            <p class="text-xs uppercase tracking-widest text-stone-500">Filter by status</p>
+          <div class="space-y-2 mb-4">
+            <p class="text-xs uppercase font-bold text-black">FILTER:</p>
             <div class="flex flex-wrap gap-2">
               <button
                 *ngFor="let filter of statusFilters"
-                [ngClass]="statusFilter() === filter.value ? 'bg-linear-to-r from-amber-600 to-amber-700 text-amber-50' : 'bg-stone-100 text-stone-700 hover:bg-stone-200'"
+                [ngClass]="statusFilter() === filter.value ? 'bg-yellow-400 border-4 border-black' : 'bg-gray-200 border-2 border-black'"
                 (click)="setFilter(filter.value)"
-                class="px-4 py-2 rounded-lg font-sans font-medium text-sm transition-all duration-200"
+                class="px-3 py-1 font-bold text-xs uppercase hover:bg-yellow-300 transition-colors"
               >
                 {{ filter.label }}
               </button>
             </div>
           </div>
 
-          <div *ngIf="filteredTasks().length === 0" class="text-center text-stone-500 py-6">
-            No tasks assigned yet.
+          <div *ngIf="filteredTasks().length === 0" class="text-center bg-gray-100 border-2 border-black p-6">
+            <p class="text-black font-bold">NO TASKS ASSIGNED YET</p>
+            <p class="text-xs text-black mt-1">Check back later!</p>
           </div>
 
-          <div class="space-y-4" *ngIf="filteredTasks().length > 0">
-            <div *ngFor="let task of filteredTasks()" class="border border-stone-200 rounded-xl p-4 bg-white shadow-sm">
-                <div class="flex items-start justify-between gap-3">
+          <div class="space-y-3" *ngIf="filteredTasks().length > 0">
+            <div *ngFor="let task of filteredTasks()" class="border-4 border-black bg-linear-to-br from-white to-gray-100 p-3 shadow-[4px_4px_0_0_rgba(0,0,0,1)]">
+              <div class="flex items-start justify-between gap-3 mb-3">
                 <div class="min-w-0">
-                  <p class="text-xs text-stone-500">Due: {{ task.dueDate || 'No deadline' }}</p>
-                  <h3 class="text-lg font-bold text-stone-800 wrap-break-word">{{ task.title }}</h3>
-                  <p class="text-sm text-stone-600 break-words">{{ task.description || 'No description provided' }}</p>
+                  <p class="text-xs text-black font-bold">DUE: {{ task.dueDate || 'NO DEADLINE' }}</p>
+                  <h3 class="text-lg font-bold text-black wrap-break-word">{{ task.title }}</h3>
+                  <p class="text-sm text-black wrap-break-word">{{ task.description || 'No description' }}</p>
                 </div>
-                <div class="flex flex-col gap-2 text-right">
-                  <span class="text-xs text-stone-500">Priority</span>
-                  <span class="text-sm font-semibold text-stone-700">{{ task.priority || 'MEDIUM' }}</span>
-                  <span class="text-xs text-stone-500">Status</span>
-                  <span class="text-sm font-semibold text-stone-700">{{ task.status }}</span>
+                <div class="flex flex-col gap-1 text-right">
+                  <div class="px-2 py-1 bg-black text-white text-xs font-bold">
+                    {{ task.priority || 'MEDIUM' }}
+                  </div>
+                  <div [ngClass]="{
+                    'bg-lime-300 border-2 border-black': task.status === 'COMPLETED',
+                    'bg-yellow-300 border-2 border-black': task.status === 'PENDING'
+                  }" class="px-2 py-1 text-xs font-bold">
+                    {{ task.status }}
+                  </div>
                 </div>
               </div>
 
-              <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 mt-4">
-                <label class="text-sm text-stone-700 flex flex-col gap-1">
-                  <span>Priority</span>
-                  <select [(ngModel)]="priorityChoice[task.id]" class="border rounded-lg px-3 py-2 bg-stone-50">
+              <div class="grid grid-cols-1 sm:grid-cols-3 gap-2 mt-3 pt-3 border-t-2 border-dotted border-black">
+                <label class="text-xs text-black font-bold flex flex-col gap-1">
+                  <span>PRIORITY:</span>
+                  <select [(ngModel)]="priorityChoice[task.id]" class="border-2 border-black px-2 py-1 bg-white font-mono text-xs">
                     <option *ngFor="let p of priorityOptions" [value]="p">{{ p }}</option>
                   </select>
                 </label>
-                <label class="text-sm text-stone-700 flex flex-col gap-1">
-                  <span>Status</span>
-                  <select [(ngModel)]="statusChoice[task.id]" class="border rounded-lg px-3 py-2 bg-stone-50">
+                <label class="text-xs text-black font-bold flex flex-col gap-1">
+                  <span>STATUS:</span>
+                  <select [(ngModel)]="statusChoice[task.id]" class="border-2 border-black px-2 py-1 bg-white font-mono text-xs">
                     <option *ngFor="let s of statusOptions" [value]="s">{{ s }}</option>
                   </select>
                 </label>
                 <div class="flex items-end">
-                  <button (click)="updateTask(task.id, statusChoice[task.id], priorityChoice[task.id])" class="w-full px-4 py-2 bg-emerald-600 text-white rounded-lg font-semibold hover:bg-emerald-700 transition-all duration-200">Save</button>
+                  <button (click)="updateTask(task.id, statusChoice[task.id], priorityChoice[task.id])" class="w-full px-3 py-2 bg-lime-400 border-2 border-black font-bold uppercase text-xs hover:bg-lime-500">
+                    SAVE
+                  </button>
                 </div>
               </div>
 
-              <div class="mt-3 text-sm text-stone-700 space-y-1">
-                <p><strong>Assigned to:</strong> {{ getUserLabel(task.assignedToUserId) }}</p>
-                <p><strong>Created by:</strong> {{ getUserLabel(task.createdByUserId) }}</p>
+              <div class="mt-3 text-xs text-black font-bold space-y-1 bg-gray-100 border-2 border-black p-2">
+                <p>→ ASSIGNED: {{ getUserLabel(task.assignedToUserId) }}</p>
+                <p>→ CREATED BY: {{ getUserLabel(task.createdByUserId) }}</p>
               </div>
             </div>
           </div>
         </div>
 
         <!-- Task Board (Manager/Admin) -->
-        <div *ngIf="userRole() === 'MANAGER' || userRole() === 'ADMIN'" class="bg-gradient-to-br from-white to-stone-50 rounded-2xl shadow-xl border border-stone-200/50 p-6">
-          <div class="flex items-center justify-between mb-8">
+        <div *ngIf="userRole() === 'MANAGER' || userRole() === 'ADMIN'" class="bg-white border-4 border-black shadow-[6px_6px_0_0_rgba(0,0,0,1)] p-4">
+          <div class="flex items-center justify-between mb-4 pb-3 border-b-4 border-dotted border-black">
             <div>
-              <div class="flex items-center space-x-3 mb-2">
-                <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-amber-500 to-amber-600 flex items-center justify-center">
-                  <svg class="w-4 h-4 text-amber-50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
-                  </svg>
-                </div>
-                <h2 class="text-2xl font-bold text-stone-800">{{ userRole() === 'ADMIN' ? 'All Tasks (Admin)' : 'Task Board' }}</h2>
-              </div>
-              <p class="text-stone-600">All tasks with current filters applied</p>
+              <h2 class="text-2xl font-bold text-black uppercase">
+                {{ userRole() === 'ADMIN' ? '🔐 ALL TASKS (ADMIN)' : '📊 TASK BOARD' }}
+              </h2>
+              <p class="text-black text-xs font-bold">All tasks with current filters</p>
             </div>
             <button 
               (click)="loadRoleData(userRole())"
-              class="px-4 py-2 bg-stone-100 text-stone-700 rounded-lg font-sans font-medium hover:bg-stone-200 transition-all duration-200 flex items-center space-x-2"
+              class="px-4 py-2 bg-cyan-400 border-2 border-black font-bold uppercase text-sm hover:bg-cyan-500"
             >
-              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
-              </svg>
-              <span>Refresh</span>
+              ↻ REFRESH
             </button>
           </div>
 
-          <div class="space-y-2 mb-6">
-            <p class="text-xs uppercase tracking-widest text-stone-500">Filter by status</p>
+          <div class="space-y-2 mb-4">
+            <p class="text-xs uppercase font-bold text-black">FILTER:</p>
             <div class="flex flex-wrap gap-2">
               <button
                 *ngFor="let filter of statusFilters"
-                [ngClass]="statusFilter() === filter.value ? 'bg-gradient-to-r from-amber-600 to-amber-700 text-amber-50' : 'bg-stone-100 text-stone-700 hover:bg-stone-200'"
+                [ngClass]="statusFilter() === filter.value ? 'bg-yellow-400 border-4 border-black' : 'bg-gray-200 border-2 border-black'"
                 (click)="setFilter(filter.value)"
-                class="px-4 py-2 rounded-lg font-sans font-medium text-sm transition-all duration-200"
+                class="px-3 py-1 font-bold text-xs uppercase hover:bg-yellow-300 transition-colors"
               >
                 {{ filter.label }}
               </button>
@@ -357,79 +357,78 @@
           </div>
 
           <!-- Empty State -->
-          <div *ngIf="filteredTasks().length === 0" class="text-center py-12">
-            <div class="w-24 h-24 mx-auto mb-4 opacity-20">
-              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-              </svg>
-            </div>
-            <p class="text-stone-500">No tasks yet. Create one or refresh.</p>
+          <div *ngIf="filteredTasks().length === 0" class="text-center bg-gray-100 border-2 border-black p-8">
+            <p class="text-4xl mb-2">📋</p>
+            <p class="text-black font-bold uppercase">NO TASKS YET</p>
+            <p class="text-xs text-black mt-1">Create one or refresh!</p>
           </div>
 
           <!-- Task Grid -->
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-4" *ngIf="filteredTasks().length > 0">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-3" *ngIf="filteredTasks().length > 0">
             <div 
               *ngFor="let task of filteredTasks()"
-              class="bg-gradient-to-br from-white to-stone-50 rounded-xl p-4 border border-stone-200 hover:border-amber-300 transition-all duration-200 hover:shadow-lg"
+              class="bg-linear-to-br from-white to-gray-100 border-4 border-black p-3 shadow-[4px_4px_0_0_rgba(0,0,0,1)] hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-[2px_2px_0_0_rgba(0,0,0,1)] transition-all"
             >
               <!-- Task Header -->
               <div class="flex items-start justify-between mb-3">
-                <div>
-                  <div class="flex items-center space-x-2 mb-2">
+                <div class="flex-1 min-w-0">
+                  <div class="flex flex-wrap items-center gap-1 mb-2">
                     <span [ngClass]="{
-                      'bg-red-100 text-red-800': task.priority === 'HIGH',
-                      'bg-yellow-100 text-yellow-800': task.priority === 'MEDIUM',
-                      'bg-blue-100 text-blue-800': task.priority === 'LOW'
-                    }" class="px-2 py-1 rounded text-xs font-sans font-semibold">
+                      'bg-red-500 text-white': task.priority === 'HIGH',
+                      'bg-yellow-400 text-black': task.priority === 'MEDIUM',
+                      'bg-blue-400 text-white': task.priority === 'LOW'
+                    }" class="px-2 py-1 border-2 border-black text-xs font-bold">
                       {{ task.priority }}
                     </span>
                     <span [ngClass]="{
-                      'bg-emerald-100 text-emerald-800': task.status === 'COMPLETED',
-                      'bg-amber-100 text-amber-800': task.status === 'PENDING'
-                    }" class="px-2 py-1 rounded text-xs font-sans font-semibold">
+                      'bg-lime-400 text-black': task.status === 'COMPLETED',
+                      'bg-orange-400 text-black': task.status === 'PENDING'
+                    }" class="px-2 py-1 border-2 border-black text-xs font-bold">
                       {{ task.status }}
                     </span>
                   </div>
-                  <h3 class="text-lg font-bold text-stone-800 mb-1 break-words">{{ task.title }}</h3>
-                  <p class="text-stone-600 text-sm break-words">{{ task.description || 'No description provided' }}</p>
+                  <h3 class="text-base font-bold text-black wrap-break-word mb-1">{{ task.title }}</h3>
+                  <p class="text-black text-xs wrap-break-word">{{ task.description || 'No description' }}</p>
                 </div>
-                <div class="text-right">
-                  <p class="text-xs text-stone-500">Due:</p>
-                  <p class="text-sm font-sans font-semibold text-stone-700">{{ task.dueDate || 'No deadline' }}</p>
+                <div class="text-right ml-2">
+                  <p class="text-xs text-black font-bold">DUE:</p>
+                  <p class="text-xs font-bold text-black">{{ task.dueDate || 'NONE' }}</p>
                 </div>
               </div>
 
               <!-- Task Meta -->
-              <div class="flex flex-wrap items-start justify-between gap-3 mt-4 pt-3 border-t border-stone-100">
-                <div class="flex flex-col gap-1 text-sm text-stone-700">
-                  <div class="flex items-center gap-2 min-w-0">
-                    <div class="w-6 h-6 rounded-full bg-gradient-to-br from-stone-400 to-stone-600 flex items-center justify-center flex-shrink-0">
-                      <span class="text-xs text-stone-50">{{ getUserLabel(task.assignedToUserId)?.[0] }}</span>
+              <div class="flex flex-col gap-2 mt-3 pt-3 border-t-2 border-dotted border-black">
+                <div class="flex items-center justify-between gap-2 text-xs text-black font-bold">
+                  <div class="flex items-center gap-1 min-w-0">
+                    <div class="w-5 h-5 bg-linear-to-br from-purple-400 to-purple-600 border-2 border-black flex items-center justify-center shrink-0">
+                      <span class="text-xs text-white">{{ getUserLabel(task.assignedToUserId)?.[0] }}</span>
                     </div>
-                    <span class="break-words"><strong>Assigned to:</strong> {{ getUserLabel(task.assignedToUserId) }}</span>
+                    <span class="wrap-break-word">→ {{ getUserLabel(task.assignedToUserId) }}</span>
                   </div>
-                  <div class="flex items-center gap-2 min-w-0">
-                    <div class="w-6 h-6 rounded-full bg-gradient-to-br from-amber-400 to-amber-600 flex items-center justify-center flex-shrink-0">
-                      <span class="text-xs text-amber-50">{{ getUserLabel(task.createdByUserId)?.[0] }}</span>
+                </div>
+                <div class="flex items-center justify-between gap-2 text-xs text-black font-bold">
+                  <div class="flex items-center gap-1 min-w-0">
+                    <div class="w-5 h-5 bg-linear-to-br from-orange-400 to-orange-600 border-2 border-black flex items-center justify-center shrink-0">
+                      <span class="text-xs text-white">{{ getUserLabel(task.createdByUserId)?.[0] }}</span>
                     </div>
-                    <span class="break-words"><strong>Created by:</strong> {{ getUserLabel(task.createdByUserId) }}</span>
+                    <span class="wrap-break-word">BY: {{ getUserLabel(task.createdByUserId) }}</span>
                   </div>
                 </div>
                 
                 <!-- Manager/Admin Actions -->
-                <div class="flex flex-wrap gap-2" *ngIf="userRole() === 'MANAGER' || userRole() === 'ADMIN'">
+                <div class="flex flex-wrap gap-2 mt-2" *ngIf="userRole() === 'MANAGER' || userRole() === 'ADMIN'">
                   <button 
                     (click)="updateTask(task.id, 'COMPLETED', task.priority || 'MEDIUM')"
                     [disabled]="task.status === 'COMPLETED'"
-                    class="px-3 py-1 bg-emerald-100 text-emerald-700 rounded-lg text-xs font-sans font-semibold hover:bg-emerald-200 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+                    class="px-3 py-2 bg-lime-400 border-2 border-black font-bold text-xs uppercase hover:bg-lime-500 disabled:opacity-60 disabled:cursor-not-allowed"
                   >
-                    Complete
+                    COMPLETE
                   </button>
                   <button 
                     (click)="deleteTask(task.id)"
-                    class="px-3 py-1 bg-red-100 text-red-700 rounded-lg text-xs font-sans font-semibold hover:bg-red-200 transition-all duration-200"
+                    class="px-3 py-2 bg-red-400 border-2 border-black font-bold text-xs uppercase hover:bg-red-500"
                   >
-                    Remove
+                    REMOVE
                   </button>
                 </div>
               </div>
@@ -437,83 +436,116 @@
           </div>
         </div>
 
-        <!-- Admin Overview -->
-        <div *ngIf="userRole() === 'ADMIN'" class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          <!-- Performance Summary -->
-          <div class="lg:col-span-2 bg-white rounded-2xl border border-stone-200 shadow p-6 space-y-4">
-            <div class="flex items-center justify-between">
-              <h3 class="text-xl font-bold text-stone-800">Performance Summary</h3>
-              <button (click)="loadPerformance()" class="px-3 py-2 bg-stone-100 rounded-lg text-sm text-stone-700">Refresh</button>
+        <!-- Admin Performance Panel -->
+        <div *ngIf="userRole() === 'ADMIN'" class="bg-linear-to-br from-blue-100 to-purple-200 border-4 border-black shadow-[6px_6px_0_0_rgba(0,0,0,1)] p-4">
+          <div class="flex items-center justify-between mb-4 pb-3 border-b-4 border-dotted border-black">
+            <div>
+              <h2 class="text-2xl font-bold text-black uppercase">PERFORMANCE DASHBOARD</h2>
+              <p class="text-black text-xs font-bold">Team-wide metrics & charts</p>
             </div>
-            <div *ngIf="performance(); else noPerf" class="grid grid-cols-2 md:grid-cols-4 gap-4">
-              <div class="p-4 rounded-xl bg-amber-50 border border-amber-100">
-                <p class="text-xs uppercase text-stone-500">Total</p>
-                <p class="text-2xl font-bold text-stone-900">{{ performance()?.totalTasks }}</p>
-              </div>
-              <div class="p-4 rounded-xl bg-emerald-50 border border-emerald-100">
-                <p class="text-xs uppercase text-stone-500">Completed</p>
-                <p class="text-2xl font-bold text-emerald-700">{{ performance()?.completedTasks }}</p>
-              </div>
-              <div class="p-4 rounded-xl bg-blue-50 border border-blue-100">
-                <p class="text-xs uppercase text-stone-500">In Progress</p>
-                <p class="text-2xl font-bold text-blue-700">{{ performance()?.inProgressTasks }}</p>
-              </div>
-              <div class="p-4 rounded-xl bg-yellow-50 border border-yellow-100">
-                <p class="text-xs uppercase text-stone-500">Pending</p>
-                <p class="text-2xl font-bold text-yellow-700">{{ performance()?.pendingTasks }}</p>
-              </div>
-            </div>
-            <p *ngIf="performance()" class="text-sm text-stone-600">Completion rate: {{ performance()?.completionRatePercent | number:'1.0-1' }}%</p>
-            <ng-template #noPerf>
-              <p class="text-stone-500 text-sm">No performance data yet.</p>
-            </ng-template>
+            <button 
+              (click)="loadPerformance()"
+              class="px-4 py-2 bg-cyan-400 border-2 border-black font-bold uppercase text-sm hover:bg-cyan-500"
+            >
+              REFRESH
+            </button>
+          </div>
 
-            <div *ngIf="performance()?.userStats?.length">
-              <p class="text-sm font-semibold text-stone-700 mb-2">Top performers</p>
-              <div class="space-y-2 max-h-56 overflow-auto pr-2">
-                <div *ngFor="let stat of performance()?.userStats" class="flex items-center justify-between border border-stone-200 rounded-lg px-3 py-2">
-                  <div>
-                    <p class="text-sm font-semibold text-stone-800">{{ stat.fullName }}</p>
-                    <p class="text-xs text-stone-500">{{ stat.email }}</p>
+          <div *ngIf="performance(); else noPerfData" class="space-y-4">
+            <!-- Summary cards -->
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+              <div class="p-3 border-3 border-black bg-yellow-300 text-black shadow-[3px_3px_0_0_rgba(0,0,0,1)]">
+                <p class="text-xs font-bold uppercase">Total</p>
+                <p class="text-3xl font-extrabold">{{ performance()?.totalTasks }}</p>
+              </div>
+              <div class="p-3 border-3 border-black bg-lime-300 text-black shadow-[3px_3px_0_0_rgba(0,0,0,1)]">
+                <p class="text-xs font-bold uppercase">Completed</p>
+                <p class="text-3xl font-extrabold">{{ performance()?.completedTasks }}</p>
+              </div>
+              <div class="p-3 border-3 border-black bg-blue-300 text-black shadow-[3px_3px_0_0_rgba(0,0,0,1)]">
+                <p class="text-xs font-bold uppercase">In Progress</p>
+                <p class="text-3xl font-extrabold">{{ performance()?.inProgressTasks }}</p>
+              </div>
+              <div class="p-3 border-3 border-black bg-orange-300 text-black shadow-[3px_3px_0_0_rgba(0,0,0,1)]">
+                <p class="text-xs font-bold uppercase">Pending</p>
+                <p class="text-3xl font-extrabold">{{ performance()?.pendingTasks }}</p>
+              </div>
+            </div>
+
+            <p class="text-sm font-bold text-black bg-white border-2 border-black px-3 py-2 inline-block">
+              Completion rate: {{ performance()?.completionRatePercent | number:'1.0-1' }}%
+            </p>
+
+            <!-- Completion Gauge -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+              <div class="bg-white border-3 border-black p-3 shadow-[3px_3px_0_0_rgba(0,0,0,1)] flex flex-col items-center justify-center">
+                <p class="text-xs font-bold text-black uppercase mb-2">Completion gauge</p>
+                <div 
+                  class="w-28 h-28 rounded-full border-4 border-black flex items-center justify-center text-center text-black font-extrabold"
+                  [style.background]=" 'conic-gradient(#22c55e ' + ((performance()?.completionRatePercent || 0) > 100 ? 100 : (performance()?.completionRatePercent || 0)) + '%, #e2e8f0 0)' ">
+                  <div class="w-18 h-18 bg-white rounded-full border-2 border-black flex items-center justify-center text-sm font-bold">
+                    {{ performance()?.completionRatePercent | number:'1.0-1' }}%
                   </div>
-                  <div class="text-right">
-                    <p class="text-sm text-emerald-700 font-semibold">{{ stat.completedTasks }}/{{ stat.totalTasks }}</p>
-                    <p class="text-xs text-stone-500">{{ stat.completionRatePercent | number:'1.0-1' }}%</p>
+                </div>
+              </div>
+
+            </div>
+
+            <!-- Employee performance bar chart -->
+            <div *ngIf="performance()?.userStats?.length" class="bg-white border-3 border-black p-3 shadow-[3px_3px_0_0_rgba(0,0,0,1)]">
+              <p class="text-sm font-bold text-black mb-2 uppercase">Employee performance (completed vs total)</p>
+              <div class="space-y-3">
+                <div *ngFor="let stat of performance()?.userStats">
+                  <div class="flex justify-between text-xs font-bold text-black">
+                    <span class="truncate">{{ stat.fullName }}</span>
+                    <span>{{ stat.completedTasks }}/{{ stat.totalTasks }}</span>
+                  </div>
+                  <div class="w-full bg-gray-200 border-2 border-black h-5 relative overflow-hidden">
+                    <div 
+                      class="h-full bg-lime-400"
+                      [style.width.%]="stat.totalTasks ? (stat.completedTasks * 100) / stat.totalTasks : 0">
+                    </div>
+                    <div 
+                      class="absolute inset-0 border-l-2 border-black opacity-30"
+                      *ngIf="stat.totalTasks === 0">
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Simple bar chart -->
+            <div *ngIf="performance()?.userStats?.length" class="bg-white border-3 border-black p-3 shadow-[3px_3px_0_0_rgba(0,0,0,1)]">
+              <p class="text-sm font-bold text-black mb-2 uppercase">User completion chart</p>
+              <div class="space-y-2">
+                <div *ngFor="let stat of performance()?.userStats" class="space-y-1">
+                  <div class="flex justify-between text-xs font-bold text-black">
+                    <span>{{ stat.fullName }}</span>
+                    <span>{{ stat.completionRatePercent | number:'1.0-1' }}% ({{ stat.completedTasks }}/{{ stat.totalTasks }})</span>
+                  </div>
+                  <div class="w-full bg-gray-200 border-2 border-black h-4 relative">
+                    <div 
+                      class="h-full bg-linear-to-r from-green-400 via-yellow-300 to-red-400"
+                      [style.width.%]="stat.completionRatePercent > 100 ? 100 : stat.completionRatePercent">
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
 
-          <!-- User List -->
-          <div class="bg-white rounded-2xl border border-stone-200 shadow p-6 space-y-4">
-            <div class="flex items-center justify-between">
-              <h3 class="text-xl font-bold text-stone-800">Users</h3>
-              <button (click)="loadAdminUsers()" class="px-3 py-2 bg-stone-100 rounded-lg text-sm text-stone-700">Refresh</button>
+          <ng-template #noPerfData>
+            <div class="text-center bg-white border-3 border-black p-4 text-black font-bold">
+              No performance data yet. Try refreshing after tasks exist.
             </div>
-            <div *ngIf="adminUsers().length === 0" class="text-stone-500 text-sm">No users loaded.</div>
-            <div *ngIf="adminUsers().length > 0" class="space-y-3 max-h-80 overflow-auto pr-1">
-              <div *ngFor="let user of adminUsers()" class="border border-stone-200 rounded-lg p-3">
-                <div class="flex items-center justify-between">
-                  <div>
-                    <p class="text-sm font-semibold text-stone-800">{{ user.fullName }}</p>
-                    <p class="text-xs text-stone-500">{{ user.email }}</p>
-                  </div>
-                  <span class="text-xs px-2 py-1 rounded-full bg-stone-100 text-stone-700">{{ user.role }}</span>
-                </div>
-                <p class="text-xs text-stone-500 mt-1">Status: {{ user.active ? 'Active' : 'Inactive' }}</p>
-              </div>
-            </div>
-          </div>
+          </ng-template>
         </div>
       </div>
     </main>
 
     <!-- Footer -->
-    <footer class="text-center py-6 border-t border-amber-200/50 mt-8">
-      <p class="text-stone-600 text-sm">
-        Built with TaskAsk • © {{ currentYear }}
-      </p>
+    <footer class="text-center py-6 border-t-4 border-black mt-6 bg-yellow-300 text-black font-bold">
+      <p>TaskAsk Retro Edition (C) {{ currentYear }}</p>
     </footer>
   </div>
 </div>

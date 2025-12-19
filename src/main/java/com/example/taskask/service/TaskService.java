@@ -13,6 +13,8 @@ import com.example.taskask.entity.User;
 import com.example.taskask.enums.Role;
 import com.example.taskask.enums.TaskStatus;
 import com.example.taskask.repository.TaskRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.transaction.annotation.Transactional;
 
 import static org.springframework.http.HttpStatus.BAD_REQUEST;
@@ -64,13 +66,18 @@ public class TaskService {
         return taskRepository.findAllByAssignedToId(userId).stream().map(TaskResponse::fromEntity).toList();
      }
 
+        public Page<TaskResponse> getTasksForAssignee(Long userId, Pageable pageable) {
+         return taskRepository.findAllByAssignedToId(userId, pageable)
+             .map(TaskResponse::fromEntity);
+         }
+
      public List<TaskResponse> getTasksCreatedBy(Long managerId) {
         return taskRepository.findAllByCreatedById(managerId).stream()
                 .map(TaskResponse::fromEntity)
                 .toList();
      }
 
-     @Transactional(readOnly = true)
+     @Transactional(readOnly = true)// transtional is for lazy loading
      public List<TaskResponse> getAllTasks() {
          return taskRepository.findAll().stream()
                  .map(TaskResponse::fromEntity)
