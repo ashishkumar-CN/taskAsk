@@ -5,17 +5,17 @@ import { Component, computed, signal, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 
 // Common Angular directives
-import { NgFor, NgClass, NgIf } from '@angular/common';
+import { NgFor, NgClass, NgIf, DecimalPipe } from '@angular/common';
 
 // Needed for [(ngModel)] two-way binding
 import { FormsModule } from '@angular/forms';
 
 // Service that talks to Spring Boot backend
-import { ApiService, CreateTaskRequest, EmployeeOption, TaskItem } from './api.service';
+import { ApiService, CreateTaskRequest, EmployeeOption, PerformanceSummary, TaskItem, UserSummary } from './api.service';
 
 @Component({
   selector: 'app-root', // <app-root> is the entry component
-  imports: [RouterOutlet, NgFor, NgClass, NgIf, FormsModule],
+  imports: [RouterOutlet, NgFor, NgClass, NgIf, FormsModule, DecimalPipe],
   templateUrl: './app.html', // HTML view
   styleUrl: './app.css'      // CSS styles
 })
@@ -62,7 +62,7 @@ export class App implements OnInit {
   // Logged-in user's email
   readonly userEmail = signal('');
 
-  // Logged-in user's role (MANAGER / EMPLOYEE)
+  // Logged-in user's role (MANAGER / EMPLOYEE / ADMIN)
   readonly userRole = signal('');
 
   // Computed signal: true if token exists
@@ -82,7 +82,7 @@ export class App implements OnInit {
   signupFullName = '';
   signupEmail = '';
   signupPassword = '';
-  signupRole: 'MANAGER' | 'EMPLOYEE' = 'EMPLOYEE';
+  signupRole: 'MANAGER' | 'EMPLOYEE' | 'ADMIN' = 'EMPLOYEE';
 
   // Create task form (manager)
   newTaskTitle = '';
@@ -112,6 +112,11 @@ export class App implements OnInit {
 
   // Tasks created by the manager
   readonly managerTasks = signal<TaskItem[]>([]);
+
+  // Admin data
+  readonly adminTasks = signal<TaskItem[]>([]);
+  readonly adminUsers = signal<UserSummary[]>([]);
+  readonly performance = signal<PerformanceSummary | null>(null);
 
   // Selection maps for editable fields
   statusChoice: Record<number, string> = {};
@@ -143,15 +148,20 @@ export class App implements OnInit {
   readonly filteredTasks = computed(() => {
     const filter = this.statusFilter();
 
-    // Managers see both tasks assigned to them and tasks they created; employees see assigned tasks only
-    const combined = this.userRole() === 'MANAGER'
-      ? (() => {
-          const map = new Map<number, TaskItem>();
-          this.tasks().forEach(t => t?.id && map.set(t.id, t));
-          this.managerTasks().forEach(t => t?.id && map.set(t.id, t));
-          return this.sortTasks(Array.from(map.values()));
-        })()
-      : this.sortTasks(this.tasks());
+    // Role-based task view
+    const role = this.userRole();
+    const combined = (() => {
+      if (role === 'ADMIN') {
+        return this.sortTasks(this.adminTasks());
+      }
+      if (role === 'MANAGER') {
+        const map = new Map<number, TaskItem>();
+        this.tasks().forEach(t => t?.id && map.set(t.id, t));
+        this.managerTasks().forEach(t => t?.id && map.set(t.id, t));
+        return this.sortTasks(Array.from(map.values()));
+      }
+      return this.sortTasks(this.tasks());
+    })();
 
     if (filter === 'ALL') return combined;
     return combined.filter(task => task.status === filter);
@@ -162,11 +172,32 @@ export class App implements OnInit {
     this.statusFilter.set(filter);
   }
 
-  // Helper to show assignee label in manager view
+  // Helper to show assignee label in manager/admin view
   getEmployeeLabel(id: number | undefined | null) {
     if (!id) return 'Unknown';
     const emp = this.employees().find(e => e.id === id);
     return emp ? `${emp.fullName} (${emp.email})` : `User #${id}`;
+  }
+
+  // Generic user label lookup (uses admin user list when available, then employees, then self)
+  getUserLabel(id: number | undefined | null) {
+    if (!id) return 'Unknown';
+
+    // If admin user list is loaded
+    const all = this.adminUsers();
+    const fromAll = all.find(u => u.id === id);
+    if (fromAll) return `${fromAll.fullName} (${fromAll.email})`;
+
+    // Employees list (for manager/employee views)
+    const emp = this.employees().find(e => e.id === id);
+    if (emp) return `${emp.fullName} (${emp.email})`;
+
+    // Fallback to self if it matches
+    if (this.userId() === id) {
+      return `${this.userEmail()} (you)`;
+    }
+
+    return `User #${id}`;
   }
 
 
@@ -203,11 +234,8 @@ export class App implements OnInit {
       // Load tasks automatically
       this.loadTasks();
 
-      // Load employees for managers
-      if (role === 'MANAGER') {
-        this.loadEmployees();
-        this.loadManagerTasks();
-      }
+      // Load data by role
+      this.loadRoleData(role);
     }
   }
 
@@ -220,6 +248,22 @@ export class App implements OnInit {
     this.authMode.set(mode);
     this.authError.set('');
     this.authMessage.set('');
+  }
+
+  // Load data based on current role
+  loadRoleData(role: string | null) {
+    if (!role) return;
+    if (role === 'ADMIN') {
+      this.loadAdminTasks();
+      this.loadAdminUsers();
+      this.loadPerformance();
+    } else {
+      this.loadTasks();
+      if (role === 'MANAGER') {
+        this.loadEmployees();
+        this.loadManagerTasks();
+      }
+    }
   }
 
 
@@ -293,11 +337,7 @@ export class App implements OnInit {
         localStorage.setItem('taskask_role', response.role);
 
         this.loginPassword = '';
-        this.loadTasks();
-        if (response.role === 'MANAGER') {
-          this.loadEmployees();
-          this.loadManagerTasks();
-        }
+        this.loadRoleData(response.role);
         this.isLoading.set(false);
       },
       error: () => {
@@ -320,6 +360,9 @@ export class App implements OnInit {
     this.tasks.set([]);
     this.managerTasks.set([]);
     this.employees.set([]);
+    this.adminTasks.set([]);
+    this.adminUsers.set([]);
+    this.performance.set(null);
     this.authError.set('');
     this.authMessage.set('');
     this.taskError.set('');
@@ -384,6 +427,47 @@ export class App implements OnInit {
     });
   }
 
+  loadAdminTasks() {
+    const token = this.token();
+    if (!token) return;
+    this.api.getAllTasks(token).subscribe({
+      next: tasks => {
+        this.adminTasks.set(tasks);
+        this.setTaskChoices(tasks);
+        this.taskError.set('');
+      },
+      error: () => {
+        this.taskError.set('Failed to load all tasks (admin).');
+      }
+    });
+  }
+
+  loadAdminUsers() {
+    const token = this.token();
+    if (!token) return;
+    this.api.getAllUsers(token).subscribe({
+      next: users => {
+        this.adminUsers.set(users);
+      },
+      error: () => {
+        this.taskError.set('Failed to load users (admin).');
+      }
+    });
+  }
+
+  loadPerformance() {
+    const token = this.token();
+    if (!token) return;
+    this.api.getPerformance(token).subscribe({
+      next: perf => {
+        this.performance.set(perf);
+      },
+      error: () => {
+        this.taskError.set('Failed to load performance (admin).');
+      }
+    });
+  }
+
   createTask() {
     this.taskError.set('');
     this.taskMessage.set('');
@@ -429,10 +513,7 @@ export class App implements OnInit {
         this.newTaskStartDate = '';
         this.newTaskDueDate = '';
         this.newTaskAssigneeId = '';
-        this.loadTasks();
-        if (this.userRole() === 'MANAGER') {
-          this.loadManagerTasks();
-        }
+        this.loadRoleData(this.userRole());
         this.isLoading.set(false);
       },
       error: () => {

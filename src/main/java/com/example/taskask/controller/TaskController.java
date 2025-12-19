@@ -26,32 +26,32 @@ public class TaskController {
         return userService.createUser(request);
     }
 
-    @PreAuthorize("hasAnyAuthority('ROLE_MANAGER','MANAGER')")
+    @PreAuthorize("hasAnyAuthority('ROLE_MANAGER','ROLE_ADMIN')")
     @PostMapping("/tasks")
     public TaskResponse createTask(@RequestBody CreateTaskRequest request) {
         return taskService.createTask(request);
     }
 
-    @PreAuthorize("hasAnyAuthority('ROLE_MANAGER','ROLE_EMPLOYEE','MANAGER','EMPLOYEE')")
+    @PreAuthorize("hasAnyAuthority('ROLE_MANAGER','ROLE_EMPLOYEE','ROLE_ADMIN')")
     @GetMapping("/tasks/assigned/{userId}")
     public List<TaskResponse> getTasksForUser(@PathVariable Long userId) {
         return taskService.getTasksForAssignee(userId);
     }
 
-    @PreAuthorize("hasAnyAuthority('ROLE_MANAGER','MANAGER')")
+    @PreAuthorize("hasAnyAuthority('ROLE_MANAGER','ROLE_ADMIN')")
     @GetMapping("/tasks/created/{managerId}")
     public List<TaskResponse> getTasksCreatedBy(@PathVariable Long managerId) {
         return taskService.getTasksCreatedBy(managerId);
     }
 
-    @PreAuthorize("hasAnyAuthority('ROLE_MANAGER','ROLE_EMPLOYEE','MANAGER','EMPLOYEE')")
+    @PreAuthorize("hasAnyAuthority('ROLE_MANAGER','ROLE_EMPLOYEE','ROLE_ADMIN')")
     @PatchMapping("/tasks/{taskId}/status")
     public TaskResponse updateStatus(@PathVariable Long taskId,
                                      @RequestBody UpdateTaskRequest request) {
         return taskService.updateTask(taskId, request);
     }
 
-    @PreAuthorize("hasAnyAuthority('ROLE_MANAGER','MANAGER')")
+    @PreAuthorize("hasAnyAuthority('ROLE_MANAGER','ROLE_ADMIN')")
     @DeleteMapping("/tasks/{taskId}")
     public void deleteTask(@PathVariable Long taskId) {
         taskService.deleteTask(taskId);

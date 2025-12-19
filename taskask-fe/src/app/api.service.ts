@@ -44,7 +44,33 @@ export interface CreateUserRequest {
   fullName: string;
   email: string;
   password: string;
-  role: 'MANAGER' | 'EMPLOYEE';
+  role: 'MANAGER' | 'EMPLOYEE' | 'ADMIN';
+}
+
+export interface UserSummary {
+  id: number;
+  fullName: string;
+  email: string;
+  role: 'MANAGER' | 'EMPLOYEE' | 'ADMIN';
+  active: boolean;
+}
+
+export interface UserPerformance {
+  userId: number;
+  fullName: string;
+  email: string;
+  totalTasks: number;
+  completedTasks: number;
+  completionRatePercent: number;
+}
+
+export interface PerformanceSummary {
+  totalTasks: number;
+  completedTasks: number;
+  inProgressTasks: number;
+  pendingTasks: number;
+  completionRatePercent: number;
+  userStats: UserPerformance[];
 }
 
 @Injectable({ providedIn: 'root' })
@@ -116,6 +142,25 @@ export class ApiService {
       headers: {
         Authorization: `Bearer ${token}`
       }
+    });
+  }
+
+  // Admin endpoints
+  getAllTasks(token: string): Observable<TaskItem[]> {
+    return this.http.get<TaskItem[]>(`${this.baseUrl}/admin/tasks`, {
+      headers: { Authorization: `Bearer ${token}` }
+    });
+  }
+
+  getAllUsers(token: string): Observable<UserSummary[]> {
+    return this.http.get<UserSummary[]>(`${this.baseUrl}/admin/users`, {
+      headers: { Authorization: `Bearer ${token}` }
+    });
+  }
+
+  getPerformance(token: string): Observable<PerformanceSummary> {
+    return this.http.get<PerformanceSummary>(`${this.baseUrl}/admin/performance`, {
+      headers: { Authorization: `Bearer ${token}` }
     });
   }
 }

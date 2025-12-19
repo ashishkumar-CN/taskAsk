@@ -2,6 +2,7 @@ package com.example.taskask.service;
 
 import com.example.taskask.dto.CreateUserRequest;
 import com.example.taskask.dto.EmployeeResponse;
+import com.example.taskask.dto.UserSummary;
 import com.example.taskask.entity.User;
 import com.example.taskask.enums.Role;
 import com.example.taskask.repository.UserRepository;
@@ -44,6 +45,18 @@ public class UserService {
     public List<EmployeeResponse> getEmployees() {
         return userRepository.findByRole(Role.EMPLOYEE).stream()
                 .map(user -> new EmployeeResponse(user.getId(), user.getFullName(), user.getEmail()))
+                .toList();
+    }
+
+    public List<UserSummary> getAllUsers() {
+        return userRepository.findAll().stream()
+                .map(user -> new UserSummary(
+                        user.getId(),
+                        user.getFullName(),
+                        user.getEmail(),
+                        user.getRole(),
+                        Boolean.TRUE.equals(user.getIsActive())
+                ))
                 .toList();
     }
 }
