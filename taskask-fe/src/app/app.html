@@ -14,62 +14,64 @@
         </div>
       </div>
 
-      <div class="session" *ngIf="state.isLoggedIn(); else guest">
-        <span class="badge soft">{{ state.userEmail() }}</span>
-        <span class="badge role">{{ state.userRole() || 'USER' }}</span>
-        <a routerLink="/manager" *ngIf="state.userRole() === 'MANAGER'" class="badge">⚙ Manager</a>
-        <a routerLink="/team-lead" *ngIf="state.userRole() === 'TEAM_LEAD'" class="badge">👥 Team Lead</a>
-        <a routerLink="/employee" *ngIf="state.userRole() === 'EMPLOYEE'" class="badge">📝 Employee</a>
-        <a routerLink="/admin" *ngIf="state.userRole() === 'ADMIN'" class="badge">🔐 Admin</a>
+      <nav class="navbar" *ngIf="state.isLoggedIn(); else guest">
+        <!-- User info -->
+        <div class="nav-user">
+          <span class="badge soft">{{ state.userEmail() }}</span>
+          <span class="badge role">{{ state.userRole() || 'USER' }}</span>
+        </div>
         
-        <!-- ===== NOTIFICATION BELL ===== -->
-        <div class="notification-wrapper">
-          <!-- Bell button with badge -->
-          <button class="notification-bell" (click)="state.toggleNotificationPanel()">
-            🔔
-            <!-- Unread count badge (only shows if count > 0) -->
-            <span class="notification-badge" *ngIf="state.unreadCount() > 0">
-              {{ state.unreadCount() > 9 ? '9+' : state.unreadCount() }}
-            </span>
-          </button>
+        <!-- Navigation links + actions -->
+        <div class="nav-actions">
+          <a routerLink="/manager" *ngIf="state.userRole() === 'MANAGER'" class="nav-link">⚙ Manager</a>
+          <a routerLink="/team-lead" *ngIf="state.userRole() === 'TEAM_LEAD'" class="nav-link">👥 Team Lead</a>
+          <a routerLink="/employee" *ngIf="state.userRole() === 'EMPLOYEE'" class="nav-link">📝 Employee</a>
+          <a routerLink="/admin" *ngIf="state.userRole() === 'ADMIN'" class="nav-link">🔐 Admin</a>
           
-          <!-- Notification dropdown panel -->
-          <div class="notification-panel" *ngIf="state.showNotificationPanel()">
-            <div class="notification-header">
-              <span>🔔 Notifications</span>
-              <button class="close-btn" (click)="state.closeNotificationPanel()">✕</button>
-            </div>
+          <!-- Notification Bell -->
+          <div class="notification-wrapper">
+            <button class="notification-bell" (click)="state.toggleNotificationPanel()">
+              🔔
+              <span class="notification-badge" *ngIf="state.unreadCount() > 0">
+                {{ state.unreadCount() > 9 ? '9+' : state.unreadCount() }}
+              </span>
+            </button>
             
-            <!-- Empty state -->
-            <div class="notification-empty" *ngIf="state.notifications().length === 0">
-              No notifications yet
-            </div>
-            
-            <!-- Notification list -->
-            <div class="notification-list" *ngIf="state.notifications().length > 0">
-              <div 
-                class="notification-item" 
-                *ngFor="let n of state.notifications()"
-                [class.unread]="!n.read"
-              >
-                <!-- Icon based on type -->
-                <span class="notification-icon">
-                  {{ n.type === 'TASK_ASSIGNED' ? '📋' : '✅' }}
-                </span>
-                <div class="notification-content">
-                  <p class="notification-message">{{ n.message }}</p>
-                  <span class="notification-time">{{ n.createdAt | date:'short' }}</span>
+            <!-- Notification dropdown panel -->
+            <div class="notification-panel" *ngIf="state.showNotificationPanel()">
+              <div class="notification-header">
+                <span>🔔 Notifications</span>
+                <button class="close-btn" (click)="state.closeNotificationPanel()">✕</button>
+              </div>
+              
+              <div class="notification-empty" *ngIf="state.notifications().length === 0">
+                No notifications yet
+              </div>
+              
+              <div class="notification-list" *ngIf="state.notifications().length > 0">
+                <div 
+                  class="notification-item" 
+                  *ngFor="let n of state.notifications()"
+                  [class.unread]="!n.read"
+                >
+                  <span class="notification-icon">
+                    {{ n.type === 'TASK_ASSIGNED' ? '📋' : '✅' }}
+                  </span>
+                  <div class="notification-content">
+                    <p class="notification-message">{{ n.message }}</p>
+                    <span class="notification-time">{{ n.createdAt | date:'short' }}</span>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
+          
+          <button class="btn danger" (click)="logout()">Logout</button>
         </div>
-        <!-- ===== END NOTIFICATION BELL ===== -->
-        
-        <button class="btn danger" (click)="logout()">← Logout</button>
-      </div>
+      </nav>
+      
       <ng-template #guest>
-        <div class="session">
+        <div class="nav-actions">
           <a class="btn primary" routerLink="/auth">★ Login / Sign up ★</a>
         </div>
       </ng-template>

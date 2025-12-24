@@ -2,7 +2,7 @@ import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { AppStateService } from './app-state.service';
-import { TaskItem } from './api.service';
+import { ApiService, TaskItem } from './api.service';
 
 @Component({
   selector: 'app-team-lead-page',
@@ -12,6 +12,7 @@ import { TaskItem } from './api.service';
 })
 export class TeamLeadPageComponent implements OnInit {
   state = inject(AppStateService);
+  private api = inject(ApiService);
 
   teamName = '';
   addUserId = '';
@@ -61,20 +62,27 @@ export class TeamLeadPageComponent implements OnInit {
 
   createTask() {
     this.localError = '';
+    this.localMessage = '';
+    
     const title = this.taskTitle.trim();
     const assigneeId = Number(this.taskAssigneeId);
     const creatorId = this.state.userId();
+    const token = this.state.token();
+    
     if (!title || !assigneeId || !creatorId) {
       this.localError = 'Title and assignee are required';
       return;
     }
-    // enforce assignee is in team on the client side too
+    
+    // Enforce assignee is in team on the client side too
     const allowed = this.teamMembers.some(m => m.userId === assigneeId);
     if (!allowed) {
       this.localError = 'Pick someone from your team';
       return;
     }
-    this.state.createTask({
+    
+    // Call API directly to properly handle success/error
+    this.api.createTask({
       title,
       description: this.taskDescription.trim() || null,
       priority: this.taskPriority,
@@ -83,12 +91,27 @@ export class TeamLeadPageComponent implements OnInit {
       dueDate: this.taskDueDate || null,
       createdByUserId: creatorId,
       assignedToUserId: assigneeId
+    }, token).subscribe({
+      next: () => {
+        // Only show success AFTER the API confirms
+        this.localMessage = 'Task created successfully!';
+        this.localError = '';
+        // Reset form
+        this.taskTitle = '';
+        this.taskDescription = '';
+        this.taskPriority = 'MEDIUM';
+        this.taskDueDate = '';
+        this.taskAssigneeId = '';
+        // Refresh task lists
+        this.state.loadManagerTasks();
+        this.state.loadTasksForMe();
+        this.state.refreshNotifications();
+      },
+      error: (err) => {
+        // Show the actual error from the backend
+        this.localError = err?.error?.message || err?.message || 'Failed to create task';
+        this.localMessage = '';
+      }
     });
-    this.localMessage = 'Task submitted';
-    this.taskTitle = '';
-    this.taskDescription = '';
-    this.taskPriority = 'MEDIUM';
-    this.taskDueDate = '';
-    this.taskAssigneeId = '';
   }
 }

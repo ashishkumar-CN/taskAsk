@@ -62,14 +62,60 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 24px;
+  gap: 20px;
   flex-wrap: wrap;
+  padding-bottom: 16px;
 }
 
 .brand {
   display: flex;
   align-items: center;
   gap: 16px;
+  flex-shrink: 0;
+}
+
+/* ===== NAVBAR STYLES ===== */
+.navbar {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  flex: 1;
+}
+
+.nav-user {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.nav-actions {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.nav-link {
+  padding: 8px 14px;
+  border-radius: 10px;
+  border: 2px solid var(--panel-border);
+  background: var(--panel);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--ink);
+  text-decoration: none;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+
+.nav-link:hover {
+  background: var(--accent-2);
+  border-color: var(--accent);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(139, 90, 43, 0.2);
 }
 
 .crest {
@@ -113,29 +159,28 @@ h3 {
   margin: 6px 0 0;
 }
 
-.session {
-  display: flex;
-  gap: 10px;
-  align-items: center;
-  flex-wrap: wrap;
-}
-
+/* Badge styles */
 .badge {
-  padding: 8px 12px;
+  padding: 6px 12px;
   border-radius: 999px;
   border: 1px solid var(--panel-border);
   background: rgba(255, 255, 255, 0.7);
-  font-size: 12px;
+  font-size: 11px;
   font-weight: 600;
+  white-space: nowrap;
 }
 
 .badge.role {
-  background: rgba(47, 59, 43, 0.08);
+  background: rgba(47, 59, 43, 0.12);
   color: var(--accent-3);
+  border-color: var(--accent-3);
 }
 
 .badge.soft {
   color: var(--ink-soft);
+  max-width: 180px;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .badge.status {
@@ -639,10 +684,82 @@ h3 {
   color: var(--ink-soft);
 }
 
-/* Responsive */
+/* ===== RESPONSIVE STYLES ===== */
+
+/* Tablet */
+@media (max-width: 900px) {
+  .header {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 16px;
+  }
+  
+  .brand {
+    justify-content: center;
+  }
+  
+  .navbar {
+    justify-content: center;
+    gap: 12px;
+  }
+  
+  .nav-user {
+    justify-content: center;
+    width: 100%;
+  }
+  
+  .nav-actions {
+    justify-content: center;
+    width: 100%;
+  }
+}
+
+/* Mobile */
 @media (max-width: 480px) {
+  .header {
+    padding-bottom: 12px;
+  }
+  
+  .brand h1 {
+    font-size: 18px;
+  }
+  
+  .tagline {
+    font-size: 11px;
+  }
+  
+  .crest {
+    width: 44px;
+    height: 44px;
+    font-size: 14px;
+  }
+  
+  .nav-link {
+    padding: 6px 10px;
+    font-size: 12px;
+  }
+  
+  .badge {
+    padding: 4px 8px;
+    font-size: 10px;
+  }
+  
+  .badge.soft {
+    max-width: 120px;
+  }
+  
+  .btn {
+    padding: 8px 12px;
+    font-size: 12px;
+  }
+  
   .notification-panel {
     width: 280px;
     right: -50px;
+  }
+  
+  .notification-bell {
+    padding: 6px 10px;
+    font-size: 16px;
   }
 }

@@ -39,9 +39,12 @@ public class TaskService {
 
     public TaskResponse createTask(CreateTaskRequest request) {
 
-        User manager = userService.getUserOrThrow(request.createdByUserId());
-        if(manager.getRole() != Role.MANAGER && manager.getRole() != Role.ADMIN) {
-            throw new ResponseStatusException(BAD_REQUEST, "createdBy must be a MANAGER or ADMIN");
+        // Get the creator (can be MANAGER, ADMIN, or TEAM_LEAD)
+        User creator = userService.getUserOrThrow(request.createdByUserId());
+        
+        // Validate: Only MANAGER, ADMIN, or TEAM_LEAD can create tasks
+        if(creator.getRole() != Role.MANAGER && creator.getRole() != Role.ADMIN && creator.getRole() != Role.TEAM_LEAD) {
+            throw new ResponseStatusException(BAD_REQUEST, "createdBy must be a MANAGER, ADMIN, or TEAM_LEAD");
         }
     
 
@@ -57,7 +60,7 @@ public class TaskService {
                 .status(request.status() == null ? com.example.taskask.enums.TaskStatus.PENDING : request.status())
                 .startDate(request.startDate())
                 .dueDate(request.dueDate())
-                .createdBy(manager)
+                .createdBy(creator)
                 .assignedTo(assignee)
                 .build();
 
@@ -66,7 +69,7 @@ public class TaskService {
         
         // Send notification to the assignee that they have a new task
         // The manager/creator assigned a task to the employee
-        notificationService.notifyTaskAssigned(savedTask, assignee, manager);
+        notificationService.notifyTaskAssigned(savedTask, assignee, creator);
 
         return TaskResponse.fromEntity(savedTask);
 
