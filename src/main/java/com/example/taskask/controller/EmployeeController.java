@@ -17,7 +17,7 @@ public class EmployeeController {
 
     private final UserService userService;
 
-    @PreAuthorize("hasAnyAuthority('ROLE_MANAGER','ROLE_ADMIN')")
+    @PreAuthorize("hasAnyAuthority('ROLE_MANAGER','ROLE_ADMIN','ROLE_TEAM_LEAD')")
     @GetMapping("/employees")
     public List<EmployeeResponse> listEmployees() {
         return userService.getEmployees();

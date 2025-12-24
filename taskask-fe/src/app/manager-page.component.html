@@ -1,0 +1,167 @@
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-4 font-mono">
+  <!-- Create Task Panel -->
+  <div class="lg:col-span-1 bg-linear-to-br from-lime-200 to-green-300 border-4 border-black shadow-[6px_6px_0_0_rgba(0,0,0,1)] p-4">
+    <div class="flex items-center justify-between mb-4 pb-3 border-b-4 border-dotted border-black gap-3 flex-wrap">
+      <div>
+        <h2 class="text-2xl font-bold text-black uppercase">✏️ CREATE TASK</h2>
+        <p class="text-black text-xs font-bold">Assign to employee / team lead</p>
+      </div>
+
+      <button
+        class="px-4 py-2 bg-cyan-400 border-2 border-black font-bold uppercase text-sm hover:bg-cyan-500"
+        (click)="state.loadManagerTasks()"
+      >
+        ↻ REFRESH
+      </button>
+    </div>
+
+    <div class="grid grid-cols-1 gap-3">
+      <label class="text-xs text-black font-bold flex flex-col gap-1 uppercase">
+        <span>TITLE:</span>
+        <input
+          class="border-2 border-black px-2 py-2 bg-white font-mono text-sm"
+          [(ngModel)]="taskTitle"
+          placeholder="Task title"
+        />
+      </label>
+
+      <label class="text-xs text-black font-bold flex flex-col gap-1 uppercase">
+        <span>ASSIGNEE (EMPLOYEE OR TEAM LEAD):</span>
+        <select
+          class="border-2 border-black px-2 py-2 bg-white font-mono text-sm"
+          [(ngModel)]="taskAssigneeId"
+        >
+          <option value="">Select...</option>
+          <option *ngFor="let emp of employees" [value]="emp.id">
+            {{ emp.fullName }} - {{ emp.email }}
+          </option>
+        </select>
+      </label>
+
+      <label class="text-xs text-black font-bold flex flex-col gap-1 uppercase">
+        <span>DESCRIPTION:</span>
+        <textarea
+          class="border-2 border-black px-2 py-2 bg-white font-mono text-sm resize-none"
+          [(ngModel)]="taskDescription"
+          rows="3"
+          placeholder="Add context..."
+        ></textarea>
+      </label>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+        <label class="text-xs text-black font-bold flex flex-col gap-1 uppercase">
+          <span>PRIORITY:</span>
+          <select
+            class="border-2 border-black px-2 py-2 bg-white font-mono text-sm"
+            [(ngModel)]="taskPriority"
+          >
+            <option value="LOW">LOW</option>
+            <option value="MEDIUM">MEDIUM</option>
+            <option value="HIGH">HIGH</option>
+          </select>
+        </label>
+
+        <label class="text-xs text-black font-bold flex flex-col gap-1 uppercase">
+          <span>DUE DATE:</span>
+          <input
+            class="border-2 border-black px-2 py-2 bg-white font-mono text-sm"
+            type="date"
+            [(ngModel)]="taskDueDate"
+          />
+        </label>
+      </div>
+    </div>
+
+    <div class="flex items-center justify-between mt-4 pt-4 border-t-4 border-dotted border-black gap-3 flex-wrap">
+      <div class="flex-1 min-w-[220px] space-y-2">
+        <p *ngIf="localError" class="text-xs font-bold text-red-700 bg-red-200 border-2 border-black p-2">
+          ✗ {{ localError }}
+        </p>
+        <p *ngIf="localMessage" class="text-xs font-bold text-green-700 bg-green-200 border-2 border-black p-2">
+          ✓ {{ localMessage }}
+        </p>
+      </div>
+
+      <button
+        class="px-6 py-3 bg-yellow-400 border-4 border-black shadow-[4px_4px_0_0_rgba(0,0,0,1)] hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-none transition-all text-black font-bold uppercase"
+        (click)="createTask()"
+      >
+        ★ CREATE ★
+      </button>
+    </div>
+  </div>
+
+  <!-- Task Board -->
+  <div class="lg:col-span-2 bg-white border-4 border-black shadow-[6px_6px_0_0_rgba(0,0,0,1)] p-4">
+    <div class="flex items-center justify-between mb-4 pb-3 border-b-4 border-dotted border-black gap-3 flex-wrap">
+      <div>
+        <h2 class="text-2xl font-bold text-black uppercase">📊 TASK BOARD</h2>
+        <p class="text-black text-xs font-bold">All created tasks</p>
+      </div>
+
+      <button
+        class="px-4 py-2 bg-cyan-400 border-2 border-black font-bold uppercase text-sm hover:bg-cyan-500"
+        (click)="state.loadManagerTasks()"
+      >
+        ↻ REFRESH
+      </button>
+    </div>
+
+    <!-- Empty -->
+    <div *ngIf="!tasks.length" class="text-center bg-gray-100 border-2 border-black p-8">
+      <p class="text-4xl mb-2">📋</p>
+      <p class="text-black font-bold uppercase">NO TASKS YET</p>
+      <p class="text-xs text-black mt-1 font-bold">CREATE ONE OR REFRESH!</p>
+    </div>
+
+    <!-- Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-3" *ngIf="tasks.length">
+      <div
+        *ngFor="let task of tasks"
+        class="bg-linear-to-br from-white to-gray-100 border-4 border-black p-3 shadow-[4px_4px_0_0_rgba(0,0,0,1)] hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-[2px_2px_0_0_rgba(0,0,0,1)] transition-all"
+      >
+        <!-- Header -->
+        <div class="flex items-start justify-between gap-3 mb-3">
+          <div class="min-w-0">
+            <h3 class="text-base font-bold text-black break-words mb-1">{{ task.title }}</h3>
+            <p class="text-sm text-black break-words">{{ task.description || 'No description' }}</p>
+          </div>
+
+          <div class="flex flex-col items-end gap-1 shrink-0">
+            <span
+              class="px-2 py-1 border-2 border-black text-xs font-bold"
+              [ngClass]="{
+                'bg-red-500 text-white': task.priority==='HIGH',
+                'bg-yellow-400 text-black': task.priority==='MEDIUM',
+                'bg-blue-400 text-white': task.priority==='LOW'
+              }"
+            >
+              {{ task.priority }}
+            </span>
+            <span class="text-xs font-bold text-black">DUE: {{ task.dueDate || 'NONE' }}</span>
+          </div>
+        </div>
+
+        <!-- Status -->
+        <div class="flex items-center justify-between gap-2 text-xs mb-3">
+          <span
+            class="px-2 py-1 border-2 border-black font-bold"
+            [ngClass]="{
+              'bg-lime-400 text-black': task.status==='COMPLETED',
+              'bg-orange-400 text-black': task.status==='PENDING',
+              'bg-cyan-300 text-black': task.status==='IN_PROGRESS'
+            }"
+          >
+            {{ task.status }}
+          </span>
+        </div>
+
+        <!-- Meta -->
+        <div class="text-xs text-black font-bold bg-gray-100 border-2 border-black p-2 space-y-1">
+          <p class="break-words">→ CREATED BY: {{ task.createdByName || 'Unknown' }}</p>
+          <p class="break-words">→ ASSIGNED TO: {{ task.assignedToName || 'Unknown' }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

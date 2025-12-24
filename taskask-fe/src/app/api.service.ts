@@ -18,7 +18,11 @@ export interface TaskItem {
   startDate?: string | null;
   dueDate?: string | null;
   createdByUserId?: number;
+  createdByName?: string;
+  createdByRole?: string;
   assignedToUserId?: number;
+  assignedToName?: string;
+  assignedToRole?: string;
   createdAt?: string | null;
   updatedAt?: string | null;
 }
@@ -44,14 +48,14 @@ export interface CreateUserRequest {
   fullName: string;
   email: string;
   password: string;
-  role: 'MANAGER' | 'EMPLOYEE' | 'ADMIN';
+  role: 'MANAGER' | 'EMPLOYEE' | 'ADMIN' | 'TEAM_LEAD';
 }
 
 export interface UserSummary {
   id: number;
   fullName: string;
   email: string;
-  role: 'MANAGER' | 'EMPLOYEE' | 'ADMIN';
+  role: 'MANAGER' | 'EMPLOYEE' | 'ADMIN' | 'TEAM_LEAD';
   active: boolean;
 }
 
@@ -71,6 +75,28 @@ export interface PerformanceSummary {
   pendingTasks: number;
   completionRatePercent: number;
   userStats: UserPerformance[];
+}
+
+// Teams
+export interface Team {
+  id: number;
+  name: string;
+  leadId?: number;
+  createdAt?: string;
+}
+
+export interface TeamSummary {
+  id: number;
+  name: string;
+  leadId: number;
+  leadName: string;
+  leadEmail: string;
+}
+
+export interface TeamMember {
+  userId: number;
+  fullName: string;
+  email: string;
 }
 
 @Injectable({ providedIn: 'root' })
@@ -160,6 +186,37 @@ export class ApiService {
 
   getPerformance(token: string): Observable<PerformanceSummary> {
     return this.http.get<PerformanceSummary>(`${this.baseUrl}/admin/performance`, {
+      headers: { Authorization: `Bearer ${token}` }
+    });
+  }
+
+  getAllTeams(token: string): Observable<TeamSummary[]> {
+    return this.http.get<TeamSummary[]>(`${this.baseUrl}/admin/teams`, {
+      headers: { Authorization: `Bearer ${token}` }
+    });
+  }
+
+  // Teams (TEAM_LEAD)
+  getMyTeam(token: string): Observable<Team> {
+    return this.http.get<Team>(`${this.baseUrl}/teams/mine`, {
+      headers: { Authorization: `Bearer ${token}` }
+    });
+  }
+
+  createTeam(name: string, token: string): Observable<Team> {
+    return this.http.post<Team>(`${this.baseUrl}/teams`, { name }, {
+      headers: { Authorization: `Bearer ${token}` }
+    });
+  }
+
+  addTeamMember(teamId: number, userId: number, token: string): Observable<void> {
+    return this.http.post<void>(`${this.baseUrl}/teams/${teamId}/members`, { userId }, {
+      headers: { Authorization: `Bearer ${token}` }
+    });
+  }
+
+  getMyTeamMembers(token: string): Observable<TeamMember[]> {
+    return this.http.get<TeamMember[]>(`${this.baseUrl}/teams/mine/members`, {
       headers: { Authorization: `Bearer ${token}` }
     });
   }

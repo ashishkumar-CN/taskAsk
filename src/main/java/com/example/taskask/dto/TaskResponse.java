@@ -16,7 +16,11 @@ public record TaskResponse(
         LocalDate startDate,
         LocalDate dueDate,
         Long createdByUserId,
+        String createdByName,
+        String createdByRole,
         Long assignedToUserId,
+        String assignedToName,
+        String assignedToRole,
         Instant createdAt,
         Instant updatedAt
 ) {
@@ -30,7 +34,11 @@ public record TaskResponse(
                 task.getStartDate(),
                 task.getDueDate(),
                 task.getCreatedBy().getId(),
+                task.getCreatedBy().getFullName(),
+                task.getCreatedBy().getRole().name(),
                 task.getAssignedTo().getId(),
+                task.getAssignedTo().getFullName(),
+                task.getAssignedTo().getRole().name(),
                 task.getCreatedAt(),
                 task.getUpdatedAt()
         );

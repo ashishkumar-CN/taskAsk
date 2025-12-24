@@ -42,8 +42,14 @@ public class UserService {
                 .orElseThrow(() -> new ResponseStatusException(BAD_REQUEST, "User not found: " + userId));
     }
 
+    public User getByEmailOrThrow(String email) {
+        return userRepository.findByEmail(email)
+                .orElseThrow(() -> new ResponseStatusException(BAD_REQUEST, "User not found: " + email));
+    }
+
     public List<EmployeeResponse> getEmployees() {
-        return userRepository.findByRole(Role.EMPLOYEE).stream()
+        // return assignable users (employees + team leads)
+        return userRepository.findByRoleIn(List.of(Role.EMPLOYEE, Role.TEAM_LEAD)).stream()
                 .map(user -> new EmployeeResponse(user.getId(), user.getFullName(), user.getEmail()))
                 .toList();
     }

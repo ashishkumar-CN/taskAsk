@@ -2,8 +2,10 @@ package com.example.taskask.controller;
 
 import com.example.taskask.dto.PerformanceSummary;
 import com.example.taskask.dto.TaskResponse;
+import com.example.taskask.dto.TeamResponse;
 import com.example.taskask.dto.UserSummary;
 import com.example.taskask.service.TaskService;
+import com.example.taskask.service.TeamService;
 import com.example.taskask.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -21,6 +23,7 @@ public class AdminController {
 
     private final TaskService taskService;
     private final UserService userService;
+    private final TeamService teamService;
 
     @GetMapping("/tasks")
     public List<TaskResponse> listAllTasks() {
@@ -35,5 +38,10 @@ public class AdminController {
     @GetMapping("/performance")
     public PerformanceSummary performanceSummary() {
         return taskService.getPerformanceSummary();
+    }
+
+    @GetMapping("/teams")
+    public List<TeamResponse> listAllTeams() {
+        return teamService.getAllTeams();
     }
 }

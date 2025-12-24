@@ -30,25 +30,25 @@ public class TaskController {
         return userService.createUser(request);
     }
 
-    @PreAuthorize("hasAnyAuthority('ROLE_MANAGER','ROLE_ADMIN')")
+    @PreAuthorize("hasAnyAuthority('ROLE_MANAGER','ROLE_ADMIN','ROLE_TEAM_LEAD')")
     @PostMapping("/tasks")
     public TaskResponse createTask(@RequestBody CreateTaskRequest request) {
         return taskService.createTask(request);
     }
 
-    @PreAuthorize("hasAnyAuthority('ROLE_MANAGER','ROLE_EMPLOYEE','ROLE_ADMIN')")
+    @PreAuthorize("hasAnyAuthority('ROLE_MANAGER','ROLE_EMPLOYEE','ROLE_ADMIN','ROLE_TEAM_LEAD')")
     @GetMapping("/tasks/assigned/{userId}")
     public List<TaskResponse> getTasksForUser(@PathVariable Long userId) {
         return taskService.getTasksForAssignee(userId);
     }
 
-    @PreAuthorize("hasAnyAuthority('ROLE_MANAGER','ROLE_ADMIN')")
+    @PreAuthorize("hasAnyAuthority('ROLE_MANAGER','ROLE_ADMIN','ROLE_TEAM_LEAD')")
     @GetMapping("/tasks/created/{managerId}")
     public List<TaskResponse> getTasksCreatedBy(@PathVariable Long managerId) {
         return taskService.getTasksCreatedBy(managerId);
     }
 
-    @PreAuthorize("hasAnyAuthority('ROLE_MANAGER','ROLE_EMPLOYEE','ROLE_ADMIN')")
+    @PreAuthorize("hasAnyAuthority('ROLE_MANAGER','ROLE_EMPLOYEE','ROLE_ADMIN','ROLE_TEAM_LEAD')")
     @PatchMapping("/tasks/{taskId}/status")
     public TaskResponse updateStatus(@PathVariable Long taskId,
                                      @RequestBody UpdateTaskRequest request) {

@@ -1,0 +1,58 @@
+<div class="panel" style="max-width: 480px; margin: 0 auto;">
+  <div class="panel-header">
+    <h2>⚡ ACCESS ⚡</h2>
+  </div>
+
+  <div class="tab-switch" style="margin-bottom: 16px;">
+    <button [class.active]="mode==='login'" (click)="toggle('login')">Login</button>
+    <button [class.active]="mode==='signup'" (click)="toggle('signup')">Sign up</button>
+  </div>
+
+  <div *ngIf="mode==='login'" class="form-grid">
+    <div class="field">
+      <label>Email</label>
+      <input [(ngModel)]="email" placeholder="you@example.com">
+    </div>
+    <div class="field">
+      <label>Password</label>
+      <input type="password" [(ngModel)]="password" placeholder="••••••••">
+    </div>
+    <div class="field full">
+      <button class="btn primary" (click)="doLogin()" [disabled]="loading" style="width: 100%;">
+        {{ loading ? '⏳ SIGNING IN...' : '→ LOGIN' }}
+      </button>
+    </div>
+  </div>
+
+  <div *ngIf="mode==='signup'" class="form-grid">
+    <div class="field">
+      <label>Full name</label>
+      <input [(ngModel)]="fullName" placeholder="Jordan Smith">
+    </div>
+    <div class="field">
+      <label>Email</label>
+      <input [(ngModel)]="email" placeholder="you@example.com">
+    </div>
+    <div class="field">
+      <label>Password</label>
+      <input type="password" [(ngModel)]="password" placeholder="Create password">
+    </div>
+    <div class="field">
+      <label>Role</label>
+      <select [(ngModel)]="role">
+        <option value="EMPLOYEE">EMPLOYEE</option>
+        <option value="MANAGER">MANAGER</option>
+        <option value="TEAM_LEAD">TEAM LEAD</option>
+        <option value="ADMIN">ADMIN</option>
+      </select>
+    </div>
+    <div class="field full">
+      <button class="btn" style="width: 100%; background: var(--lime);" (click)="doSignup()" [disabled]="loading">
+        {{ loading ? '⏳ CREATING...' : '★ CREATE ACCOUNT ★' }}
+      </button>
+    </div>
+  </div>
+
+  <div *ngIf="error" class="alert error">✗ {{ error }}</div>
+  <div *ngIf="message" class="alert success">✓ {{ message }}</div>
+</div>
