@@ -85,6 +85,37 @@ export interface Team {
   createdAt?: string;
 }
 
+// ===== NOTIFICATIONS =====
+// These interfaces match the backend NotificationResponse DTO
+
+/**
+ * Notification type enum - matches backend NotificationType.java
+ * TASK_ASSIGNED: When a task is assigned to you
+ * TASK_COMPLETED: When a task you created is completed
+ */
+export type NotificationType = 'TASK_ASSIGNED' | 'TASK_COMPLETED';
+
+/**
+ * Notification response from the API
+ * Maps to NotificationResponse.java record
+ */
+export interface NotificationItem {
+  id: number;               // Unique notification ID
+  message: string;          // Human-readable message
+  type: NotificationType;   // TASK_ASSIGNED or TASK_COMPLETED
+  read: boolean;            // Has user seen this?
+  taskId: number | null;    // Related task ID (for navigation)
+  taskTitle: string | null; // Task title for display
+  createdAt: string;        // ISO timestamp
+}
+
+/**
+ * Response for unread count endpoint
+ */
+export interface UnreadCountResponse {
+  count: number;
+}
+
 export interface TeamSummary {
   id: number;
   name: string;
@@ -217,6 +248,41 @@ export class ApiService {
 
   getMyTeamMembers(token: string): Observable<TeamMember[]> {
     return this.http.get<TeamMember[]>(`${this.baseUrl}/teams/mine/members`, {
+      headers: { Authorization: `Bearer ${token}` }
+    });
+  }
+
+  // ===== NOTIFICATION ENDPOINTS =====
+  
+  /**
+   * Get all notifications for the logged-in user.
+   * Backend: GET /api/notifications
+   * Returns newest first.
+   */
+  getNotifications(token: string): Observable<NotificationItem[]> {
+    return this.http.get<NotificationItem[]>(`${this.baseUrl}/notifications`, {
+      headers: { Authorization: `Bearer ${token}` }
+    });
+  }
+
+  /**
+   * Get count of unread notifications.
+   * Backend: GET /api/notifications/unread-count
+   * Used to display badge on bell icon.
+   */
+  getUnreadCount(token: string): Observable<UnreadCountResponse> {
+    return this.http.get<UnreadCountResponse>(`${this.baseUrl}/notifications/unread-count`, {
+      headers: { Authorization: `Bearer ${token}` }
+    });
+  }
+
+  /**
+   * Mark all notifications as read.
+   * Backend: POST /api/notifications/mark-read
+   * Called when user opens notification dropdown.
+   */
+  markNotificationsRead(token: string): Observable<void> {
+    return this.http.post<void>(`${this.baseUrl}/notifications/mark-read`, {}, {
       headers: { Authorization: `Bearer ${token}` }
     });
   }

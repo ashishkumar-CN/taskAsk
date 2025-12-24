@@ -33,6 +33,9 @@ public class TaskService {
 
     private final TaskRepository taskRepository;
     private final UserService userService;
+    
+    // Inject NotificationService to send notifications when tasks are created/completed
+    private final NotificationService notificationService;
 
     public TaskResponse createTask(CreateTaskRequest request) {
 
@@ -58,7 +61,14 @@ public class TaskService {
                 .assignedTo(assignee)
                 .build();
 
-        return TaskResponse.fromEntity(taskRepository.save(task));
+        // Save the task first
+        Task savedTask = taskRepository.save(task);
+        
+        // Send notification to the assignee that they have a new task
+        // The manager/creator assigned a task to the employee
+        notificationService.notifyTaskAssigned(savedTask, assignee, manager);
+
+        return TaskResponse.fromEntity(savedTask);
 
      }       
 
@@ -136,6 +146,10 @@ public class TaskService {
      public TaskResponse updateTask(Long taskId, UpdateTaskRequest req) {
         Task task = taskRepository.findById(taskId).orElseThrow(( ) -> new ResponseStatusException(BAD_REQUEST, "Task Not Found " + taskId));
 
+        // Track if status changed to COMPLETED for notification
+        boolean wasNotCompleted = task.getStatus() != TaskStatus.COMPLETED;
+        boolean willBeCompleted = req.status() == TaskStatus.COMPLETED;
+
         if (req.status() != null) {
             task.setStatus(req.status());
         }
@@ -143,7 +157,16 @@ public class TaskService {
             task.setPriority(req.priority());
         }
 
-        return TaskResponse.fromEntity(taskRepository.save(task));
+        Task savedTask = taskRepository.save(task);
+
+        // If task just changed to COMPLETED, notify the creator (manager/team lead)
+        // wasNotCompleted ensures we don't send duplicate notifications
+        if (wasNotCompleted && willBeCompleted) {
+            User completedBy = task.getAssignedTo(); // The employee who completed it
+            notificationService.notifyTaskCompleted(savedTask, completedBy);
+        }
+
+        return TaskResponse.fromEntity(savedTask);
      }
 
       public void deleteTask(Long taskId) {

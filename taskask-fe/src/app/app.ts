@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { RouterLink, RouterOutlet } from '@angular/router';
-import { NgIf } from '@angular/common';
+import { NgIf, NgFor, DatePipe } from '@angular/common';
 import { AppStateService } from './app-state.service';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, RouterLink, NgIf],
+  imports: [RouterOutlet, RouterLink, NgIf, NgFor, DatePipe],
   templateUrl: './app.html',
   styleUrl: './app.css'
 })

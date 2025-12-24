@@ -4,6 +4,7 @@ import {
   CreateTaskRequest,
   EmployeeOption,
   LoginResponse,
+  NotificationItem,
   PerformanceSummary,
   TaskItem,
   Team,
@@ -37,6 +38,12 @@ export class AppStateService {
   readonly performance = signal<PerformanceSummary | null>(null);
   readonly team = signal<Team | null>(null);
   readonly teamMembers = signal<TeamMember[]>([]);
+
+  // ===== NOTIFICATIONS =====
+  // These signals power the notification bell in the header
+  readonly notifications = signal<NotificationItem[]>([]);  // All notifications
+  readonly unreadCount = signal<number>(0);                  // Badge count
+  readonly showNotificationPanel = signal<boolean>(false);  // Dropdown visible?
 
   // ===== Messages (lightweight) =====
   readonly lastError = signal('');
@@ -73,6 +80,10 @@ export class AppStateService {
     this.performance.set(null);
     this.team.set(null);
     this.teamMembers.set([]);
+    // Clear notification state on logout
+    this.notifications.set([]);
+    this.unreadCount.set(0);
+    this.showNotificationPanel.set(false);
     this.lastError.set('');
     this.lastMessage.set('');
     localStorage.removeItem('taskask_token');
@@ -104,6 +115,9 @@ export class AppStateService {
   loadRoleData(role: string | null) {
     if (!role) return;
     this.loadTasksForMe();
+    // Load notifications for ALL roles (everyone can receive notifications)
+    this.loadNotifications();
+    this.loadUnreadCount();
     if (role === 'MANAGER' || role === 'TEAM_LEAD') {
       this.loadEmployees();
       this.loadManagerTasks();
@@ -216,6 +230,8 @@ export class AppStateService {
         this.loadTasksForMe();
         this.loadManagerTasks();
         this.loadAllTasks();
+        // Refresh notifications (task assignment triggers notifications)
+        this.refreshNotifications();
       },
       error: () => this.lastError.set('Failed to create task')
     });
@@ -237,6 +253,8 @@ export class AppStateService {
         if (role === 'ADMIN') {
           this.loadAllTasks();
         }
+        // Refresh notifications (task completion triggers notifications)
+        this.refreshNotifications();
       },
       error: () => this.lastError.set('Failed to update task')
     });
@@ -283,5 +301,80 @@ export class AppStateService {
       },
       error: () => this.lastError.set('Failed to add member')
     });
+  }
+
+  // ===== NOTIFICATION METHODS =====
+
+  /**
+   * Load all notifications for the current user.
+   * Called on login and when refreshing notification list.
+   */
+  loadNotifications() {
+    const token = this.token();
+    if (!token) return;
+    this.api.getNotifications(token).subscribe({
+      next: (list: NotificationItem[]) => this.notifications.set(list),
+      error: () => this.lastError.set('Failed to load notifications')
+    });
+  }
+
+  /**
+   * Load unread notification count.
+   * Used to display the red badge number on the bell icon.
+   */
+  loadUnreadCount() {
+    const token = this.token();
+    if (!token) return;
+    this.api.getUnreadCount(token).subscribe({
+      next: (res) => this.unreadCount.set(res.count),
+      error: () => {} // Silently fail for count
+    });
+  }
+
+  /**
+   * Toggle the notification dropdown panel visibility.
+   * When opening, also mark all as read.
+   */
+  toggleNotificationPanel() {
+    const newValue = !this.showNotificationPanel();
+    this.showNotificationPanel.set(newValue);
+    
+    // When opening the panel, mark all as read
+    if (newValue && this.unreadCount() > 0) {
+      this.markAllNotificationsRead();
+    }
+  }
+
+  /**
+   * Close the notification panel (e.g., when clicking outside).
+   */
+  closeNotificationPanel() {
+    this.showNotificationPanel.set(false);
+  }
+
+  /**
+   * Mark all notifications as read.
+   * Called when user opens the notification dropdown.
+   */
+  markAllNotificationsRead() {
+    const token = this.token();
+    if (!token) return;
+    this.api.markNotificationsRead(token).subscribe({
+      next: () => {
+        // Reset unread count to 0
+        this.unreadCount.set(0);
+        // Refresh the notification list to show them as read
+        this.loadNotifications();
+      },
+      error: () => this.lastError.set('Failed to mark notifications read')
+    });
+  }
+
+  /**
+   * Refresh notifications (can be called after task actions).
+   */
+  refreshNotifications() {
+    this.loadNotifications();
+    this.loadUnreadCount();
   }
 }
