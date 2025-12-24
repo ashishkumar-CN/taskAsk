@@ -1,92 +1,88 @@
-<div class="space-y-4 font-mono">
+<div class="space-y-4">
   <!-- Header -->
-  <div class="bg-blue-600 border-4 border-black shadow-[6px_6px_0_0_rgba(0,0,0,1)] p-4 flex items-center justify-between gap-3 flex-wrap">
-    <div class="flex items-center gap-3">
-      <div class="w-12 h-12 bg-yellow-400 border-4 border-black flex items-center justify-center">
-        <span class="text-2xl font-bold text-black">A</span>
+  <div class="panel" style="background: linear-gradient(135deg, var(--magenta), var(--cyan)); border-color: var(--yellow);">
+    <div class="flex items-center justify-between gap-3 flex-wrap">
+      <div class="flex items-center gap-3">
+        <div class="crest" style="width: 48px; height: 48px; font-size: 16px;">A</div>
+        <div>
+          <h2 style="color: var(--bg); text-shadow: 2px 2px 0 var(--yellow);">
+            🔐 ADMIN DASHBOARD
+          </h2>
+          <p style="color: var(--bg); font-size: 12px;">PERFORMANCE + TASKS + USERS</p>
+        </div>
       </div>
-      <div>
-        <h2 class="text-2xl font-bold text-white uppercase tracking-wider" style="text-shadow: 3px 3px 0 #000;">
-          🔐 ADMIN DASHBOARD
-        </h2>
-        <p class="text-yellow-300 text-xs font-bold">Performance + tasks + users</p>
-      </div>
-    </div>
 
-    <button
-      class="px-4 py-2 bg-cyan-400 text-black border-4 border-black shadow-[2px_2px_0_0_rgba(0,0,0,1)] hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-none transition-all font-bold uppercase text-sm"
-      (click)="state.loadPerformance(); state.loadAllTasks(); state.loadAllUsers(); state.loadAllTeams()"
-    >
-      ↻ REFRESH ALL
-    </button>
+      <button
+        class="btn"
+        style="background: var(--yellow); color: var(--bg); border-color: var(--bg);"
+        (click)="state.loadPerformance(); state.loadAllTasks(); state.loadAllUsers(); state.loadAllTeams()"
+      >
+        ↻ REFRESH ALL
+      </button>
+    </div>
   </div>
 
   <!-- Main Grid: Tasks (left 2/3) | Sidebar (right 1/3) -->
   <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
     <!-- All Tasks (Left - 2 columns) -->
-    <div class="lg:col-span-2 bg-white border-4 border-black shadow-[6px_6px_0_0_rgba(0,0,0,1)] p-4">
-      <div class="flex items-center justify-between mb-4 pb-3 border-b-4 border-dotted border-black gap-3 flex-wrap">
+    <div class="lg:col-span-2 panel">
+      <div class="panel-header">
         <div>
-          <h3 class="text-2xl font-bold text-black uppercase">📋 ALL TASKS</h3>
-          <p class="text-black text-xs font-bold">Admin overview</p>
+          <h3>📋 ALL TASKS</h3>
+          <p class="muted" style="font-size: 12px;">ADMIN OVERVIEW</p>
         </div>
 
-        <button
-          class="px-4 py-2 bg-cyan-400 border-2 border-black font-bold uppercase text-sm hover:bg-cyan-500"
-          (click)="state.loadAllTasks()"
-        >
+        <button class="btn" (click)="state.loadAllTasks()">
           ↻ REFRESH
         </button>
       </div>
 
-      <div *ngIf="!tasks.length" class="text-center bg-gray-100 border-2 border-black p-8">
-        <p class="text-4xl mb-2">📋</p>
-        <p class="text-black font-bold uppercase">NO TASKS YET</p>
-        <p class="text-xs text-black mt-1 font-bold">CREATE ONE OR REFRESH!</p>
+      <div *ngIf="!tasks.length" class="empty">
+        <p style="font-size: 32px; margin-bottom: 8px;">📋</p>
+        <p>[ NO TASKS YET ]</p>
+        <p style="font-size: 12px; margin-top: 4px;">CREATE ONE OR REFRESH!</p>
       </div>
 
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-3" *ngIf="tasks.length">
-        <div
-          *ngFor="let task of tasks"
-          class="bg-linear-to-br from-white to-gray-100 border-4 border-black p-3 shadow-[4px_4px_0_0_rgba(0,0,0,1)] hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-[2px_2px_0_0_rgba(0,0,0,1)] transition-all"
-        >
-          <div class="flex items-start justify-between gap-3 mb-3">
-            <div class="min-w-0">
-              <h4 class="text-base font-bold text-black break-words mb-1">{{ task.title }}</h4>
-              <p class="text-sm text-black break-words">{{ task.description || 'No description' }}</p>
+      <div class="task-grid" *ngIf="tasks.length">
+        <div *ngFor="let task of tasks" class="task-card">
+          <div class="task-head">
+            <div style="min-width: 0;">
+              <h3 style="word-break: break-word; margin-bottom: 4px;">{{ task.title }}</h3>
+              <p style="font-size: 14px; word-break: break-word;">{{ task.description || '[ NO DESCRIPTION ]' }}</p>
             </div>
 
-            <div class="flex flex-col items-end gap-1 shrink-0">
+            <div style="display: flex; flex-direction: column; align-items: flex-end; gap: 4px;">
               <span
-                class="px-2 py-1 border-2 border-black text-xs font-bold"
+                class="badge"
                 [ngClass]="{
-                  'bg-red-500 text-white': task.priority==='HIGH',
-                  'bg-yellow-400 text-black': task.priority==='MEDIUM',
-                  'bg-blue-400 text-white': task.priority==='LOW'
+                  'bg-red': task.priority==='HIGH',
+                  'bg-yellow': task.priority==='MEDIUM',
+                  'bg-cyan': task.priority==='LOW'
                 }"
+                [style.background]="task.priority==='HIGH' ? 'var(--red)' : task.priority==='MEDIUM' ? 'var(--yellow)' : 'var(--cyan)'"
+                [style.color]="'var(--bg)'"
+                [style.border-color]="'var(--bg)'"
               >
                 {{ task.priority }}
               </span>
-              <span class="text-xs font-bold text-black">DUE: {{ task.dueDate || 'NONE' }}</span>
+              <span style="font-size: 12px; color: var(--yellow);">DUE: {{ task.dueDate || 'NONE' }}</span>
             </div>
           </div>
 
-          <div class="flex items-center justify-between gap-2 text-xs mb-3">
+          <div style="display: flex; align-items: center; gap: 8px;">
             <span
-              class="px-2 py-1 border-2 border-black font-bold"
-              [ngClass]="{
-                'bg-lime-400 text-black': task.status==='COMPLETED',
-                'bg-orange-400 text-black': task.status==='PENDING',
-                'bg-cyan-300 text-black': task.status==='IN_PROGRESS'
-              }"
+              class="badge"
+              [style.background]="task.status==='COMPLETED' ? 'var(--lime)' : task.status==='PENDING' ? 'var(--orange)' : 'var(--cyan)'"
+              [style.color]="'var(--bg)'"
+              [style.border-color]="'var(--bg)'"
             >
               {{ task.status }}
             </span>
           </div>
 
-          <div class="text-xs text-black font-bold bg-gray-100 border-2 border-black p-2 space-y-1">
-            <p class="break-words">→ CREATED BY: {{ task.createdByName || 'Unknown' }}</p>
-            <p class="break-words">→ ASSIGNED TO: {{ task.assignedToName || 'Unknown' }}</p>
+          <div style="font-size: 12px; background: var(--bg); border: 2px solid var(--cyan); padding: 8px;">
+            <p style="word-break: break-word;">→ CREATED BY: {{ task.createdByName || 'UNKNOWN' }}</p>
+            <p style="word-break: break-word;">→ ASSIGNED TO: {{ task.assignedToName || 'UNKNOWN' }}</p>
           </div>
         </div>
       </div>
@@ -95,124 +91,107 @@
     <!-- Right Sidebar (1 column) - Performance, Teams, Users stacked -->
     <div class="lg:col-span-1 space-y-4">
       <!-- Performance -->
-      <div class="bg-linear-to-br from-blue-100 to-purple-200 border-4 border-black shadow-[6px_6px_0_0_rgba(0,0,0,1)] p-4">
-        <div class="flex items-center justify-between mb-4 pb-3 border-b-4 border-dotted border-black gap-3">
+      <div class="panel" style="background: linear-gradient(135deg, var(--panel), rgba(0,255,255,0.1));">
+        <div class="panel-header">
           <div>
-            <h3 class="text-xl font-bold text-black uppercase">📊 PERFORMANCE</h3>
-            <p class="text-black text-xs font-bold">Team-wide metrics</p>
+            <h3>📊 PERFORMANCE</h3>
+            <p class="muted" style="font-size: 12px;">TEAM-WIDE METRICS</p>
           </div>
-          <button
-            class="px-3 py-2 bg-cyan-400 border-2 border-black font-bold uppercase text-xs hover:bg-cyan-500"
-            (click)="state.loadPerformance()"
-          >
-            ↻
-          </button>
+          <button class="btn" style="padding: 8px;" (click)="state.loadPerformance()">↻</button>
         </div>
 
-        <div *ngIf="!perf" class="text-center bg-white border-2 border-black p-4">
-          <p class="text-3xl mb-2">📈</p>
-          <p class="text-black font-bold uppercase text-sm">NO DATA YET</p>
+        <div *ngIf="!perf" class="empty">
+          <p style="font-size: 24px; margin-bottom: 8px;">📈</p>
+          <p style="font-size: 12px;">[ NO DATA YET ]</p>
         </div>
 
-        <div *ngIf="perf as p" class="space-y-3">
+        <div *ngIf="perf as p" style="display: grid; gap: 12px;">
           <!-- KPI cards -->
-          <div class="grid grid-cols-2 gap-2">
-            <div class="p-2 border-3 border-black bg-yellow-300 text-black shadow-[2px_2px_0_0_rgba(0,0,0,1)]">
-              <p class="text-xs font-bold uppercase">Total</p>
-              <p class="text-2xl font-extrabold">{{ p.totalTasks }}</p>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
+            <div style="padding: 12px; border: 3px solid var(--yellow); background: rgba(255,255,0,0.1);">
+              <p style="font-size: 10px; color: var(--yellow);">TOTAL</p>
+              <p style="font-size: 24px; color: var(--yellow);">{{ p.totalTasks }}</p>
             </div>
 
-            <div class="p-2 border-3 border-black bg-lime-300 text-black shadow-[2px_2px_0_0_rgba(0,0,0,1)]">
-              <p class="text-xs font-bold uppercase">Done</p>
-              <p class="text-2xl font-extrabold">{{ p.completedTasks }}</p>
+            <div style="padding: 12px; border: 3px solid var(--lime); background: rgba(0,255,0,0.1);">
+              <p style="font-size: 10px; color: var(--lime);">DONE</p>
+              <p style="font-size: 24px; color: var(--lime);">{{ p.completedTasks }}</p>
             </div>
 
-            <div class="p-2 border-3 border-black bg-blue-300 text-black shadow-[2px_2px_0_0_rgba(0,0,0,1)]">
-              <p class="text-xs font-bold uppercase">In Prog</p>
-              <p class="text-2xl font-extrabold">{{ p.inProgressTasks }}</p>
+            <div style="padding: 12px; border: 3px solid var(--cyan); background: rgba(0,255,255,0.1);">
+              <p style="font-size: 10px; color: var(--cyan);">IN PROG</p>
+              <p style="font-size: 24px; color: var(--cyan);">{{ p.inProgressTasks }}</p>
             </div>
 
-            <div class="p-2 border-3 border-black bg-orange-300 text-black shadow-[2px_2px_0_0_rgba(0,0,0,1)]">
-              <p class="text-xs font-bold uppercase">Pending</p>
-              <p class="text-2xl font-extrabold">{{ p.pendingTasks }}</p>
+            <div style="padding: 12px; border: 3px solid var(--orange); background: rgba(255,102,0,0.1);">
+              <p style="font-size: 10px; color: var(--orange);">PENDING</p>
+              <p style="font-size: 24px; color: var(--orange);">{{ p.pendingTasks }}</p>
             </div>
           </div>
 
-          <div class="text-xs font-bold text-green-700 bg-green-200 border-2 border-black p-2">
+          <div style="font-size: 12px; color: var(--lime); background: rgba(0,255,0,0.1); border: 2px solid var(--lime); padding: 8px;">
             ✓ COMPLETION: {{ p.completionRatePercent | number:'1.0-1' }}%
           </div>
         </div>
       </div>
 
       <!-- Teams -->
-      <div class="bg-linear-to-br from-purple-200 to-pink-200 border-4 border-black shadow-[6px_6px_0_0_rgba(0,0,0,1)] p-4">
-        <div class="flex items-center justify-between mb-4 pb-3 border-b-4 border-dotted border-black gap-3">
+      <div class="panel" style="background: linear-gradient(135deg, var(--panel), rgba(255,0,255,0.1));">
+        <div class="panel-header">
           <div>
-            <h3 class="text-xl font-bold text-black uppercase">👥 TEAMS</h3>
-            <p class="text-black text-xs font-bold">All teams</p>
+            <h3>👥 TEAMS</h3>
+            <p class="muted" style="font-size: 12px;">ALL TEAMS</p>
           </div>
-          <button
-            class="px-3 py-2 bg-cyan-400 border-2 border-black font-bold uppercase text-xs hover:bg-cyan-500"
-            (click)="state.loadAllTeams()"
-          >
-            ↻
-          </button>
+          <button class="btn" style="padding: 8px;" (click)="state.loadAllTeams()">↻</button>
         </div>
 
-        <div *ngIf="!teams.length" class="text-center bg-white border-2 border-black p-4">
-          <p class="text-3xl mb-2">👥</p>
-          <p class="text-black font-bold uppercase text-sm">NO TEAMS YET</p>
+        <div *ngIf="!teams.length" class="empty">
+          <p style="font-size: 24px; margin-bottom: 8px;">👥</p>
+          <p style="font-size: 12px;">[ NO TEAMS YET ]</p>
         </div>
 
-        <div *ngIf="teams.length" class="space-y-2">
+        <div *ngIf="teams.length" style="display: grid; gap: 8px;">
           <div
             *ngFor="let team of teams"
-            class="bg-white border-3 border-black p-2 shadow-[2px_2px_0_0_rgba(0,0,0,1)]"
+            style="background: var(--bg); border: 2px solid var(--magenta); padding: 8px;"
           >
-            <p class="text-sm font-bold text-black break-words">{{ team.name }}</p>
-            <p class="text-xs text-gray-700">👑 {{ team.leadName }}</p>
+            <p style="font-size: 14px; word-break: break-word;">{{ team.name }}</p>
+            <p style="font-size: 12px; color: var(--magenta);">👑 {{ team.leadName }}</p>
           </div>
         </div>
       </div>
 
       <!-- Users -->
-      <div class="bg-linear-to-br from-lime-200 to-green-300 border-4 border-black shadow-[6px_6px_0_0_rgba(0,0,0,1)] p-4">
-        <div class="flex items-center justify-between mb-4 pb-3 border-b-4 border-dotted border-black gap-3">
+      <div class="panel" style="background: linear-gradient(135deg, var(--panel), rgba(0,255,0,0.1));">
+        <div class="panel-header">
           <div>
-            <h3 class="text-xl font-bold text-black uppercase">👤 USERS</h3>
-            <p class="text-black text-xs font-bold">Roles overview</p>
+            <h3>👤 USERS</h3>
+            <p class="muted" style="font-size: 12px;">ROLES OVERVIEW</p>
           </div>
-          <button
-            class="px-3 py-2 bg-cyan-400 border-2 border-black font-bold uppercase text-xs hover:bg-cyan-500"
-            (click)="state.loadAllUsers()"
-          >
-            ↻
-          </button>
+          <button class="btn" style="padding: 8px;" (click)="state.loadAllUsers()">↻</button>
         </div>
 
-        <div *ngIf="!users.length" class="text-center bg-white border-2 border-black p-4">
-          <p class="text-3xl mb-2">👤</p>
-          <p class="text-black font-bold uppercase text-sm">NO USERS YET</p>
+        <div *ngIf="!users.length" class="empty">
+          <p style="font-size: 24px; margin-bottom: 8px;">👤</p>
+          <p style="font-size: 12px;">[ NO USERS YET ]</p>
         </div>
 
-        <div *ngIf="users.length" class="space-y-2 max-h-64 overflow-y-auto">
+        <div *ngIf="users.length" style="display: grid; gap: 8px; max-height: 256px; overflow-y: auto;">
           <div
             *ngFor="let u of users"
-            class="bg-white border-3 border-black p-2 shadow-[2px_2px_0_0_rgba(0,0,0,1)] flex items-center justify-between gap-2"
+            style="background: var(--bg); border: 2px solid var(--lime); padding: 8px; display: flex; align-items: center; justify-content: space-between; gap: 8px;"
           >
-            <div class="min-w-0">
-              <p class="text-sm font-bold text-black break-words">{{ u.fullName }}</p>
-              <p class="text-xs text-gray-600 break-words">{{ u.email }}</p>
+            <div style="min-width: 0;">
+              <p style="font-size: 14px; word-break: break-word;">{{ u.fullName }}</p>
+              <p style="font-size: 12px; color: var(--ink-soft); word-break: break-word;">{{ u.email }}</p>
             </div>
 
             <span
-              class="px-2 py-1 border-2 border-black text-xs font-bold shrink-0"
-              [ngClass]="{
-                'bg-red-500 text-white': u.role==='ADMIN',
-                'bg-yellow-400 text-black': u.role==='MANAGER',
-                'bg-blue-400 text-white': u.role==='EMPLOYEE',
-                'bg-purple-400 text-white': u.role==='TEAM_LEAD'
-              }"
+              class="badge"
+              [style.background]="u.role==='ADMIN' ? 'var(--red)' : u.role==='MANAGER' ? 'var(--yellow)' : u.role==='TEAM_LEAD' ? 'var(--magenta)' : 'var(--cyan)'"
+              [style.color]="'var(--bg)'"
+              [style.border-color]="'var(--bg)'"
+              style="flex-shrink: 0;"
             >
               {{ u.role }}
             </span>

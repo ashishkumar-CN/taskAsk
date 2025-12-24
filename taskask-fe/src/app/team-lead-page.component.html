@@ -1,245 +1,201 @@
-<div class="space-y-4 font-mono">
+<div class="space-y-4">
   <!-- Header -->
-  <div class="bg-blue-600 border-4 border-black shadow-[6px_6px_0_0_rgba(0,0,0,1)] p-4 flex justify-between items-center gap-3 flex-wrap">
-    <div class="flex items-center gap-3">
-      <div class="w-10 h-10 bg-yellow-400 border-4 border-black flex items-center justify-center">
-        <span class="text-xl font-bold text-black">TL</span>
+  <div class="panel" style="background: linear-gradient(135deg, var(--cyan), var(--magenta)); border-color: var(--yellow);">
+    <div class="flex justify-between items-center gap-3 flex-wrap">
+      <div class="flex items-center gap-3">
+        <div class="crest" style="width: 40px; height: 40px; font-size: 12px; background: var(--yellow); color: var(--bg); border-color: var(--bg);">TL</div>
+        <h2 style="color: var(--bg); text-shadow: 2px 2px 0 var(--yellow);">
+          TEAM LEAD
+        </h2>
       </div>
-      <h2 class="text-2xl font-bold text-white uppercase tracking-wider" style="text-shadow: 3px 3px 0 #000;">
-        TEAM LEAD
-      </h2>
-    </div>
 
-    <button
-      class="px-4 py-2 bg-cyan-400 text-black border-4 border-black shadow-[2px_2px_0_0_rgba(0,0,0,1)] hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-none transition-all font-bold uppercase text-sm"
-      (click)="state.loadManagerTasks()"
-    >
-      ↻ REFRESH
-    </button>
+      <button
+        class="btn"
+        style="background: var(--yellow); color: var(--bg); border-color: var(--bg);"
+        (click)="state.loadManagerTasks()"
+      >
+        ↻ REFRESH
+      </button>
+    </div>
   </div>
 
   <!-- Panels Grid -->
   <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
     <!-- Team Panel -->
-    <div class="bg-white border-4 border-black shadow-[6px_6px_0_0_rgba(0,0,0,1)] p-4">
-      <div class="pb-3 mb-4 border-b-4 border-dotted border-black flex items-center justify-between">
+    <div class="panel">
+      <div class="panel-header">
         <div>
-          <h2 class="text-xl font-bold text-black uppercase">👥 TEAM</h2>
-          <p class="text-xs font-bold text-black">Create + manage members</p>
+          <h2>👥 TEAM</h2>
+          <p class="muted" style="font-size: 12px;">CREATE + MANAGE MEMBERS</p>
         </div>
-        <div class="w-12 h-12 bg-linear-to-br from-lime-400 to-green-500 border-4 border-black flex items-center justify-center font-bold text-lg">
-          ✓
-        </div>
+        <div class="crest" style="width: 48px; height: 48px; font-size: 16px; background: var(--lime); color: var(--bg); border-color: var(--bg);">✓</div>
       </div>
 
       <!-- Show existing team name -->
-      <div *ngIf="state.team()" class="mb-4 p-3 bg-lime-100 border-4 border-black">
-        <p class="text-xs font-bold text-black uppercase">YOUR TEAM:</p>
-        <p class="text-lg font-bold text-black">{{ state.team()?.name }}</p>
+      <div *ngIf="state.team()" style="margin-bottom: 16px; padding: 12px; background: rgba(0,255,0,0.1); border: 3px solid var(--lime);">
+        <p style="font-size: 10px; color: var(--lime);">YOUR TEAM:</p>
+        <p style="font-size: 18px; color: var(--lime);">{{ state.team()?.name }}</p>
       </div>
 
       <!-- Create team form (only if no team exists) -->
-      <div *ngIf="!state.team()" class="grid grid-cols-1 gap-3">
-        <label class="text-xs text-black font-bold flex flex-col gap-1 uppercase">
-          <span>TEAM NAME:</span>
-          <input
-            class="border-2 border-black px-2 py-2 bg-white font-mono text-sm"
-            [(ngModel)]="teamName"
-            placeholder="My Team"
-          />
-        </label>
+      <div *ngIf="!state.team()" style="display: grid; gap: 12px;">
+        <div class="field">
+          <label>TEAM NAME:</label>
+          <input [(ngModel)]="teamName" placeholder="MY TEAM" />
+        </div>
 
-        <button
-          class="w-full py-3 bg-yellow-400 border-4 border-black shadow-[4px_4px_0_0_rgba(0,0,0,1)] hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-none transition-all text-black font-bold uppercase"
-          (click)="saveTeam()"
-        >
-          ★ SAVE TEAM ★
+        <button class="btn primary" style="width: 100%;" (click)="saveTeam()">
+          ★ [ SAVE TEAM ] ★
         </button>
       </div>
 
       <!-- Add member -->
-      <div class="mt-4 pt-4 border-t-4 border-dotted border-black">
-        <h3 class="text-black font-bold mb-2 uppercase">➕ ADD MEMBER</h3>
+      <div style="margin-top: 16px; padding-top: 16px; border-top: 2px dashed var(--cyan);">
+        <h3 style="margin-bottom: 8px;">➕ ADD MEMBER</h3>
 
-        <select
-          class="w-full border-2 border-black px-2 py-2 bg-white font-mono text-sm mb-2"
-          [(ngModel)]="addUserId"
-        >
-          <option value="">Select employee...</option>
+        <select class="field-input" style="margin-bottom: 8px;" [(ngModel)]="addUserId">
+          <option value="">[ SELECT EMPLOYEE... ]</option>
           <option *ngFor="let emp of employees" [value]="emp.id">
             {{ emp.fullName }} - {{ emp.email }}
           </option>
         </select>
 
-        <button
-          class="px-4 py-2 bg-lime-400 text-black border-4 border-black shadow-[2px_2px_0_0_rgba(0,0,0,1)] hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-none transition-all font-bold uppercase text-sm"
-          (click)="addMember()"
-        >
+        <button class="btn" style="border-color: var(--lime); color: var(--lime);" (click)="addMember()">
           + ADD
         </button>
       </div>
 
       <!-- Members -->
-      <div class="mt-4 pt-4 border-t-4 border-dotted border-black">
-        <h3 class="text-black font-bold mb-2 uppercase">📌 MEMBERS</h3>
+      <div style="margin-top: 16px; padding-top: 16px; border-top: 2px dashed var(--cyan);">
+        <h3 style="margin-bottom: 8px;">📌 MEMBERS</h3>
 
-        <div *ngIf="!teamMembers.length" class="text-sm text-black font-bold bg-gray-100 border-2 border-black p-3">
-          NO MEMBERS YET.
+        <div *ngIf="!teamMembers.length" class="empty" style="font-size: 12px;">
+          [ NO MEMBERS YET ]
         </div>
 
-        <div *ngFor="let m of teamMembers" class="p-2 border-2 border-black bg-gray-100 text-black text-sm mb-2">
-          <p class="font-bold break-words">{{ m.fullName }}</p>
-          <p class="text-xs font-bold break-words">{{ m.email }}</p>
+        <div *ngFor="let m of teamMembers" style="padding: 8px; border: 2px solid var(--cyan); background: var(--bg); margin-bottom: 8px;">
+          <p style="word-break: break-word;">{{ m.fullName }}</p>
+          <p style="font-size: 12px; color: var(--ink-soft); word-break: break-word;">{{ m.email }}</p>
         </div>
       </div>
     </div>
 
     <!-- Create Task Panel -->
-    <div class="bg-linear-to-br from-lime-200 to-green-300 border-4 border-black shadow-[6px_6px_0_0_rgba(0,0,0,1)] p-4">
-      <div class="pb-3 mb-4 border-b-4 border-dotted border-black">
-        <h2 class="text-2xl font-bold text-black uppercase">✏️ ASSIGN TASK</h2>
-        <p class="text-black text-xs font-bold">Assign work to your team</p>
+    <div class="panel" style="background: linear-gradient(135deg, var(--panel), rgba(0,255,0,0.15)); border-color: var(--lime);">
+      <div class="panel-header" style="border-color: var(--lime);">
+        <div>
+          <h2>✏️ ASSIGN TASK</h2>
+          <p class="muted" style="font-size: 12px;">ASSIGN WORK TO YOUR TEAM</p>
+        </div>
       </div>
 
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
-        <label class="text-xs text-black font-bold flex flex-col gap-1 uppercase md:col-span-2">
-          <span>TASK TITLE:</span>
-          <input
-            class="border-2 border-black px-2 py-2 bg-white font-mono text-sm"
-            [(ngModel)]="taskTitle"
-            placeholder="Task title"
-          />
-        </label>
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+        <div class="field" style="grid-column: span 2;">
+          <label>TASK TITLE:</label>
+          <input [(ngModel)]="taskTitle" placeholder="TASK TITLE" />
+        </div>
 
-        <label class="text-xs text-black font-bold flex flex-col gap-1 uppercase md:col-span-2">
-          <span>ASSIGNEE (TEAM MEMBER):</span>
-          <select
-            class="border-2 border-black px-2 py-2 bg-white font-mono text-sm"
-            [(ngModel)]="taskAssigneeId"
-          >
-            <option value="">Select...</option>
+        <div class="field" style="grid-column: span 2;">
+          <label>ASSIGNEE (TEAM MEMBER):</label>
+          <select [(ngModel)]="taskAssigneeId">
+            <option value="">[ SELECT... ]</option>
             <option *ngFor="let m of teamMembers" [value]="m.userId">
               {{ m.fullName }} - {{ m.email }}
             </option>
           </select>
-        </label>
+        </div>
 
-        <label class="text-xs text-black font-bold flex flex-col gap-1 uppercase md:col-span-2">
-          <span>DESCRIPTION:</span>
-          <textarea
-            class="border-2 border-black px-2 py-2 bg-white font-mono text-sm resize-none"
-            [(ngModel)]="taskDescription"
-            rows="3"
-            placeholder="Add context..."
-          ></textarea>
-        </label>
+        <div class="field" style="grid-column: span 2;">
+          <label>DESCRIPTION:</label>
+          <textarea [(ngModel)]="taskDescription" rows="3" placeholder="ADD CONTEXT..."></textarea>
+        </div>
 
-        <label class="text-xs text-black font-bold flex flex-col gap-1 uppercase">
-          <span>PRIORITY:</span>
-          <select
-            class="border-2 border-black px-2 py-2 bg-white font-mono text-sm"
-            [(ngModel)]="taskPriority"
-          >
+        <div class="field">
+          <label>PRIORITY:</label>
+          <select [(ngModel)]="taskPriority">
             <option value="LOW">LOW</option>
             <option value="MEDIUM">MEDIUM</option>
             <option value="HIGH">HIGH</option>
           </select>
-        </label>
+        </div>
 
-        <label class="text-xs text-black font-bold flex flex-col gap-1 uppercase">
-          <span>DUE DATE:</span>
-          <input
-            class="border-2 border-black px-2 py-2 bg-white font-mono text-sm"
-            type="date"
-            [(ngModel)]="taskDueDate"
-          />
-        </label>
+        <div class="field">
+          <label>DUE DATE:</label>
+          <input type="date" [(ngModel)]="taskDueDate" />
+        </div>
       </div>
 
-      <div class="flex items-center justify-between mt-4 pt-4 border-t-4 border-dotted border-black gap-3 flex-wrap">
-        <div class="flex-1 min-w-[220px] space-y-2">
-          <p *ngIf="localError" class="text-xs font-bold text-red-700 bg-red-200 border-2 border-black p-2">
+      <div class="panel-footer" style="border-color: var(--lime);">
+        <div style="flex: 1; min-width: 220px;">
+          <p *ngIf="localError" class="alert error" style="margin: 0;">
             ✗ {{ localError }}
           </p>
-          <p *ngIf="localMessage" class="text-xs font-bold text-green-700 bg-green-200 border-2 border-black p-2">
+          <p *ngIf="localMessage" class="alert success" style="margin: 0;">
             ✓ {{ localMessage }}
           </p>
         </div>
 
-        <button
-          class="px-6 py-3 bg-yellow-400 border-4 border-black shadow-[4px_4px_0_0_rgba(0,0,0,1)] hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-none transition-all text-black font-bold uppercase flex items-center space-x-2"
-          (click)="createTask()"
-        >
-          <span>★ CREATE TASK ★</span>
+        <button class="btn primary" (click)="createTask()">
+          ★ [ CREATE TASK ] ★
         </button>
       </div>
     </div>
   </div>
 
   <!-- Task List -->
-  <div class="bg-white border-4 border-black shadow-[6px_6px_0_0_rgba(0,0,0,1)] p-4">
-    <div class="pb-3 mb-4 border-b-4 border-dotted border-black flex items-center justify-between gap-3 flex-wrap">
+  <div class="panel">
+    <div class="panel-header">
       <div>
-        <h2 class="text-xl font-bold text-black uppercase">📋 TASKS YOU CREATED</h2>
-        <p class="text-black text-xs font-bold">Manager view</p>
+        <h2>📋 TASKS YOU CREATED</h2>
+        <p class="muted" style="font-size: 12px;">MANAGER VIEW</p>
       </div>
 
-      <button
-        class="px-4 py-2 bg-cyan-400 border-2 border-black font-bold uppercase text-sm hover:bg-cyan-500"
-        (click)="state.loadManagerTasks()"
-      >
+      <button class="btn" (click)="state.loadManagerTasks()">
         ↻ REFRESH
       </button>
     </div>
 
-    <div *ngIf="!tasks.length" class="text-center bg-gray-100 border-2 border-black p-6">
-      <p class="text-4xl mb-2">📋</p>
-      <p class="text-black font-bold uppercase">NO TASKS YET</p>
-      <p class="text-xs text-black mt-1 font-bold">Create one or refresh!</p>
+    <div *ngIf="!tasks.length" class="empty">
+      <p style="font-size: 32px; margin-bottom: 8px;">📋</p>
+      <p>[ NO TASKS YET ]</p>
+      <p style="font-size: 12px; margin-top: 4px;">CREATE ONE OR REFRESH!</p>
     </div>
 
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-3" *ngIf="tasks.length">
-      <div
-        *ngFor="let task of tasks"
-        class="bg-linear-to-br from-white to-gray-100 border-4 border-black p-3 shadow-[4px_4px_0_0_rgba(0,0,0,1)] hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-[2px_2px_0_0_rgba(0,0,0,1)] transition-all"
-      >
-        <div class="flex items-start justify-between gap-3 mb-3">
-          <div class="min-w-0">
-            <h3 class="text-base font-bold text-black break-words mb-1">{{ task.title }}</h3>
-            <p class="text-sm text-black break-words">{{ task.description || 'No description' }}</p>
+    <div class="task-grid" *ngIf="tasks.length">
+      <div *ngFor="let task of tasks" class="task-card">
+        <div class="task-head">
+          <div style="min-width: 0;">
+            <h3 style="word-break: break-word; margin-bottom: 4px;">{{ task.title }}</h3>
+            <p style="font-size: 14px; word-break: break-word;">{{ task.description || '[ NO DESCRIPTION ]' }}</p>
           </div>
 
-          <div class="flex flex-col items-end gap-1 shrink-0">
+          <div style="display: flex; flex-direction: column; align-items: flex-end; gap: 4px;">
             <span
-              class="px-2 py-1 border-2 border-black text-xs font-bold"
-              [ngClass]="{
-                'bg-red-500 text-white': task.priority==='HIGH',
-                'bg-yellow-400 text-black': task.priority==='MEDIUM',
-                'bg-blue-400 text-white': task.priority==='LOW'
-              }"
+              class="badge"
+              [style.background]="task.priority==='HIGH' ? 'var(--red)' : task.priority==='MEDIUM' ? 'var(--yellow)' : 'var(--cyan)'"
+              [style.color]="'var(--bg)'"
+              [style.border-color]="'var(--bg)'"
             >
               {{ task.priority }}
             </span>
-            <span class="text-xs font-bold text-black">DUE: {{ task.dueDate || 'NONE' }}</span>
+            <span style="font-size: 12px; color: var(--yellow);">DUE: {{ task.dueDate || 'NONE' }}</span>
           </div>
         </div>
 
-        <div class="flex items-center justify-between gap-2 text-xs mb-3">
+        <div style="display: flex; align-items: center; gap: 8px;">
           <span
-            class="px-2 py-1 border-2 border-black font-bold"
-            [ngClass]="{
-              'bg-lime-400 text-black': task.status==='COMPLETED',
-              'bg-orange-400 text-black': task.status==='PENDING',
-              'bg-cyan-300 text-black': task.status==='IN_PROGRESS'
-            }"
+            class="badge"
+            [style.background]="task.status==='COMPLETED' ? 'var(--lime)' : task.status==='PENDING' ? 'var(--orange)' : 'var(--cyan)'"
+            [style.color]="'var(--bg)'"
+            [style.border-color]="'var(--bg)'"
           >
             {{ task.status }}
           </span>
         </div>
 
-        <div class="text-xs text-black font-bold bg-gray-100 border-2 border-black p-2 space-y-1">
-          <p class="break-words">→ CREATED BY: {{ task.createdByName || 'Unknown' }}</p>
-          <p class="break-words">→ ASSIGNED TO: {{ task.assignedToName || 'Unknown' }}</p>
+        <div style="font-size: 12px; background: var(--bg); border: 2px solid var(--cyan); padding: 8px;">
+          <p style="word-break: break-word;">→ CREATED BY: {{ task.createdByName || 'UNKNOWN' }}</p>
+          <p style="word-break: break-word;">→ ASSIGNED TO: {{ task.assignedToName || 'UNKNOWN' }}</p>
         </div>
       </div>
     </div>

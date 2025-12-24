@@ -1,53 +1,109 @@
-
 @import "tailwindcss";
-@import url("https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Source+Serif+4:wght@400;600&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap");
 
 :root {
-  --bg: #f3ead7;
-  --bg-2: #efe1c9;
-  --panel: #fffaf0;
-  --panel-border: #e3d4bc;
-  --ink: #1f1a12;
-  --ink-soft: #5f554a;
-  --accent: #8b5a2b;
-  --accent-2: #d4a32f;
-  --accent-3: #2f3b2b;
-  --danger: #b23a3a;
-  --success: #2f7a4f;
-  --shadow: rgba(40, 30, 20, 0.15);
-  --radius: 18px;
-  font-family: "Source Serif 4", serif;
+  /* Brighter Retro Palette */
+  --bg: #1a1a2e;
+  --bg-2: #252540;
+  --panel: #2d2d4a;
+  --panel-border: #4a4a70;
+  --ink: #ffffff;
+  --ink-soft: #b0b0c8;
+  --ink-bright: #ffffff;
+  --ink-highlight: #ffffff;
+  
+  /* Vivid but not harsh accent colors */
+  --cyan: #6dd5ed;
+  --magenta: #d882c8;
+  --yellow: #f0e060;
+  --lime: #7cd87c;
+  --orange: #f0a060;
+  --red: #e07070;
+  
+  /* Semantic */
+  --accent: var(--cyan);
+  --accent-2: var(--magenta);
+  --accent-3: var(--lime);
+  --danger: var(--red);
+  --success: var(--lime);
+  --warning: var(--yellow);
+  
+  --shadow: rgba(109, 213, 237, 0.15);
+  --glow: 0 0 10px rgba(109, 213, 237, 0.5);
+  --glow-magenta: 0 0 10px rgba(216, 130, 200, 0.5);
+  --glow-yellow: 0 0 10px rgba(240, 224, 96, 0.5);
+  
+  --radius: 0px;
+  font-family: "VT323", monospace;
+  font-size: 18px;
   color: var(--ink);
   background: var(--bg);
+}
+
+/* Important text - bright white */
+h1, h2, h3, h4, h5, h6 {
+  color: #ffffff !important;
+}
+
+/* Make bold text white */
+strong, b, .font-bold {
+  color: #ffffff;
+}
+
+/* Labels and important info */
+label, .text-white, .uppercase {
+  color: #ffffff;
 }
 
 * {
   box-sizing: border-box;
 }
 
+/* Page container - clean, no scanlines */
 .page {
   min-height: 100vh;
-  background:
-    radial-gradient(circle at 18% 20%, rgba(212, 163, 47, 0.15), transparent 50%),
-    radial-gradient(circle at 80% 10%, rgba(47, 59, 43, 0.12), transparent 45%),
-    linear-gradient(180deg, var(--bg), var(--bg-2));
+  background: var(--bg);
   position: relative;
+  overflow: hidden;
 }
 
-.page::before {
+/* Subtle vignette effect only */
+.page::after {
   content: "";
   position: absolute;
   inset: 0;
-  background:
-    repeating-linear-gradient(
-      45deg,
-      rgba(255, 255, 255, 0.25),
-      rgba(255, 255, 255, 0.25) 6px,
-      rgba(0, 0, 0, 0.02) 6px,
-      rgba(0, 0, 0, 0.02) 12px
-    );
-  opacity: 0.12;
+  background: radial-gradient(
+    ellipse at center,
+    transparent 0%,
+    rgba(0, 0, 0, 0.3) 100%
+  );
   pointer-events: none;
+}
+
+/* Retro Gradient Banners */
+.retro-banner {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, var(--cyan), var(--magenta), var(--yellow), var(--cyan));
+  animation: rainbowSlide 3s linear infinite;
+}
+
+.retro-banner-2 {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, var(--magenta), var(--yellow), var(--cyan), var(--magenta));
+  animation: rainbowSlide 3s linear infinite reverse;
+}
+
+@keyframes rainbowSlide {
+  0% { background-position: 0% 50%; }
+  100% { background-position: 200% 50%; }
 }
 
 .shell {
@@ -65,6 +121,7 @@
   gap: 20px;
   flex-wrap: wrap;
   padding-bottom: 16px;
+  border-bottom: 3px solid var(--cyan);
 }
 
 .brand {
@@ -100,57 +157,75 @@
 
 .nav-link {
   padding: 8px 14px;
-  border-radius: 10px;
-  border: 2px solid var(--panel-border);
-  background: var(--panel);
-  font-size: 13px;
-  font-weight: 600;
-  color: var(--ink);
+  border: 3px solid var(--cyan);
+  background: transparent;
+  font-family: "Press Start 2P", monospace;
+  font-size: 10px;
+  color: var(--cyan);
   text-decoration: none;
+  text-transform: uppercase;
   transition: all 0.2s;
   white-space: nowrap;
 }
 
 .nav-link:hover {
-  background: var(--accent-2);
-  border-color: var(--accent);
+  background: var(--cyan);
+  color: var(--bg);
+  box-shadow: var(--glow);
   transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(139, 90, 43, 0.2);
 }
 
 .crest {
   width: 56px;
   height: 56px;
-  border-radius: 16px;
-  background: linear-gradient(135deg, var(--accent-2), #f5d77b);
+  background: var(--bg);
+  border: 4px solid var(--cyan);
   display: grid;
   place-items: center;
-  font-family: "Cinzel", serif;
-  font-size: 18px;
-  font-weight: 700;
-  color: #2c1a0f;
-  box-shadow: 0 14px 30px rgba(139, 90, 43, 0.3);
-  border: 2px solid rgba(139, 90, 43, 0.2);
-  animation: crestFloat 6s ease-in-out infinite;
+  font-family: "Press Start 2P", monospace;
+  font-size: 20px;
+  color: var(--cyan);
+  box-shadow: var(--glow);
+  animation: crestPulse 2s ease-in-out infinite;
 }
 
-h1,
-h2,
-h3 {
-  font-family: "Cinzel", serif;
+@keyframes crestPulse {
+  0%, 100% { box-shadow: var(--glow); }
+  50% { box-shadow: 0 0 20px var(--cyan), 0 0 40px var(--cyan), 0 0 60px var(--cyan); }
+}
+
+h1, h2, h3 {
+  font-family: "Press Start 2P", monospace;
   margin: 0;
+  color: var(--ink);
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+h1 {
+  font-size: 16px;
+  text-shadow: 3px 3px 0 var(--magenta), -1px -1px 0 var(--cyan);
+}
+
+h2 {
+  font-size: 14px;
+}
+
+h3 {
+  font-size: 12px;
 }
 
 .tagline {
   color: var(--ink-soft);
-  margin: 4px 0 0;
+  margin: 8px 0 0;
+  font-size: 14px;
 }
 
 .eyebrow {
-  color: var(--accent);
+  color: var(--yellow);
   font-size: 12px;
   text-transform: uppercase;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.15em;
   margin: 0 0 4px;
 }
 
@@ -162,22 +237,24 @@ h3 {
 /* Badge styles */
 .badge {
   padding: 6px 12px;
-  border-radius: 999px;
-  border: 1px solid var(--panel-border);
-  background: rgba(255, 255, 255, 0.7);
-  font-size: 11px;
-  font-weight: 600;
+  border: 2px solid var(--cyan);
+  background: transparent;
+  font-family: "VT323", monospace;
+  font-size: 14px;
+  color: var(--cyan);
   white-space: nowrap;
 }
 
 .badge.role {
-  background: rgba(47, 59, 43, 0.12);
-  color: var(--accent-3);
-  border-color: var(--accent-3);
+  background: var(--magenta);
+  color: var(--bg);
+  border-color: var(--magenta);
+  box-shadow: var(--glow-magenta);
 }
 
 .badge.soft {
   color: var(--ink-soft);
+  border-color: var(--ink-soft);
   max-width: 180px;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -185,7 +262,7 @@ h3 {
 
 .badge.status {
   text-transform: uppercase;
-  font-size: 11px;
+  font-size: 12px;
 }
 
 .layout {
@@ -197,24 +274,15 @@ h3 {
 
 .panel {
   background: var(--panel);
-  border: 1px solid var(--panel-border);
-  border-radius: var(--radius);
+  border: 3px solid var(--cyan);
   padding: 20px;
-  box-shadow: 0 18px 40px var(--shadow);
+  box-shadow: 8px 8px 0 var(--magenta);
   animation: riseIn 0.6s ease both;
 }
 
-.auth-panel {
-  animation-delay: 0.05s;
-}
-
-.tasks-panel {
-  animation-delay: 0.12s;
-}
-
-.manager-panel {
-  animation-delay: 0.18s;
-}
+.auth-panel { animation-delay: 0.05s; }
+.tasks-panel { animation-delay: 0.12s; }
+.manager-panel { animation-delay: 0.18s; }
 
 .panel-header {
   display: flex;
@@ -222,6 +290,8 @@ h3 {
   gap: 16px;
   align-items: flex-start;
   margin-bottom: 16px;
+  padding-bottom: 16px;
+  border-bottom: 2px dashed var(--cyan);
 }
 
 .panel-footer {
@@ -230,15 +300,16 @@ h3 {
   justify-content: space-between;
   gap: 12px;
   margin-top: 16px;
+  padding-top: 16px;
+  border-top: 2px dashed var(--cyan);
 }
 
 .tab-switch {
-  background: rgba(139, 90, 43, 0.08);
+  background: var(--bg);
   padding: 4px;
-  border-radius: 12px;
+  border: 3px solid var(--cyan);
   display: inline-flex;
   gap: 4px;
-  border: 1px solid rgba(139, 90, 43, 0.2);
 }
 
 .tab-switch button {
@@ -246,15 +317,16 @@ h3 {
   background: transparent;
   color: var(--ink-soft);
   padding: 8px 12px;
-  border-radius: 10px;
   cursor: pointer;
-  font-family: inherit;
+  font-family: "Press Start 2P", monospace;
+  font-size: 10px;
+  text-transform: uppercase;
 }
 
 .tab-switch button.active {
-  background: linear-gradient(135deg, var(--accent), var(--accent-2));
-  color: #2c1a0f;
-  font-weight: 700;
+  background: var(--cyan);
+  color: var(--bg);
+  box-shadow: var(--glow);
 }
 
 .form-grid {
@@ -269,16 +341,33 @@ h3 {
   font-size: 14px;
 }
 
+.field label {
+  color: var(--yellow);
+  text-transform: uppercase;
+  font-size: 12px;
+  letter-spacing: 1px;
+}
+
 .field input,
 .field textarea,
 .field select,
+.field-input,
 .select {
   width: 100%;
-  padding: 10px 12px;
-  border-radius: 12px;
-  border: 1px solid var(--panel-border);
-  background: #fffdf7;
+  padding: 12px;
+  border: 3px solid var(--cyan);
+  background: var(--bg);
   color: var(--ink);
+  font-family: "VT323", monospace;
+  font-size: 18px;
+}
+
+.field input:focus,
+.field textarea:focus,
+.field select:focus,
+.field-input:focus {
+  outline: none;
+  box-shadow: var(--glow);
 }
 
 .field textarea {
@@ -290,32 +379,44 @@ h3 {
   grid-column: span 2;
 }
 
+/* Button Styles */
 .btn {
-  border: 1px solid var(--panel-border);
-  border-radius: 12px;
-  padding: 10px 14px;
-  background: #fffdf7;
-  color: var(--ink);
+  border: 3px solid var(--cyan);
+  padding: 12px 16px;
+  background: transparent;
+  color: var(--cyan);
   cursor: pointer;
-  transition: transform 120ms ease, box-shadow 120ms ease;
-  font-family: "Cinzel", serif;
+  transition: all 0.15s ease;
+  font-family: "Press Start 2P", monospace;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
 }
 
 .btn:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 10px 24px rgba(139, 90, 43, 0.2);
+  background: var(--cyan);
+  color: var(--bg);
+  box-shadow: var(--glow);
+  transform: translateY(-2px);
+}
+
+.btn:active {
+  transform: translateY(0);
 }
 
 .btn:disabled {
-  opacity: 0.6;
+  opacity: 0.5;
   cursor: not-allowed;
 }
 
 .btn.primary {
-  background: linear-gradient(135deg, var(--accent-2), #f5d77b);
-  color: #2c1a0f;
-  border: none;
-  font-weight: 700;
+  background: var(--yellow);
+  color: var(--bg);
+  border-color: var(--yellow);
+}
+
+.btn.primary:hover {
+  box-shadow: var(--glow-yellow);
 }
 
 .btn.ghost {
@@ -323,26 +424,33 @@ h3 {
 }
 
 .btn.danger {
-  border-color: rgba(178, 58, 58, 0.4);
-  color: var(--danger);
+  border-color: var(--red);
+  color: var(--red);
+}
+
+.btn.danger:hover {
+  background: var(--red);
+  color: var(--bg);
+  box-shadow: 0 0 10px var(--red), 0 0 20px var(--red);
 }
 
 .alert {
   margin-top: 10px;
-  padding: 10px 12px;
-  border-radius: 12px;
-  font-size: 13px;
-  border: 1px solid var(--panel-border);
+  padding: 12px;
+  border: 3px solid var(--cyan);
+  font-size: 14px;
 }
 
 .alert.success {
-  border-color: rgba(47, 122, 79, 0.3);
-  color: var(--success);
+  border-color: var(--lime);
+  color: var(--lime);
+  background: rgba(0, 255, 0, 0.1);
 }
 
 .alert.error {
-  border-color: rgba(178, 58, 58, 0.4);
-  color: var(--danger);
+  border-color: var(--red);
+  color: var(--red);
+  background: rgba(255, 0, 0, 0.1);
 }
 
 .alert.inline {
@@ -364,14 +472,14 @@ h3 {
 .label {
   font-size: 12px;
   text-transform: uppercase;
-  letter-spacing: 0.08em;
-  color: var(--accent);
+  letter-spacing: 0.15em;
+  color: var(--yellow);
   margin: 0 0 6px;
 }
 
 .value {
-  font-size: 16px;
-  font-weight: 600;
+  font-size: 18px;
+  color: var(--ink);
 }
 
 .filters {
@@ -382,20 +490,19 @@ h3 {
 }
 
 .chip {
-  border: 1px solid var(--panel-border);
+  border: 2px solid var(--cyan);
   padding: 6px 10px;
-  border-radius: 999px;
-  background: #fffdf7;
-  color: var(--ink);
+  background: transparent;
+  color: var(--cyan);
   cursor: pointer;
   font-size: 12px;
+  text-transform: uppercase;
 }
 
 .chip.active {
-  background: linear-gradient(135deg, var(--accent), var(--accent-2));
-  color: #2c1a0f;
-  border: none;
-  font-weight: 700;
+  background: var(--cyan);
+  color: var(--bg);
+  box-shadow: var(--glow);
 }
 
 .task-grid {
@@ -406,11 +513,17 @@ h3 {
 
 .task-card {
   padding: 16px;
-  border-radius: 14px;
-  background: #fffdf8;
-  border: 1px solid var(--panel-border);
+  background: var(--panel);
+  border: 3px solid var(--cyan);
   display: grid;
   gap: 10px;
+  box-shadow: 6px 6px 0 var(--magenta);
+  transition: all 0.15s ease;
+}
+
+.task-card:hover {
+  transform: translate(2px, 2px);
+  box-shadow: 4px 4px 0 var(--magenta);
 }
 
 .task-head {
@@ -424,7 +537,7 @@ h3 {
   display: flex;
   flex-wrap: wrap;
   gap: 12px;
-  font-size: 13px;
+  font-size: 14px;
   color: var(--ink-soft);
 }
 
@@ -437,18 +550,17 @@ h3 {
 .kicker {
   font-size: 12px;
   text-transform: uppercase;
-  letter-spacing: 0.06em;
-  color: var(--accent);
+  letter-spacing: 0.1em;
+  color: var(--yellow);
   margin: 0 0 6px;
 }
 
 .empty {
-  border: 1px dashed var(--panel-border);
-  border-radius: 14px;
-  padding: 18px;
+  border: 3px dashed var(--ink-soft);
+  padding: 24px;
   text-align: center;
   color: var(--ink-soft);
-  background: rgba(255, 255, 255, 0.6);
+  background: rgba(255, 255, 255, 0.02);
 }
 
 .assigned-list {
@@ -466,30 +578,41 @@ h3 {
   align-items: center;
   justify-content: space-between;
   padding: 12px 14px;
-  border-radius: 12px;
-  border: 1px solid var(--panel-border);
-  background: #fffdf7;
+  border: 2px solid var(--cyan);
+  background: var(--bg);
+}
+
+/* Marquee */
+.marquee-wrap {
+  overflow: hidden;
+  background: var(--yellow);
+  padding: 8px 0;
+  margin: 20px 0;
+  border: 3px solid var(--bg);
+}
+
+.marquee-text {
+  display: inline-block;
+  white-space: nowrap;
+  animation: marquee 15s linear infinite;
+  font-family: "Press Start 2P", monospace;
+  font-size: 12px;
+  color: var(--bg);
+  text-transform: uppercase;
+}
+
+@keyframes marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
 }
 
 @keyframes riseIn {
   from {
     opacity: 0;
-    transform: translateY(12px);
+    transform: translateY(20px);
   }
   to {
     opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes crestFloat {
-  0% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(-4px);
-  }
-  100% {
     transform: translateY(0);
   }
 }
@@ -512,56 +635,49 @@ h3 {
 
 /* ===== NOTIFICATION STYLES ===== */
 
-/* Wrapper for positioning the dropdown */
 .notification-wrapper {
   position: relative;
   display: inline-block;
 }
 
-/* Bell button */
 .notification-bell {
-  background: linear-gradient(135deg, var(--accent-2), #f5d77b);
-  border: 2px solid var(--accent);
-  border-radius: 12px;
+  background: var(--yellow);
+  border: 3px solid var(--bg);
   padding: 8px 12px;
   font-size: 18px;
   cursor: pointer;
   position: relative;
-  transition: transform 0.2s, box-shadow 0.2s;
-  box-shadow: 0 4px 12px rgba(139, 90, 43, 0.25);
+  transition: all 0.2s;
 }
 
 .notification-bell:hover {
+  box-shadow: var(--glow-yellow);
   transform: translateY(-2px);
-  box-shadow: 0 6px 16px rgba(139, 90, 43, 0.35);
 }
 
-/* Red badge with unread count */
 .notification-badge {
   position: absolute;
-  top: -6px;
-  right: -6px;
-  background: var(--danger);
-  color: white;
-  font-size: 10px;
-  font-weight: 700;
-  min-width: 18px;
-  height: 18px;
-  border-radius: 9px;
+  top: -8px;
+  right: -8px;
+  background: var(--red);
+  color: var(--ink);
+  font-family: "Press Start 2P", monospace;
+  font-size: 8px;
+  min-width: 20px;
+  height: 20px;
   display: flex;
   align-items: center;
   justify-content: center;
   padding: 0 4px;
-  border: 2px solid var(--panel);
-  animation: badgePulse 2s ease-in-out infinite;
+  border: 2px solid var(--bg);
+  animation: badgePulse 1s ease-in-out infinite;
 }
 
 @keyframes badgePulse {
   0%, 100% { transform: scale(1); }
-  50% { transform: scale(1.1); }
+  50% { transform: scale(1.2); }
 }
 
-/* Dropdown panel */
 .notification-panel {
   position: absolute;
   top: 100%;
@@ -570,9 +686,8 @@ h3 {
   width: 320px;
   max-height: 400px;
   background: var(--panel);
-  border: 2px solid var(--panel-border);
-  border-radius: var(--radius);
-  box-shadow: 0 12px 40px var(--shadow);
+  border: 3px solid var(--cyan);
+  box-shadow: 8px 8px 0 var(--magenta);
   z-index: 1000;
   overflow: hidden;
   animation: panelSlide 0.2s ease-out;
@@ -589,17 +704,15 @@ h3 {
   }
 }
 
-/* Panel header */
 .notification-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 12px 16px;
-  background: linear-gradient(135deg, var(--accent-2), #f5d77b);
-  border-bottom: 2px solid var(--panel-border);
-  font-family: "Cinzel", serif;
-  font-weight: 600;
-  color: #2c1a0f;
+  background: var(--cyan);
+  color: var(--bg);
+  font-family: "Press Start 2P", monospace;
+  font-size: 10px;
 }
 
 .notification-header .close-btn {
@@ -607,31 +720,25 @@ h3 {
   border: none;
   font-size: 16px;
   cursor: pointer;
-  color: #2c1a0f;
+  color: var(--bg);
   padding: 4px 8px;
-  border-radius: 6px;
-  transition: background 0.2s;
 }
 
 .notification-header .close-btn:hover {
-  background: rgba(0, 0, 0, 0.1);
+  background: rgba(0, 0, 0, 0.2);
 }
 
-/* Empty state */
 .notification-empty {
   padding: 32px 16px;
   text-align: center;
   color: var(--ink-soft);
-  font-style: italic;
 }
 
-/* Scrollable notification list */
 .notification-list {
   max-height: 320px;
   overflow-y: auto;
 }
 
-/* Individual notification item */
 .notification-item {
   display: flex;
   gap: 12px;
@@ -646,26 +753,23 @@ h3 {
 }
 
 .notification-item:hover {
-  background: var(--bg);
+  background: rgba(0, 255, 255, 0.1);
 }
 
-/* Unread notification highlight */
 .notification-item.unread {
-  background: rgba(212, 163, 47, 0.15);
-  border-left: 3px solid var(--accent-2);
+  background: rgba(255, 0, 255, 0.15);
+  border-left: 4px solid var(--magenta);
 }
 
 .notification-item.unread:hover {
-  background: rgba(212, 163, 47, 0.25);
+  background: rgba(255, 0, 255, 0.25);
 }
 
-/* Notification icon */
 .notification-icon {
   font-size: 20px;
   flex-shrink: 0;
 }
 
-/* Notification content */
 .notification-content {
   flex: 1;
   min-width: 0;
@@ -673,20 +777,19 @@ h3 {
 
 .notification-message {
   margin: 0 0 4px;
-  font-size: 13px;
+  font-size: 14px;
   line-height: 1.4;
   color: var(--ink);
   word-wrap: break-word;
 }
 
 .notification-time {
-  font-size: 11px;
+  font-size: 12px;
   color: var(--ink-soft);
 }
 
 /* ===== RESPONSIVE STYLES ===== */
 
-/* Tablet */
 @media (max-width: 900px) {
   .header {
     flex-direction: column;
@@ -714,34 +817,37 @@ h3 {
   }
 }
 
-/* Mobile */
 @media (max-width: 480px) {
+  :root {
+    font-size: 16px;
+  }
+
   .header {
     padding-bottom: 12px;
   }
   
-  .brand h1 {
-    font-size: 18px;
+  h1 {
+    font-size: 12px;
   }
   
   .tagline {
-    font-size: 11px;
+    font-size: 12px;
   }
   
   .crest {
     width: 44px;
     height: 44px;
-    font-size: 14px;
+    font-size: 16px;
   }
   
   .nav-link {
     padding: 6px 10px;
-    font-size: 12px;
+    font-size: 8px;
   }
   
   .badge {
     padding: 4px 8px;
-    font-size: 10px;
+    font-size: 12px;
   }
   
   .badge.soft {
@@ -749,8 +855,8 @@ h3 {
   }
   
   .btn {
-    padding: 8px 12px;
-    font-size: 12px;
+    padding: 10px 12px;
+    font-size: 8px;
   }
   
   .notification-panel {
@@ -761,5 +867,9 @@ h3 {
   .notification-bell {
     padding: 6px 10px;
     font-size: 16px;
+  }
+
+  .marquee-text {
+    font-size: 10px;
   }
 }

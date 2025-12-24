@@ -1,44 +1,44 @@
 <div class="panel" style="max-width: 480px; margin: 0 auto;">
   <div class="panel-header">
-    <h2>⚡ ACCESS ⚡</h2>
+    <h2>⚡ [ ACCESS TERMINAL ] ⚡</h2>
   </div>
 
   <div class="tab-switch" style="margin-bottom: 16px;">
-    <button [class.active]="mode==='login'" (click)="toggle('login')">Login</button>
-    <button [class.active]="mode==='signup'" (click)="toggle('signup')">Sign up</button>
+    <button [class.active]="mode==='login'" (click)="toggle('login')">LOGIN</button>
+    <button [class.active]="mode==='signup'" (click)="toggle('signup')">SIGN UP</button>
   </div>
 
   <div *ngIf="mode==='login'" class="form-grid">
     <div class="field">
-      <label>Email</label>
+      <label>EMAIL:</label>
       <input [(ngModel)]="email" placeholder="you@example.com">
     </div>
     <div class="field">
-      <label>Password</label>
+      <label>PASSWORD:</label>
       <input type="password" [(ngModel)]="password" placeholder="••••••••">
     </div>
     <div class="field full">
       <button class="btn primary" (click)="doLogin()" [disabled]="loading" style="width: 100%;">
-        {{ loading ? '⏳ SIGNING IN...' : '→ LOGIN' }}
+        {{ loading ? '⏳ AUTHENTICATING...' : '→ [ LOGIN ]' }}
       </button>
     </div>
   </div>
 
   <div *ngIf="mode==='signup'" class="form-grid">
     <div class="field">
-      <label>Full name</label>
-      <input [(ngModel)]="fullName" placeholder="Jordan Smith">
+      <label>FULL NAME:</label>
+      <input [(ngModel)]="fullName" placeholder="ENTER NAME">
     </div>
     <div class="field">
-      <label>Email</label>
+      <label>EMAIL:</label>
       <input [(ngModel)]="email" placeholder="you@example.com">
     </div>
     <div class="field">
-      <label>Password</label>
-      <input type="password" [(ngModel)]="password" placeholder="Create password">
+      <label>PASSWORD:</label>
+      <input type="password" [(ngModel)]="password" placeholder="CREATE PASSWORD">
     </div>
     <div class="field">
-      <label>Role</label>
+      <label>ROLE:</label>
       <select [(ngModel)]="role">
         <option value="EMPLOYEE">EMPLOYEE</option>
         <option value="MANAGER">MANAGER</option>
@@ -47,12 +47,12 @@
       </select>
     </div>
     <div class="field full">
-      <button class="btn" style="width: 100%; background: var(--lime);" (click)="doSignup()" [disabled]="loading">
-        {{ loading ? '⏳ CREATING...' : '★ CREATE ACCOUNT ★' }}
+      <button class="btn primary" style="width: 100%;" (click)="doSignup()" [disabled]="loading">
+        {{ loading ? '⏳ INITIALIZING...' : '★ [ CREATE ACCOUNT ] ★' }}
       </button>
     </div>
   </div>
 
-  <div *ngIf="error" class="alert error">✗ {{ error }}</div>
-  <div *ngIf="message" class="alert success">✓ {{ message }}</div>
+  <div *ngIf="error" class="alert error">✗ ERROR: {{ error }}</div>
+  <div *ngIf="message" class="alert success">✓ SUCCESS: {{ message }}</div>
 </div>

@@ -23,10 +23,10 @@
         
         <!-- Navigation links + actions -->
         <div class="nav-actions">
-          <a routerLink="/manager" *ngIf="state.userRole() === 'MANAGER'" class="nav-link">⚙ Manager</a>
-          <a routerLink="/team-lead" *ngIf="state.userRole() === 'TEAM_LEAD'" class="nav-link">👥 Team Lead</a>
-          <a routerLink="/employee" *ngIf="state.userRole() === 'EMPLOYEE'" class="nav-link">📝 Employee</a>
-          <a routerLink="/admin" *ngIf="state.userRole() === 'ADMIN'" class="nav-link">🔐 Admin</a>
+          <a routerLink="/manager" *ngIf="state.userRole() === 'MANAGER'" class="nav-link">⚙ MANAGER</a>
+          <a routerLink="/team-lead" *ngIf="state.userRole() === 'TEAM_LEAD'" class="nav-link">👥 TEAM LEAD</a>
+          <a routerLink="/employee" *ngIf="state.userRole() === 'EMPLOYEE'" class="nav-link">📝 EMPLOYEE</a>
+          <a routerLink="/admin" *ngIf="state.userRole() === 'ADMIN'" class="nav-link">🔐 ADMIN</a>
           
           <!-- Notification Bell -->
           <div class="notification-wrapper">
@@ -40,12 +40,12 @@
             <!-- Notification dropdown panel -->
             <div class="notification-panel" *ngIf="state.showNotificationPanel()">
               <div class="notification-header">
-                <span>🔔 Notifications</span>
+                <span>🔔 NOTIFICATIONS</span>
                 <button class="close-btn" (click)="state.closeNotificationPanel()">✕</button>
               </div>
               
               <div class="notification-empty" *ngIf="state.notifications().length === 0">
-                No notifications yet
+                [ NO NOTIFICATIONS ]
               </div>
               
               <div class="notification-list" *ngIf="state.notifications().length > 0">
@@ -66,13 +66,13 @@
             </div>
           </div>
           
-          <button class="btn danger" (click)="logout()">Logout</button>
+          <button class="btn danger" (click)="logout()">[ LOGOUT ]</button>
         </div>
       </nav>
       
       <ng-template #guest>
         <div class="nav-actions">
-          <a class="btn primary" routerLink="/auth">★ Login / Sign up ★</a>
+          <a class="btn primary" routerLink="/auth">★ LOGIN / SIGN UP ★</a>
         </div>
       </ng-template>
     </header>
@@ -90,7 +90,7 @@
     </main>
 
     <footer style="margin-top: 40px; text-align:center; font-family: 'Press Start 2P', monospace; font-size: 10px; color: var(--yellow);">
-      ★ © {{ currentYear }} TaskAsk ★ RETRO EDITION ★
+      ★ © {{ currentYear }} TASKASK ★ RETRO EDITION ★
     </footer>
   </div>
 </div>

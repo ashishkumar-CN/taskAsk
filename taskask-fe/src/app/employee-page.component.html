@@ -1,27 +1,27 @@
-<div class="space-y-4 font-mono">
+<div class="space-y-4">
   <!-- Header -->
-  <div class="bg-gradient-to-r from-cyan-400 to-blue-500 border-4 border-black shadow-[6px_6px_0_0_rgba(0,0,0,1)] p-4 flex items-center justify-between gap-3 flex-wrap">
-    <div class="flex items-center gap-3">
-      <div class="w-10 h-10 bg-black border-4 border-black flex items-center justify-center">
-        <span class="text-xl font-bold text-yellow-400">ME</span>
+  <div class="panel" style="background: linear-gradient(135deg, var(--cyan), var(--magenta)); border-color: var(--yellow);">
+    <div class="flex items-center justify-between gap-3 flex-wrap">
+      <div class="flex items-center gap-3">
+        <div class="crest" style="width: 40px; height: 40px; font-size: 10px; background: var(--bg); color: var(--yellow); border-color: var(--yellow);">ME</div>
+        <h2 style="color: var(--bg); text-shadow: 2px 2px 0 var(--yellow);">
+          MY TASKS
+        </h2>
       </div>
-      <h2 class="text-2xl font-bold text-black uppercase tracking-wider" style="text-shadow: 2px 2px 0 #fff;">
-        MY TASKS
-      </h2>
+      <button class="btn primary" (click)="state.loadTasksForMe()">REFRESH</button>
     </div>
-    <button class="btn primary" (click)="state.loadTasksForMe()">Refresh</button>
   </div>
 
   <!-- Panel -->
-  <div class="bg-white border-4 border-black shadow-[6px_6px_0_0_rgba(0,0,0,1)] p-4">
-    <div class="pb-3 mb-4 border-b-4 border-dotted border-black space-y-3">
-      <div>
-        <h2 class="text-xl font-bold text-black uppercase">ASSIGNED TO YOU</h2>
-        <p class="text-black text-xs font-bold">Update status and priority</p>
+  <div class="panel">
+    <div class="panel-header" style="flex-direction: column; align-items: stretch;">
+      <div style="margin-bottom: 12px;">
+        <h2>ASSIGNED TO YOU</h2>
+        <p class="muted" style="font-size: 12px;">UPDATE STATUS AND PRIORITY</p>
       </div>
-      <div class="flex flex-wrap items-center gap-3">
-        <div class="flex items-center gap-2">
-          <span class="text-xs text-black font-bold uppercase">Filter</span>
+      <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 12px;">
+        <div style="display: flex; align-items: center; gap: 8px;">
+          <span style="font-size: 10px; color: var(--yellow);">FILTER</span>
           <select class="field-input" style="max-width: 180px;" [(ngModel)]="statusFilter">
             <option value="ALL">ALL</option>
             <option value="PENDING">PENDING</option>
@@ -29,98 +29,85 @@
             <option value="COMPLETED">COMPLETED</option>
           </select>
         </div>
-        <div class="flex items-center gap-2">
-          <span class="text-xs text-black font-bold uppercase">Sort</span>
+        <div style="display: flex; align-items: center; gap: 8px;">
+          <span style="font-size: 10px; color: var(--yellow);">SORT</span>
           <select class="field-input" style="max-width: 200px;" [(ngModel)]="sortOption">
-            <option value="DUE_ASC">Due date (earliest)</option>
-            <option value="DUE_DESC">Due date (latest)</option>
-            <option value="PRIORITY">Priority</option>
-            <option value="STATUS">Status</option>
+            <option value="DUE_ASC">DUE DATE (EARLIEST)</option>
+            <option value="DUE_DESC">DUE DATE (LATEST)</option>
+            <option value="PRIORITY">PRIORITY</option>
+            <option value="STATUS">STATUS</option>
           </select>
         </div>
       </div>
     </div>
 
     <!-- Empty -->
-    <div *ngIf="!viewTasks.length" class="text-center bg-gray-100 border-2 border-black p-6">
-      <p class="text-4xl mb-2">:)</p>
-      <p class="text-black font-bold uppercase">NO TASKS ASSIGNED YET</p>
-      <p class="text-xs text-black mt-1 font-bold">CHECK BACK LATER!</p>
+    <div *ngIf="!viewTasks.length" class="empty">
+      <p style="font-size: 32px; margin-bottom: 8px;">:)</p>
+      <p>[ NO TASKS ASSIGNED YET ]</p>
+      <p style="font-size: 12px; margin-top: 4px;">CHECK BACK LATER!</p>
     </div>
 
     <!-- Grid -->
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-3" *ngIf="viewTasks.length">
-      <div
-        *ngFor="let task of viewTasks"
-        class="bg-linear-to-br from-white to-gray-100 border-4 border-black p-3 shadow-[4px_4px_0_0_rgba(0,0,0,1)] hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-[2px_2px_0_0_rgba(0,0,0,1)] transition-all"
-      >
+    <div class="task-grid" *ngIf="viewTasks.length">
+      <div *ngFor="let task of viewTasks" class="task-card">
         <!-- Title + Priority -->
-        <div class="flex items-start justify-between gap-3 mb-3">
-          <div class="min-w-0">
-            <p class="text-xs text-black font-bold">DUE: {{ task.dueDate || 'NO DEADLINE' }}</p>
-            <h3 class="text-base font-bold text-black break-words">{{ task.title }}</h3>
+        <div class="task-head">
+          <div style="min-width: 0;">
+            <p style="font-size: 10px; color: var(--yellow);">DUE: {{ task.dueDate || 'NO DEADLINE' }}</p>
+            <h3 style="word-break: break-word;">{{ task.title }}</h3>
           </div>
 
           <span
-            class="px-2 py-1 border-2 border-black text-xs font-bold shrink-0"
-            [ngClass]="{
-              'bg-red-500 text-white': task.priority==='HIGH',
-              'bg-yellow-400 text-black': task.priority==='MEDIUM',
-              'bg-blue-400 text-white': task.priority==='LOW'
-            }"
+            class="badge"
+            [style.background]="task.priority==='HIGH' ? 'var(--red)' : task.priority==='MEDIUM' ? 'var(--yellow)' : 'var(--cyan)'"
+            [style.color]="'var(--bg)'"
+            [style.border-color]="'var(--bg)'"
+            style="flex-shrink: 0;"
           >
             {{ task.priority || 'MEDIUM' }}
           </span>
         </div>
 
         <!-- Description -->
-        <p class="text-sm text-black break-words mb-3">{{ task.description || 'No description' }}</p>
+        <p style="font-size: 14px; word-break: break-word;">{{ task.description || '[ NO DESCRIPTION ]' }}</p>
 
         <!-- Created by -->
-        <p class="text-xs text-black font-bold bg-gray-100 border-2 border-black p-2">
-          CREATED BY: {{ task.createdByName || ('User #' + task.createdByUserId) }} ({{ task.createdByRole || 'N/A' }})
-        </p>
+        <div style="font-size: 12px; background: var(--bg); border: 2px solid var(--cyan); padding: 8px;">
+          CREATED BY: {{ task.createdByName || ('USER #' + task.createdByUserId) }} ({{ task.createdByRole || 'N/A' }})
+        </div>
 
         <!-- Controls -->
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 mt-3 pt-3 border-t-2 border-dotted border-black">
-          <label class="text-xs text-black font-bold flex flex-col gap-1 uppercase">
-            <span>STATUS:</span>
-            <select
-              class="field-input"
-              [(ngModel)]="statusChoice[task.id]"
-            >
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 12px; padding-top: 12px; border-top: 2px dashed var(--cyan);">
+          <div class="field">
+            <label>STATUS:</label>
+            <select class="field-input" [(ngModel)]="statusChoice[task.id]">
               <option value="PENDING">PENDING</option>
               <option value="IN_PROGRESS">IN_PROGRESS</option>
               <option value="COMPLETED">COMPLETED</option>
             </select>
-          </label>
+          </div>
 
-          <label class="text-xs text-black font-bold flex flex-col gap-1 uppercase">
-            <span>PRIORITY:</span>
-            <select
-              class="field-input"
-              [(ngModel)]="priorityChoice[task.id]"
-            >
+          <div class="field">
+            <label>PRIORITY:</label>
+            <select class="field-input" [(ngModel)]="priorityChoice[task.id]">
               <option value="LOW">LOW</option>
               <option value="MEDIUM">MEDIUM</option>
               <option value="HIGH">HIGH</option>
             </select>
-          </label>
+          </div>
 
-          <div class="sm:col-span-2 flex items-end">
-            <button
-              class="w-full btn"
-              (click)="save(task)"
-            >
-              SAVE
+          <div style="grid-column: span 2;">
+            <button class="btn" style="width: 100%;" (click)="save(task)">
+              [ SAVE ]
             </button>
           </div>
         </div>
 
         <!-- Footer -->
-        <p class="text-xs text-black font-bold bg-gray-100 border-2 border-black p-2 mt-3">
+        <div style="font-size: 12px; background: var(--bg); border: 2px solid var(--cyan); padding: 8px; margin-top: 12px;">
           DUE: {{ task.dueDate || 'NONE' }}
-        </p>
+        </div>
       </div>
     </div>
   </div>
